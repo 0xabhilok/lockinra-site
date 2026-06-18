@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LockinRa — Support</title>
+  <meta name="description" content="Support and help for LockinRa, a local-first focus & productivity app for Windows." />
+  <style>
+    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
+    a { color:#86d3a6; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
+    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:56px 22px; text-align:center; }
+    .mark { width:84px; height:84px; border-radius:20px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px; }
+    .mark svg { width:46px; height:46px; }
+    h1 { margin:0; font-size:34px; letter-spacing:-.5px; }
+    .tag { margin:8px 0 0; color:rgba(255,255,255,.85); font-size:18px; }
+    h2 { margin:40px 0 10px; font-size:21px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
+    .muted { color:var(--muted); }
+    .btn { display:inline-block; margin-top:8px; padding:10px 18px; border-radius:10px; background:var(--tile1); color:#fff; text-decoration:none; font-weight:600; }
+    ul { padding-left:20px; }
+    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
+    code { background:#0c130f; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
+    </div>
+    <h1>LockinRa</h1>
+    <p class="tag">Focus &amp; productivity for Windows — your data stays on your device.</p>
+  </header>
+
+  <div class="wrap">
+    <h2>Get support</h2>
+    <div class="card">
+      <p>Questions, bugs, or feedback? We're happy to help.</p>
+      <p><strong>Email:</strong> <a href="mailto:REPLACE-WITH-YOUR-SUPPORT-EMAIL">REPLACE-WITH-YOUR-SUPPORT-EMAIL</a></p>
+      <p class="muted">We typically respond within a few business days.</p>
+    </div>
+
+    <h2>About LockinRa</h2>
+    <div class="card">
+      <p>LockinRa is a local-first focus and productivity app: capture tasks (by voice or text),
+         run focus sessions with distraction reminders, track habits, take notes, and play focus
+         soundscapes — all stored on your own device.</p>
+      <ul>
+        <li>Works offline; no account required.</li>
+        <li>On-device voice transcription and on-device AI by default.</li>
+        <li>Optional integrations (Google, Microsoft, GitHub, Slack) and cloud AI are opt-in.</li>
+      </ul>
+    </div>
+
+    <h2>Privacy</h2>
+    <div class="card">
+      <p>We don't track you, show ads, or sell your data.</p>
+      <p><a class="btn" href="./privacy.html">Read the Privacy Policy</a></p>
+    </div>
+
+    <footer>
+      © <span id="y"></span> LockinRa. <a href="./privacy.html">Privacy Policy</a>
+      <script>document.getElementById('y').textContent = '2026';</script>
+    </footer>
+  </div>
+</body>
+</html>

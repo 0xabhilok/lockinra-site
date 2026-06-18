@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LockinRa — Privacy Policy</title>
+  <meta name="description" content="LockinRa privacy policy. Local-first; no tracking, ads, or data selling." />
+  <style>
+    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:16px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
+    a { color:#86d3a6; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
+    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:40px 22px; }
+    header .wrap { padding-bottom:0; }
+    h1 { margin:0; font-size:30px; }
+    .eff { color:rgba(255,255,255,.85); margin:6px 0 0; }
+    h2 { margin:34px 0 8px; font-size:20px; }
+    .lead { background:var(--card); border:1px solid var(--line); border-left:3px solid var(--tile1); border-radius:10px; padding:14px 18px; margin-top:18px; }
+    ul { padding-left:22px; }
+    .muted { color:var(--muted); }
+    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
+    .back { display:inline-block; margin-top:18px; color:#86d3a6; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><h1>LockinRa — Privacy Policy</h1><p class="eff">Effective date: 18 June 2026</p></div></header>
+  <div class="wrap">
+    <p>LockinRa (“LockinRa”, “the app”, “we”, “us”) is a local-first focus and productivity application for Windows. This policy explains what data the app handles, where it is stored, and the limited circumstances in which any data leaves your device.</p>
+
+    <p class="lead"><strong>The short version:</strong> LockinRa stores your data on your own device and runs no servers that collect it. We do not track you, show ads, or sell your data. Information leaves your device only when you explicitly connect a third-party service or enable a cloud AI provider — and then it goes directly to that provider, not to us.</p>
+
+    <h2>1. Who is responsible</h2>
+    <p>This app is published by <strong>LockinRa</strong>. For any privacy question or request, contact: <a href="mailto:REPLACE-WITH-YOUR-SUPPORT-EMAIL">REPLACE-WITH-YOUR-SUPPORT-EMAIL</a>.</p>
+
+    <h2>2. Information the app stores on your device</h2>
+    <p>LockinRa works with the following, all stored locally on your device (in the app's local database and files under your Windows user profile):</p>
+    <ul>
+      <li>Tasks, notes, habits, and to-do content you create.</li>
+      <li>Focus sessions and productivity analytics (session times, completion stats, streaks), computed on your device.</li>
+      <li>Active window / application information. To detect distractions during a focus session, the app reads the name and title of the app or website currently in the foreground. This is processed on your device to decide whether to show a focus reminder; it is not transmitted to us.</li>
+      <li>Voice capture (optional). If you use voice task capture, your audio is transcribed on your device using an on-device speech model. The audio is not uploaded to us or to any third party.</li>
+      <li>Soundscapes and any local audio files you add for focus playback.</li>
+      <li>App settings and preferences.</li>
+    </ul>
+    <p>We do not operate a backend that receives this data. It stays on your device unless you choose to export it, back it up, or use an integration or cloud AI feature described below.</p>
+
+    <h2>3. What we do not do</h2>
+    <ul>
+      <li><strong>No telemetry or usage tracking.</strong> The app contains no analytics, tracking, or telemetry SDKs.</li>
+      <li><strong>No automatic crash reporting or “phone home.”</strong> Diagnostic logs are kept locally. If you choose to export a diagnostic bundle for support, you review and edit it before it ever leaves your device.</li>
+      <li><strong>No advertising</strong>, and no sale or sharing of your data for advertising or any other purpose.</li>
+      <li><strong>No account required.</strong> You do not create a LockinRa account; we hold no user database.</li>
+    </ul>
+
+    <h2>4. Optional third-party integrations (only if you connect them)</h2>
+    <p>You can optionally connect external services. These connections are entirely user-initiated and use each provider's standard OAuth sign-in. When connected, data flows directly between your device and that provider under that provider's own privacy policy; it does not pass through us. Supported integrations may include:</p>
+    <ul>
+      <li>Google (Calendar, Gmail) — <a href="https://policies.google.com/privacy">policies.google.com/privacy</a></li>
+      <li>Microsoft (Outlook / Microsoft Graph, Teams) — <a href="https://privacy.microsoft.com/privacystatement">privacy.microsoft.com/privacystatement</a></li>
+      <li>GitHub — <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement">GitHub Privacy Statement</a></li>
+      <li>Slack — <a href="https://slack.com/trust/privacy/privacy-policy">slack.com/trust/privacy/privacy-policy</a></li>
+    </ul>
+    <p>You can disconnect any integration at any time in the app's settings. Access tokens for connected services are stored in the Windows secure credential store (Windows Credential Manager), not in plain text.</p>
+
+    <h2>5. Optional AI features</h2>
+    <p>By default, AI features run locally on your device and send nothing over the network. You may optionally enable a cloud AI provider (for example, Google Gemini, OpenAI, or Anthropic Claude) by supplying your own API key. If you do:</p>
+    <ul>
+      <li>Cloud AI is off by default and must be explicitly enabled.</li>
+      <li>The content to be sent for a request is shown to you and requires your confirmation before it is sent.</li>
+      <li>Data is sent directly to the AI provider you chose, under that provider's privacy policy, using your own API key. We do not receive it.</li>
+    </ul>
+    <p>Any API keys you provide are stored in the Windows secure credential store.</p>
+
+    <h2>6. Permissions the app uses</h2>
+    <ul>
+      <li><strong>Microphone</strong> — only while you are actively using voice capture; audio is processed on-device.</li>
+      <li><strong>Reading the active window/app</strong> — to detect distractions during focus sessions (processed on-device).</li>
+      <li><strong>Network access</strong> — for checking for updates and for any integrations or cloud AI you choose to enable.</li>
+    </ul>
+
+    <h2>7. Data retention and deletion</h2>
+    <p>Because your data lives on your device, you control it. You can edit or delete tasks, notes, and other content within the app, export your data, or uninstall the app to remove its locally stored data. Disconnecting an integration removes its stored access token.</p>
+
+    <h2>8. Children</h2>
+    <p>LockinRa is a general-purpose productivity tool and is not directed at children under 13 (or the equivalent minimum age in your jurisdiction). We do not knowingly collect personal information from children.</p>
+
+    <h2>9. Updates</h2>
+    <p>The app may check for updates. For installs from the Microsoft Store, updates are delivered by the Store. Update checks do not send personal data.</p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>We may update this policy as the app evolves. Material changes will be reflected by updating the effective date above and, where appropriate, noted in the app or its release notes.</p>
+
+    <h2>11. Contact</h2>
+    <p><a href="mailto:REPLACE-WITH-YOUR-SUPPORT-EMAIL">REPLACE-WITH-YOUR-SUPPORT-EMAIL</a></p>
+
+    <a class="back" href="./index.html">← Back to support</a>
+    <footer>© 2026 LockinRa.</footer>
+  </div>
+</body>
+</html>

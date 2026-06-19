@@ -1,69 +1,847 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LockinRa — Support</title>
-  <meta name="description" content="Support and help for LockinRa, a local-first focus & productivity app for Windows." />
-  <style>
-    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
-    * { box-sizing: border-box; }
-    body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
-    a { color:#86d3a6; }
-    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
-    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:56px 22px; text-align:center; }
-    .mark { width:84px; height:84px; border-radius:20px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px; }
-    .mark svg { width:46px; height:46px; }
-    h1 { margin:0; font-size:34px; letter-spacing:-.5px; }
-    .tag { margin:8px 0 0; color:rgba(255,255,255,.85); font-size:18px; }
-    h2 { margin:40px 0 10px; font-size:21px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
-    .muted { color:var(--muted); }
-    .btn { display:inline-block; margin-top:8px; padding:10px 18px; border-radius:10px; background:var(--tile1); color:#fff; text-decoration:none; font-weight:600; }
-    ul { padding-left:20px; }
-    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
-    code { background:#0c130f; padding:2px 6px; border-radius:6px; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LockinRa — Lock in. The rest goes quiet.</title>
+<meta name="description" content="A privacy-first, local-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running on your machine. Free for Windows 10/11.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='5' fill='%233B7257'/><path d='M8 5 V17 H17' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<meta property="og:title" content="LockinRa — Lock in. The rest goes quiet.">
+<meta property="og:description" content="A privacy-first AI workspace for deep work. Runs entirely on your machine — no account, no cloud, no telemetry.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://0xabhilok.github.io/lockinra-site/">
+<meta property="og:image" content="https://0xabhilok.github.io/lockinra-site/thumbnail.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script src="./support.js"></script>
 </head>
 <body>
-  <header>
-    <div class="mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
-    </div>
-    <h1>LockinRa</h1>
-    <p class="tag">Focus &amp; productivity for Windows — your data stays on your device.</p>
-  </header>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  ::selection { background: hsl(150 38% 52% / 0.3); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .lk-faq-chev { transform: rotate(180deg); }
+  @keyframes lk-introOut { 0%,72% { opacity:1; visibility:visible; } 100% { opacity:0; visibility:hidden; pointer-events:none; } }
+  @keyframes lk-drawL { 0% { stroke-dashoffset: 60; } 100% { stroke-dashoffset: 0; } }
+  @keyframes lk-rise { 0% { opacity:0; transform: translateY(14px); } 100% { opacity:1; transform: translateY(0); } }
+  @keyframes lk-fadein { from { opacity:0; } to { opacity:1; } }
+  @keyframes lk-glow { 0% { opacity:.55; transform: scale(1); } 100% { opacity:.9; transform: scale(1.08); } }
+  @keyframes lk-orb { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(40px,-30px,0); } }
+  @keyframes lk-orb2 { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(-50px,30px,0); } }
+  @keyframes lk-blink { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+  @keyframes lk-grace { 0% { width:100%; } 100% { width:0%; } }
+  @keyframes lk-pulse { 0%,100% { transform: scale(1); opacity:1; } 50% { transform: scale(1.4); opacity:.5; } }
+  @keyframes lk-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes lk-eq { 0%,100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+  @keyframes lk-shimmer { to { background-position: 200% 0; } }
+  @keyframes lk-floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 920px) {
+    [style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"] { grid-template-columns: repeat(2,1fr) !important; }
+  }
+  @media (max-width: 760px) {
+    .lk-navlinks { display: none !important; }
+    [style*="grid-template-columns:repeat(3,1fr)"],
+    [style*="grid-template-columns:repeat(2,1fr)"],
+    [style*="grid-template-columns:repeat(4,1fr)"],
+    [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"],
+    [style*="grid-template-columns:1.15fr 1fr"],
+    [style*="grid-template-columns:1.1fr 0.9fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-column:span 2"], [style*="grid-column:3"] { grid-column: auto !important; }
+    [style*="grid-row:span 2"] { grid-row: auto !important; }
+    section[style*="padding:120px"] { padding-top: 80px !important; padding-bottom: 80px !important; }
+  }
+</style>
+</helmet>
+<div id="lk-root" style="--bg:hsl(150 3% 6%);--bg-subtle:hsl(150 3% 9%);--surface:hsl(150 3% 11%);--surface-elev:hsl(150 3% 14%);--surface-overlay:hsl(150 3% 17%);--text:hsl(150 4% 95%);--text-muted:hsl(150 3% 67%);--text-subtle:hsl(150 3% 48%);--border:hsl(150 3% 19%);--border-strong:hsl(150 4% 30%);--primary:hsl(150 38% 52%);--primary-hover:hsl(150 42% 58%);--primary-active:hsl(150 46% 62%);--primary-fg:hsl(150 40% 8%);--primary-subtle:hsl(150 20% 17%);--primary-subtle-fg:hsl(150 30% 80%);--danger:hsl(0 65% 60%);--warning:hsl(38 70% 58%);--success:hsl(150 50% 50%);--coach-dark:hsl(150 6% 70%);--coach-drill:hsl(8 55% 62%);--hairline:hsl(150 3% 15%);--nav-bg:hsl(150 4% 6% / 0.72);--chip-bg:hsl(150 3% 10% / 0.6);--band:hsl(150 4% 7%);--soft-grad:linear-gradient(135deg,hsl(150 22% 13%),hsl(150 14% 9%));--soft-border:hsl(150 30% 24%);--tint:hsl(150 22% 9%);--compare-head:hsl(150 22% 11%);--avatar-bg:hsl(150 30% 22%);--ring-track:hsl(150 3% 20%);font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative;">
 
-  <div class="wrap">
-    <h2>Get support</h2>
-    <div class="card">
-      <p>Questions, bugs, or feedback? We're happy to help.</p>
-      <p><strong>Email:</strong> <a href="mailto:abhilokreddydev@gmail.com">abhilokreddydev@gmail.com</a></p>
-      <p class="muted">We typically respond within a few business days.</p>
+  <!-- ===================== INTRO ANIMATION ===================== -->
+  <div id="lk-intro" onClick="{{ skipIntro }}" style="position:fixed;inset:0;z-index:200;background:radial-gradient(ellipse 80% 60% at 50% 42%, hsl(150 14% 10%), hsl(150 4% 4%) 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;animation:lk-introOut 3.6s cubic-bezier(.16,1,.3,1) forwards;">
+    <div style="position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, hsl(150 50% 45% / 0.35), transparent 65%);filter:blur(50px);animation:lk-glow 2.4s ease-in-out infinite alternate;"></div>
+    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:28px;">
+      <div style="width:96px;height:96px;border-radius:24px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px hsl(150 60% 20% / 0.55),inset 0 1px 0 hsl(0 0% 100% / 0.18);animation:lk-rise .9s cubic-bezier(.16,1,.3,1) both;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:60;stroke-dashoffset:60;animation:lk-drawL 1s cubic-bezier(.65,0,.35,1) .35s forwards;"></path></svg>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:lk-rise .8s cubic-bezier(.16,1,.3,1) 1.1s both;">
+        <div style="font-size:34px;font-weight:600;letter-spacing:-0.03em;">Lockin<span style="color:var(--primary);">Ra</span></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:var(--text-subtle);overflow:hidden;white-space:nowrap;">Lock in. The rest goes quiet.</div>
+      </div>
     </div>
-
-    <h2>About LockinRa</h2>
-    <div class="card">
-      <p>LockinRa is a local-first focus and productivity app: capture tasks (by voice or text),
-         run focus sessions with distraction reminders, track habits, take notes, and play focus
-         soundscapes — all stored on your own device.</p>
-      <ul>
-        <li>Works offline; no account required.</li>
-        <li>On-device voice transcription and on-device AI by default.</li>
-        <li>Optional integrations (Google, Microsoft, GitHub, Slack) and cloud AI are opt-in.</li>
-      </ul>
-    </div>
-
-    <h2>Privacy</h2>
-    <div class="card">
-      <p>We don't track you, show ads, or sell your data.</p>
-      <p><a class="btn" href="./privacy.html">Read the Privacy Policy</a></p>
-    </div>
-
-    <footer>
-      © <span id="y"></span> LockinRa. <a href="./privacy.html">Privacy Policy</a>
-      <script>document.getElementById('y').textContent = '2026';</script>
-    </footer>
+    <div style="position:absolute;bottom:36px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--text-subtle);opacity:0;animation:lk-fadein .6s ease 2.2s both;">click to skip</div>
   </div>
+
+  <!-- ===================== AMBIENT BACKDROP ===================== -->
+  <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;">
+    <div style="position:absolute;top:-10%;left:8%;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,hsl(150 55% 40% / 0.16),transparent 65%);filter:blur(90px);animation:lk-orb 26s ease-in-out infinite alternate;"></div>
+    <div style="position:absolute;top:30%;right:0%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,hsl(155 60% 45% / 0.12),transparent 65%);filter:blur(90px);animation:lk-orb2 32s ease-in-out infinite alternate;"></div>
+    <div style="position:absolute;inset:0;background-image:linear-gradient(hsl(150 8% 50% / 0.05) 1px,transparent 1px),linear-gradient(90deg,hsl(150 8% 50% / 0.05) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 50% at 50% 0%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 50% at 50% 0%,#000,transparent 75%);"></div>
+  </div>
+
+  <div id="lk-progress" style="position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--primary),hsl(150 55% 64%));z-index:150;box-shadow:0 0 12px var(--primary);transition:width .12s linear;"></div>
+
+  <!-- ===================== NAV ===================== -->
+  <nav style="position:sticky;top:0;z-index:100;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);background:var(--nav-bg);border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text);">
+        <span style="width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 hsl(0 0% 100% / 0.16);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+        <span style="font-weight:600;font-size:17px;letter-spacing:-0.02em;">Lockin<span style="color:var(--primary);">Ra</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:30px;" class="lk-navlinks">
+        <a href="#features" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;transition:color .15s;" onMouseOver="{{ noop }}">Features</a>
+        <a href="#privacy" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Privacy</a>
+        <a href="#how" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">How it works</a>
+        <a href="#pricing" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Pricing</a>
+        <a href="#faq" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">FAQ</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,color .15s;">
+          <sc-if value="{{ isDark }}" hint-placeholder-val="{{ true }}">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          </sc-if>
+          <sc-if value="{{ isLight }}" hint-placeholder-val="{{ false }}">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          </sc-if>
+        </button>
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.0.0/LockinRa-1.0.0-win-x64.exe" download style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+          Download for Windows
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header id="top" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:96px 24px 40px;text-align:center;">
+    <div data-reveal style="display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:var(--chip-bg);font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:30px;">
+      <span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 10px var(--primary);"></span>
+      LOCAL-FIRST AI · NOW IN OPEN BETA
+    </div>
+    <h1 data-reveal style="font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-0.035em;font-weight:600;margin:0 auto 26px;max-width:18ch;">Lock in. The rest <span style="background:linear-gradient(90deg,var(--primary),hsl(150 60% 68%),var(--primary));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lk-shimmer 4.5s linear infinite;">goes quiet.</span></h1>
+    <p data-reveal style="font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.55;color:var(--text-muted);max-width:46ch;margin:0 auto 36px;">A privacy-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running <span style="color:var(--text);font-weight:500;">on your machine.</span></p>
+    <div data-reveal style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.0.0/LockinRa-1.0.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+        Download for Windows
+      </a>
+      <a href="#how" style="display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);font-weight:600;font-size:16px;padding:14px 24px;border-radius:11px;text-decoration:none;border:1px solid var(--border);transition:background .15s,border-color .15s;">
+        See how it works
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </a>
+    </div>
+    <div data-reveal style="display:flex;align-items:center;gap:8px;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-subtle);letter-spacing:0.04em;flex-wrap:wrap;">
+      <span style="color:var(--primary);">●</span> 100% on-device<span style="opacity:.4;">·</span>no account<span style="opacity:.4;">·</span>open about privacy
+    </div>
+
+    <!-- PRODUCT MOCKUP -->
+    <div data-reveal style="position:relative;margin:62px auto 0;max-width:1060px;perspective:1500px;">
+      <div style="position:absolute;inset:-6% 8% 6%;background:radial-gradient(ellipse 60% 50% at 50% 40%,hsl(150 60% 40% / 0.3),transparent 70%);filter:blur(60px);z-index:0;"></div>
+      <div data-tilt style="position:relative;z-index:1;background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:0 40px 90px hsl(150 30% 4% / 0.7),inset 0 1px 0 hsl(0 0% 100% / 0.05);overflow:hidden;text-align:left;transition:transform .3s cubic-bezier(.16,1,.3,1);will-change:transform;">
+        <!-- window bar -->
+        <div style="display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--border);background:var(--bg-subtle);">
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.45);"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.45);"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.45);"></span>
+          <div style="margin-left:10px;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-subtle);">
+            <span style="width:14px;height:14px;border-radius:4px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            LockinRa — Deep Focus
+          </div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--primary);"><span style="width:7px;height:7px;border-radius:50%;background:var(--primary);animation:lk-pulse 2s ease-in-out infinite;"></span>SESSION ACTIVE</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:0;min-height:340px;">
+          <!-- focus session -->
+          <div style="padding:30px 32px;border-right:1px solid var(--border);display:flex;flex-direction:column;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;color:var(--text-subtle);text-transform:uppercase;margin-bottom:6px;">// CURRENT TASK</div>
+            <div style="font-size:19px;font-weight:600;letter-spacing:-0.01em;margin-bottom:28px;">Build the onboarding flow</div>
+            <div style="display:flex;align-items:center;gap:26px;">
+              <div style="position:relative;width:132px;height:132px;flex-shrink:0;">
+                <svg width="132" height="132" viewBox="0 0 132 132" style="transform:rotate(-90deg);">
+                  <circle cx="66" cy="66" r="58" fill="none" stroke="var(--ring-track)" stroke-width="9"></circle>
+                  <circle cx="66" cy="66" r="58" fill="none" stroke="url(#lkring)" stroke-width="9" stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="124"></circle>
+                  <defs><linearGradient id="lkring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(150 50% 60%)"></stop><stop offset="1" stop-color="hsl(150 50% 38%)"></stop></linearGradient></defs>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;">17:42</div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-subtle);letter-spacing:0.1em;">FOCUS</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px;">
+                <div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:2px;background:var(--primary);"></span><span style="font-size:13px;color:var(--text-muted);">Pomodoro · session <span style="color:var(--text);font-weight:600;">1 of 4</span></span></div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:2px;background:var(--text-subtle);"></span><span style="font-size:13px;color:var(--text-muted);">3 tasks queued today</span></div>
+                <div style="display:flex;gap:8px;margin-top:6px;">
+                  <button style="width:38px;height:38px;border-radius:9px;background:var(--primary);color:var(--primary-fg);border:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></button>
+                  <button style="width:38px;height:38px;border-radius:9px;background:var(--surface-elev);color:var(--text-muted);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h12v12H6z"></path></svg></button>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding-top:24px;display:flex;align-items:center;gap:10px;border-top:1px solid var(--border);margin-top:24px;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-subtle);letter-spacing:0.12em;">AMBIENT</span>
+              <div style="display:flex;align-items:flex-end;gap:3px;height:16px;">
+                <span style="width:3px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1.1s ease-in-out infinite;"></span>
+                <span style="width:3px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1.1s ease-in-out .2s infinite;"></span>
+                <span style="width:3px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1.1s ease-in-out .4s infinite;"></span>
+                <span style="width:3px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1.1s ease-in-out .15s infinite;"></span>
+              </div>
+              <span style="font-size:12px;color:var(--text-muted);">Rain on a tin roof</span>
+            </div>
+          </div>
+          <!-- guardian feed -->
+          <div style="padding:24px 26px;position:relative;display:flex;flex-direction:column;gap:12px;background:var(--bg-subtle);">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;color:var(--text-subtle);text-transform:uppercase;">// FOCUS GUARDIAN</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);">
+              <span style="width:24px;height:24px;border-radius:6px;background:hsl(150 40% 50% / 0.15);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <div style="flex:1;"><div style="font-size:13px;font-weight:500;">github.com/onboarding</div><div style="font-size:11px;color:var(--text-subtle);">Relevant · on task</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);opacity:.75;">
+              <span style="width:24px;height:24px;border-radius:6px;background:hsl(150 3% 40% / 0.18);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+              <div style="flex:1;"><div style="font-size:13px;font-weight:500;">File Explorer</div><div style="font-size:11px;color:var(--text-subtle);">Neutral</div></div>
+            </div>
+            <!-- intervention popup -->
+            <div style="position:absolute;left:14px;right:14px;bottom:18px;background:var(--surface-elev);border:1px solid var(--border-strong);border-radius:14px;padding:16px;box-shadow:0 24px 50px hsl(150 40% 4% / 0.6),0 0 0 1px hsl(150 50% 40% / 0.2),0 0 40px hsl(150 55% 35% / 0.25);animation:lk-bob 4s ease-in-out infinite;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;">
+                <span style="width:22px;height:22px;border-radius:6px;background:hsl(8 55% 60% / 0.18);color:var(--danger);display:inline-flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></span>
+                <span style="font-size:13px;font-weight:600;">That looks like a distraction.</span>
+              </div>
+              <p style="margin:0 0 12px;font-size:12.5px;color:var(--text-muted);line-height:1.5;">YouTube — <span style="color:var(--text);">"race highlights"</span> isn't your task. You said you'd build the onboarding flow. Back to it?</p>
+              <div style="height:3px;border-radius:2px;background:var(--border);overflow:hidden;margin-bottom:12px;"><div style="height:100%;background:var(--danger);width:60%;animation:lk-grace 8s linear infinite;"></div></div>
+              <div style="display:flex;gap:7px;">
+                <button style="flex:1;background:var(--primary);color:var(--primary-fg);border:none;border-radius:8px;padding:8px;font-size:12px;font-weight:600;cursor:pointer;">Let's grind</button>
+                <button style="background:var(--surface);color:var(--text-muted);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:12px;font-weight:500;cursor:pointer;">Snooze 5m</button>
+                <button style="background:transparent;color:var(--text-subtle);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-size:12px;cursor:pointer;">Wrong guess</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ===================== STAT BAND ===================== -->
+  <section style="position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--band);margin-top:96px;">
+    <div style="max-width:1240px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;align-items:stretch;">
+      <div data-reveal style="padding:42px 40px 42px 0;display:flex;align-items:center;border-right:1px solid var(--border);">
+        <span style="font-size:clamp(1.4rem,2.2vw,2rem);font-weight:600;letter-spacing:-0.02em;line-height:1.15;">Built for people who <span style="color:var(--primary);">hate being distracted.</span></span>
+      </div>
+      <div data-reveal style="padding:42px 28px;border-right:1px solid var(--border);">
+        <div style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;">~<span data-count="90">90</span>%</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;line-height:1.4;">distraction classification accuracy</div>
+      </div>
+      <div data-reveal style="padding:42px 28px;border-right:1px solid var(--border);">
+        <div style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;">&lt;<span data-count="200">200</span><span style="font-size:0.6em;color:var(--text-muted);">ms</span></div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;line-height:1.4;">end-to-end on-device inference</div>
+      </div>
+      <div data-reveal style="padding:42px 0 42px 28px;">
+        <div style="font-size:clamp(1.8rem,3vw,2.4rem);font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;">0<span style="font-size:0.5em;color:var(--text-muted);"> bytes</span></div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;line-height:1.4;">leave your device. ever.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROBLEM → REFRAME ===================== -->
+  <section style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:120px 24px;">
+    <div data-reveal style="text-align:center;max-width:40ch;margin:0 auto 64px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// THE PROBLEM</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">Focus isn't a willpower problem.<br>It's a tooling problem.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:hsl(8 55% 60% / 0.14);color:var(--danger);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Willpower runs out</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);line-height:1.6;margin:0;">By 2pm your prefrontal cortex is fried. The fortieth "just five minutes" wins. Discipline doesn't scale across a whole day.</p>
+      </div>
+      <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:hsl(8 55% 60% / 0.14);color:var(--danger);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Cloud apps watch you back</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);line-height:1.6;margin:0;">Every todo app and "focus" tracker ships your tasks, screen time, and habits to someone else's server. Your work becomes their data.</p>
+      </div>
+      <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:hsl(8 55% 60% / 0.14);color:var(--danger);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Blockers are blunt</h3>
+        <p style="font-size:14.5px;color:var(--text-muted);line-height:1.6;margin:0;">Hard site-blockers can't tell research from rabbit-holes. So you whitelist everything, and the wall becomes useless by noon.</p>
+      </div>
+    </div>
+    <div data-reveal style="margin-top:34px;background:var(--soft-grad);border:1px solid var(--soft-border);border-radius:18px;padding:34px 38px;display:flex;align-items:center;gap:26px;flex-wrap:wrap;">
+      <div style="width:46px;height:46px;border-radius:12px;background:var(--primary);color:var(--primary-fg);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 24px hsl(150 55% 35% / 0.4);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"></path></svg></div>
+      <div style="flex:1;min-width:280px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:6px;">// THE LOCKINRA ANSWER</div>
+        <p style="margin:0;font-size:clamp(1.05rem,1.6vw,1.35rem);line-height:1.45;font-weight:500;letter-spacing:-0.01em;">An AI that understands <span style="color:var(--primary);">your task right now</span>, nudges you back the instant you drift — and runs entirely on your machine, so the data never has to leave.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== FEATURES BENTO ===================== -->
+  <section id="features" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 24px 120px;">
+    <div data-reveal style="max-width:46ch;margin:0 0 48px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// THE WORKSPACE</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">One calm surface for the whole loop.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">Capture, focus, get nudged, review. Every piece talks to the same local AI brain — no tabs, no context-switching, no cloud.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+
+      <!-- Focus Guardian (wide) -->
+      <div data-reveal style="grid-column:span 2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:22px;overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div>
+          <div>
+            <h3 style="font-size:19px;font-weight:600;margin:0 0 5px;letter-spacing:-0.01em;">AI Focus Guardian</h3>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0;max-width:42ch;">Watches your active tab and app in real time and classifies it against your task — Relevant, Neutral, or Distraction — with a rule engine plus a local LLM.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;">
+          <div style="flex:1;min-width:150px;display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:11px;background:hsl(150 40% 50% / 0.1);border:1px solid hsl(150 40% 40% / 0.3);"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);"></span><div style="font-size:12.5px;"><span style="font-weight:600;">GitHub</span> <span style="color:var(--text-subtle);">· Relevant</span></div></div>
+          <div style="flex:1;min-width:150px;display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:11px;background:var(--bg-subtle);border:1px solid var(--border);"><span style="width:8px;height:8px;border-radius:50%;background:var(--text-subtle);"></span><div style="font-size:12.5px;"><span style="font-weight:600;">Slack</span> <span style="color:var(--text-subtle);">· Neutral</span></div></div>
+          <div style="flex:1;min-width:150px;display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:11px;background:hsl(8 55% 60% / 0.1);border:1px solid hsl(8 55% 50% / 0.3);"><span style="width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 8px var(--danger);"></span><div style="font-size:12.5px;"><span style="font-weight:600;">Instagram</span> <span style="color:var(--text-subtle);">· Distraction</span></div></div>
+        </div>
+      </div>
+
+      <!-- Coach (tall) -->
+      <div data-reveal style="grid-column:3;grid-row:span 2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A5 5 0 0 1 4 12a5 5 0 0 1 .9-3M16.1 20A5 5 0 0 0 20 12a5 5 0 0 0-.9-3"></path><circle cx="12" cy="9" r="3"></circle><path d="M9 20a3 3 0 0 1 6 0"></path></svg></div>
+          <h3 style="font-size:19px;font-weight:600;margin:0 0 5px;letter-spacing:-0.01em;">Your AI coach</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0;">Reads your week and gives a short, human coach's take. Pick the voice that actually moves you.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto;">
+          <div style="padding:13px 14px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:11px;font-weight:600;color:var(--coach-dark);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">DARK HUMOR</span></div>
+            <p style="margin:0;font-size:12.5px;color:var(--text-muted);line-height:1.5;font-style:italic;">"Four tabs of YouTube and a half-written function. Bold strategy."</p>
+          </div>
+          <div style="padding:13px 14px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:11px;font-weight:600;color:var(--coach-drill);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">DRILL SERGEANT</span></div>
+            <p style="margin:0;font-size:12.5px;color:var(--text-muted);line-height:1.5;font-style:italic;">"You said 90 minutes. You did 31. Phone face-down. Move."</p>
+          </div>
+          <div style="padding:13px 14px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:11px;font-weight:600;color:var(--primary);font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">SUPPORTIVE FRIEND</span></div>
+            <p style="margin:0;font-size:12.5px;color:var(--text-muted);line-height:1.5;font-style:italic;">"Rough start, but you closed two tasks. Let's get one more."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copilot -->
+      <div data-reveal style="grid-column:1;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;">
+        <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2a2.5 2.5 0 0 1 2.5 2.5V6a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1 0 5A2.5 2.5 0 0 1 17 16a2.5 2.5 0 0 1-5 0v1.5A2.5 2.5 0 0 1 7 17.5 2.5 2.5 0 0 1 4.5 15a2.5 2.5 0 0 1 0-5A2.5 2.5 0 0 1 7 7.5 2.5 2.5 0 0 1 9.5 2z"></path></svg></div>
+        <h3 style="font-size:18px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">Copilot — your AI brain</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0 0 16px;">Writes your morning briefing and end-of-day wrap. Today's plan, top priorities, drift status — on-device.</p>
+        <div style="padding:13px 14px;border-radius:11px;background:var(--bg-subtle);border:1px solid var(--border);font-size:12.5px;line-height:1.6;color:var(--text-muted);">
+          <span style="color:var(--primary);font-weight:600;">Good morning.</span> 3 tasks, 1 deadline. Lead with the onboarding flow while you're fresh — you drift after 3pm. Protect 9–11.
+        </div>
+      </div>
+
+      <!-- SpeakIn / TypeIn -->
+      <div data-reveal style="grid-column:2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;">
+        <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg></div>
+        <h3 style="font-size:18px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">SpeakIn &amp; TypeIn</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0 0 16px;">Brain-dump by voice (on-device Whisper) or text. AI extracts clean tasks and deadlines.</p>
+        <div style="padding:12px 14px;border-radius:11px;background:var(--bg-subtle);border:1px solid var(--border);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="display:flex;align-items:flex-end;gap:2px;height:14px;"><span style="width:2.5px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out infinite;"></span><span style="width:2.5px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .2s infinite;"></span><span style="width:2.5px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .35s infinite;"></span><span style="width:2.5px;background:var(--primary);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .1s infinite;"></span></div><span style="font-size:11.5px;color:var(--text-subtle);font-style:italic;">"remind me to ship the build friday…"</span></div>
+          <div style="display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--border);"><span style="width:18px;height:18px;border-radius:5px;background:hsl(150 40% 50% / 0.18);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span><span style="font-size:12.5px;font-weight:500;">Ship v0.4 build</span><span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--primary);">FRI</span></div>
+        </div>
+      </div>
+
+      <!-- Analytics & Habits (wide) -->
+      <div data-reveal style="grid-column:span 2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px 30px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;">
+          <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="12" width="3" height="6"></rect><rect x="12" y="8" width="3" height="10"></rect><rect x="17" y="4" width="3" height="14"></rect></svg></div>
+          <h3 style="font-size:18px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">Analytics &amp; Habits</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0;">Focus score, drift trends, and a GitHub-style streak graph. See exactly where the day leaks.</p>
+        </div>
+        <div data-heatmap style="display:grid;grid-template-columns:repeat(14,1fr);gap:5px;flex:1;min-width:240px;max-width:340px;"></div>
+      </div>
+
+      <!-- Soundscapes -->
+      <div data-reveal style="grid-column:3;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
+        <div style="width:42px;height:42px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg></div>
+        <h3 style="font-size:18px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">Soundscapes &amp; mini-player</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.55;margin:0 0 16px;">Always-on-top focus player and an ambient mixer to set the room.</p>
+        <div style="margin-top:auto;display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border);">
+          <button style="width:34px;height:34px;border-radius:9px;background:var(--primary);color:var(--primary-fg);border:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></button>
+          <div style="flex:1;"><div style="font-size:12.5px;font-weight:600;">Forest rain</div><div style="height:3px;border-radius:2px;background:var(--border);margin-top:6px;overflow:hidden;"><div style="height:100%;width:42%;background:var(--primary);border-radius:2px;"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- ===================== PRIVACY ===================== -->
+  <section id="privacy" style="position:relative;z-index:1;border-top:1px solid var(--border);background:radial-gradient(ellipse 70% 80% at 50% 0%,var(--tint),transparent 70%);">
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse at center,hsl(150 55% 35% / 0.18),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:120px 24px;">
+      <div data-reveal style="text-align:center;max-width:50ch;margin:0 auto 56px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border-radius:999px;border:1px solid hsl(150 40% 40% / 0.4);background:hsl(150 40% 30% / 0.12);margin-bottom:26px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.12em;color:var(--primary);text-transform:uppercase;">The differentiator</span>
+        </div>
+        <h2 style="font-size:clamp(2.2rem,4vw,3.4rem);font-weight:600;letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;">Your AI. Your machine.<br><span style="color:var(--primary);">Nobody else's.</span></h2>
+        <p style="font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--text-muted);line-height:1.6;margin:0;">No accounts. No cloud. No telemetry. The models run locally, the data stays put, and you can pull the network cable and it still works.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;">
+          <div style="width:44px;height:44px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"></path></svg></div>
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 7px;">On-device LLM</h3>
+          <p style="font-size:13.5px;color:var(--text-muted);line-height:1.55;margin:0;">Classification and coaching run through <span style="color:var(--text);">Ollama</span> on your hardware — Llama, Qwen, Phi, Mistral. Swap models in one click.</p>
+        </div>
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;">
+          <div style="width:44px;height:44px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg></div>
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 7px;">On-device voice</h3>
+          <p style="font-size:13.5px;color:var(--text-muted);line-height:1.55;margin:0;">Voice capture is transcribed by <span style="color:var(--text);">Whisper</span> locally. Your microphone never streams to anyone.</p>
+        </div>
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;">
+          <div style="width:44px;height:44px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path><circle cx="12" cy="16" r="1"></circle></svg></div>
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 7px;">Keychain-encrypted</h3>
+          <p style="font-size:13.5px;color:var(--text-muted);line-height:1.55;margin:0;">Tasks, notes, and activity sit encrypted at rest in the OS keychain. Your data, your keys.</p>
+        </div>
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;">
+          <div style="width:44px;height:44px;border-radius:11px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle><path d="m2 2 20 20"></path></svg></div>
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 7px;">Zero telemetry</h3>
+          <p style="font-size:13.5px;color:var(--text-muted);line-height:1.55;margin:0;">No analytics SDKs, no crash pings, no "anonymous usage." There's nothing phoning home to opt out of.</p>
+        </div>
+      </div>
+      <div data-reveal style="margin-top:20px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-subtle);flex-wrap:wrap;text-align:center;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path><path d="m2 2 20 20" stroke="var(--danger)"></path></svg>
+        Works fully offline. Pull the cable — focus tracking, capture, and coaching keep running.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section id="how" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:120px 24px;">
+    <div data-reveal style="text-align:center;max-width:40ch;margin:0 auto 64px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// HOW IT WORKS</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">Four moves. One quiet loop.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;">
+      <div data-reveal style="position:relative;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--primary);margin-bottom:16px;letter-spacing:0.1em;">01</div>
+        <div style="width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Capture</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Dump the chaos by voice or text. AI turns it into clean tasks with deadlines.</p>
+      </div>
+      <div data-reveal style="position:relative;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--primary);margin-bottom:16px;letter-spacing:0.1em;">02</div>
+        <div style="width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Lock in</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Start a focus session. Pick the task, set the soundscape, go deep.</p>
+      </div>
+      <div data-reveal style="position:relative;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--primary);margin-bottom:16px;letter-spacing:0.1em;">03</div>
+        <div style="width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Get nudged</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Drift, and the Guardian catches it — with grace timers, not nag spam.</p>
+      </div>
+      <div data-reveal style="position:relative;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--primary);margin-bottom:16px;letter-spacing:0.1em;">04</div>
+        <div style="width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+        <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Review with your coach</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">End the day with a wrap and a coach's take. Tomorrow starts planned.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== COACH PERSONALITIES ===================== -->
+  <section style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
+    <div style="max-width:1240px;margin:0 auto;padding:120px 24px;">
+      <div data-reveal style="text-align:center;max-width:44ch;margin:0 auto 56px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// PICK YOUR COACH</div>
+        <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">Accountability, in a voice you'll listen to.</h2>
+        <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">Same signals, three very different deliveries. Switch any time.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+        <div data-reveal class="lk-coach" style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .25s,box-shadow .25s;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:hsl(150 6% 70% / 0.14);color:var(--coach-dark);display:flex;align-items:center;justify-content:center;font-size:20px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 15s1.5 2 4 2 4-2 4-2"></path><path d="M9 9h.01M15 9h.01"></path></svg></div>
+            <div><div style="font-size:16px;font-weight:600;">Dark Humor</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-subtle);">Roasts you</div></div>
+          </div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text);margin:0 0 18px;font-style:italic;">"You opened the doc, stared at it, and alt-tabbed to Reddit. A masterclass in starting. Now finish a sentence."</p>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Sharp, funny, a little mean. For people who flinch at sincerity but respond to a good roast.</div>
+        </div>
+        <div data-reveal class="lk-coach" style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .25s,box-shadow .25s;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:hsl(8 55% 60% / 0.14);color:var(--coach-drill);display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6-6 6 6M12 3v12"></path><path d="M5 21h14"></path></svg></div>
+            <div><div style="font-size:16px;font-weight:600;">Drill Sergeant</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-subtle);">Strict discipline</div></div>
+          </div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text);margin:0 0 18px;font-style:italic;">"No negotiation. The block is 50 minutes. You've done 12. Phone in the drawer. Eyes on the task. Begin."</p>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Zero excuses, all structure. For when you need a wall, not a hug.</div>
+        </div>
+        <div data-reveal class="lk-coach" style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .25s,box-shadow .25s;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:hsl(150 40% 50% / 0.14);color:var(--primary);display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg></div>
+            <div><div style="font-size:16px;font-weight:600;">Supportive Friend</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-subtle);">Gentle accountability</div></div>
+          </div>
+          <p style="font-size:15px;line-height:1.6;color:var(--text);margin:0 0 18px;font-style:italic;">"Hey — slow morning, that's okay. You still shipped two things. Let's protect the next hour and call it a win."</p>
+          <div style="font-size:13px;color:var(--text-muted);line-height:1.55;">Warm, steady, encouraging. For the days the inner critic is already loud enough.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON ===================== -->
+  <section style="position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:120px 24px;">
+    <div data-reveal style="text-align:center;max-width:40ch;margin:0 auto 56px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// THE DIFFERENCE</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">LockinRa vs. the cloud tab.</h2>
+    </div>
+    <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;">
+        <div style="padding:18px 24px;border-bottom:1px solid var(--border);"></div>
+        <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;background:var(--compare-head);"><div style="display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;"><span style="width:20px;height:20px;border-radius:6px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>LockinRa</div></div>
+        <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;font-weight:500;font-size:14px;color:var(--text-muted);">Typical cloud app</div>
+
+        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Where AI runs</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">On your device</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Their servers</div>
+
+        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Distraction detection</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13px;color:var(--text-subtle);">Blunt blocklist</div>
+
+        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Account required</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">None</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Sign up + sync</div>
+
+        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Telemetry</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">Zero</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Tracked</div>
+
+        <div style="padding:16px 24px;font-size:14.5px;">Works offline</div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+        <div style="padding:16px 20px;border-left:1px solid var(--border);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-subtle)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
+    <div style="max-width:1240px;margin:0 auto;padding:120px 24px;">
+      <div data-reveal style="max-width:42ch;margin:0 0 48px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// FROM THE BETA</div>
+        <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">People who stopped losing afternoons.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
+          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"The Guardian caught me three sentences into a YouTube hole and said it knew I was supposed to be writing tests. It was right. I closed the tab and finished the PR."</p>
+          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">DK</div>
+            <div><div style="font-size:13.5px;font-weight:600;">Dev Kapoor</div><div style="font-size:12px;color:var(--text-subtle);">Backend engineer</div></div>
+          </div>
+        </div>
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
+          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"I run Drill Sergeant during exam season. Brutal, but my deep-work streak hit 19 days. The fact that none of my screen data leaves my laptop is the only reason I trusted it on at all."</p>
+          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">MR</div>
+            <div><div style="font-size:13.5px;font-weight:600;">Maya Reuben</div><div style="font-size:12px;color:var(--text-subtle);">CS student, IIIT</div></div>
+          </div>
+        </div>
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
+          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"The morning briefing reads like a chief of staff who actually knows my week. It told me to front-load the investor deck before 11 because I always drift after lunch. Annoyingly accurate."</p>
+          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
+            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">TÖ</div>
+            <div><div style="font-size:13.5px;font-weight:600;">Tomas Öberg</div><div style="font-size:12px;color:var(--text-subtle);">Founder, 2-person startup</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section id="pricing" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:120px 24px;">
+    <div data-reveal style="text-align:center;max-width:42ch;margin:0 auto 56px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// PRICING</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">Free while it's in beta.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">No card, no account, no trial clock. Download it and lock in.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px;max-width:880px;margin:0 auto;">
+      <div data-reveal style="position:relative;background:var(--soft-grad);border:1px solid var(--soft-border);border-radius:20px;padding:38px;overflow:hidden;box-shadow:0 0 50px hsl(150 55% 30% / 0.14);">
+        <div style="position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,hsl(150 55% 40% / 0.18),transparent 70%);filter:blur(40px);"></div>
+        <div style="position:relative;">
+          <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;background:hsl(150 40% 40% / 0.2);border:1px solid hsl(150 40% 45% / 0.4);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--primary);margin-bottom:22px;">OPEN BETA</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;"><span style="font-size:48px;font-weight:600;letter-spacing:-0.03em;">$0</span><span style="font-size:15px;color:var(--text-muted);">/ forever in beta</span></div>
+          <p style="font-size:14.5px;color:var(--text-muted);line-height:1.6;margin:0 0 26px;max-width:38ch;">Every feature, unlocked. Local AI, focus guardian, coach, copilot, capture, analytics — the whole workspace.</p>
+          <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.0.0/LockinRa-1.0.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.4);transition:background .15s;margin-bottom:24px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+            Download for Windows
+          </a>
+          <div style="display:flex;flex-direction:column;gap:11px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>All AI runs locally — no API keys needed</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>One-click Ollama + Whisper setup</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Your data never leaves the device</div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;">
+        <div style="font-size:14px;font-weight:600;color:var(--text-muted);margin-bottom:22px;font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">PRO · LATER</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;"><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;color:var(--text-muted);">One-time</span></div>
+        <p style="font-size:14px;color:var(--text-subtle);line-height:1.6;margin:0 0 26px;">When beta ends, you keep everything you have. Pro adds the heavier stuff — memory replay, OCR recall, P2P co-focus — for a single one-time price. Never a subscription.</p>
+        <div style="margin-top:auto;display:flex;flex-direction:column;gap:11px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>Personal memory engine + OCR recall</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>Timeline replay of your work</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>P2P accountability sessions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" style="position:relative;z-index:1;max-width:820px;margin:0 auto;padding:60px 24px 120px;">
+    <div data-reveal style="text-align:center;margin:0 auto 48px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// FAQ</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">The honest answers.</h2>
+    </div>
+    <div data-reveal style="display:flex;flex-direction:column;gap:10px;">
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Is my data really private?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Yes. There are no accounts, no servers, and no telemetry. Your tasks, notes, and screen activity stay on your machine, encrypted at rest in the OS keychain. The AI models run locally — nothing is transmitted for us to even receive.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Does it need an internet connection?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">No. Once the local models are installed, focus tracking, capture, coaching, and the copilot all work fully offline. Internet is only used if you opt into cloud integrations like Google Calendar or an optional API fallback.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Which AI models does it use?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Local LLMs through Ollama — Llama, Qwen, Phi, Gemma, or Mistral — and Whisper for voice. You can switch models, see RAM recommendations and accuracy stats, and install or delete them from inside the app. No terminal required.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Is there a Mac or Linux version?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Windows ships first. Linux and macOS builds are on the roadmap — the app is built on a cross-platform stack, so it's a question of polish and testing, not a rewrite. An Android companion and web dashboard are further out.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">What are the system requirements?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Windows 10/11, 8GB RAM for small models, 16GB recommended for the larger ones. A discrete GPU helps inference but isn't required — LockinRa picks a model that fits your hardware and tells you the trade-offs up front.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL CTA ===================== -->
+  <section id="download" style="position:relative;z-index:1;padding:0 24px 120px;">
+    <div data-reveal style="position:relative;max-width:1080px;margin:0 auto;border-radius:28px;overflow:hidden;border:1px solid hsl(150 35% 28%);background:linear-gradient(150deg,hsl(150 28% 14%),hsl(150 16% 8%));padding:80px 40px;text-align:center;">
+      <div style="position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse at center,hsl(150 55% 40% / 0.28),transparent 65%);filter:blur(60px);pointer-events:none;"></div>
+      <div style="position:relative;">
+        <div style="width:64px;height:64px;border-radius:18px;margin:0 auto 28px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px hsl(150 60% 20% / 0.5),inset 0 1px 0 hsl(0 0% 100% / 0.18);"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+        <h2 style="font-size:clamp(2.2rem,4.2vw,3.6rem);font-weight:600;letter-spacing:-0.03em;line-height:1.05;margin:0 0 18px;color:hsl(150 8% 96%);">Stop fighting your focus.<br>Lock in instead.</h2>
+        <p style="font-size:clamp(1.05rem,1.6vw,1.2rem);color:hsl(150 6% 78%);line-height:1.55;margin:0 auto 34px;max-width:46ch;">Free in beta. Runs on your machine. No account, nothing to leak. Download and start your first deep session in under five minutes.</p>
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.0.0/LockinRa-1.0.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:10px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:17px;padding:16px 32px;border-radius:13px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 35% / 0.5),0 18px 40px hsl(150 55% 20% / 0.45);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+          Download for Windows
+        </a>
+        <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:hsl(150 6% 62%);letter-spacing:0.04em;">v1.0.0 · Windows 10/11 · ~181 MB</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
+    <div style="max-width:1240px;margin:0 auto;padding:56px 24px 40px;">
+      <div style="display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:44px;">
+        <div style="max-width:300px;">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px;">
+            <span style="width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 hsl(0 0% 100% / 0.16);"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            <span style="font-weight:600;font-size:17px;letter-spacing:-0.02em;">Lockin<span style="color:var(--primary);">Ra</span></span>
+          </div>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">A local-first AI productivity OS for deep work. Your tasks, your machine, your focus.</p>
+        </div>
+        <div style="display:flex;gap:64px;flex-wrap:wrap;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--text-subtle);text-transform:uppercase;margin-bottom:16px;">Product</div>
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <a href="#features" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Features</a>
+              <a href="#privacy" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Privacy</a>
+              <a href="#pricing" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Pricing</a>
+              <a href="#faq" style="font-size:14px;color:var(--text-muted);text-decoration:none;">FAQ</a>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--text-subtle);text-transform:uppercase;margin-bottom:16px;">Connect</div>
+            <div style="display:flex;gap:12px;">
+              <a href="https://github.com/0xabhilok/lockinra-site/releases" target="_blank" rel="noopener" aria-label="GitHub" style="width:38px;height:38px;border-radius:10px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--text-muted);text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.5s-1.1-.3-3.5 1.3a12 12 0 0 0-6 0C6.6 2.7 5.5 3 5.5 3a4.7 4.7 0 0 0-.1 3.5A5 5 0 0 0 4 10c0 5 3 6.2 6 6.5a3.4 3.4 0 0 0-1 2.6V23"></path></svg></a>
+              <a href="#top" aria-label="X" style="width:38px;height:38px;border-radius:10px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--text-muted);text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4 4 20"></path></svg></a>
+              <a href="mailto:abhilokreddydev@gmail.com" aria-label="Email" style="width:38px;height:38px;border-radius:10px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--text-muted);text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 7 10 6 10-6"></path></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--border);">
+        <div style="font-size:13px;color:var(--text-subtle);">© 2026 LockinRa. Made for deep work. · <a href="./privacy.html" style="color:var(--text-muted);text-decoration:none;">Privacy</a> · <a href="./support.html" style="color:var(--text-muted);text-decoration:none;">Support</a></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-subtle);letter-spacing:0.06em;">&gt;_ local-first · privacy-first</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { theme: 'dark' };
+
+  darkTokens = {
+    '--bg':'hsl(150 3% 6%)','--bg-subtle':'hsl(150 3% 9%)','--surface':'hsl(150 3% 11%)','--surface-elev':'hsl(150 3% 14%)','--surface-overlay':'hsl(150 3% 17%)','--text':'hsl(150 4% 95%)','--text-muted':'hsl(150 3% 67%)','--text-subtle':'hsl(150 3% 48%)','--border':'hsl(150 3% 19%)','--border-strong':'hsl(150 4% 30%)','--primary':'hsl(150 38% 52%)','--primary-hover':'hsl(150 42% 58%)','--primary-active':'hsl(150 46% 62%)','--primary-fg':'hsl(150 40% 8%)','--primary-subtle':'hsl(150 20% 17%)','--primary-subtle-fg':'hsl(150 30% 80%)','--danger':'hsl(0 65% 60%)','--warning':'hsl(38 70% 58%)','--success':'hsl(150 50% 50%)','--coach-dark':'hsl(150 6% 70%)','--coach-drill':'hsl(8 55% 62%)','--hairline':'hsl(150 3% 15%)','--nav-bg':'hsl(150 4% 6% / 0.72)','--chip-bg':'hsl(150 3% 10% / 0.6)','--band':'hsl(150 4% 7%)','--soft-grad':'linear-gradient(135deg,hsl(150 22% 13%),hsl(150 14% 9%))','--soft-border':'hsl(150 30% 24%)','--tint':'hsl(150 22% 9%)','--compare-head':'hsl(150 22% 11%)','--avatar-bg':'hsl(150 30% 22%)','--ring-track':'hsl(150 3% 20%)'
+  };
+  lightTokens = {
+    '--bg':'hsl(150 12% 98%)','--bg-subtle':'hsl(150 10% 96%)','--surface':'#ffffff','--surface-elev':'#ffffff','--surface-overlay':'hsl(150 5% 99%)','--text':'hsl(150 14% 14%)','--text-muted':'hsl(150 9% 38%)','--text-subtle':'hsl(150 6% 55%)','--border':'hsl(150 8% 88%)','--border-strong':'hsl(150 10% 75%)','--primary':'hsl(150 32% 34%)','--primary-hover':'hsl(150 34% 30%)','--primary-active':'hsl(150 36% 26%)','--primary-fg':'#ffffff','--primary-subtle':'hsl(150 22% 91%)','--primary-subtle-fg':'hsl(150 35% 22%)','--danger':'hsl(0 65% 47%)','--warning':'hsl(38 80% 42%)','--success':'hsl(150 50% 32%)','--coach-dark':'hsl(150 6% 30%)','--coach-drill':'hsl(8 50% 36%)','--hairline':'hsl(150 8% 90%)','--nav-bg':'hsl(150 30% 99% / 0.82)','--chip-bg':'hsl(150 20% 97%)','--band':'hsl(150 16% 96%)','--soft-grad':'linear-gradient(135deg,hsl(150 38% 93%),hsl(150 28% 97%))','--soft-border':'hsl(150 24% 80%)','--tint':'hsl(150 35% 95%)','--compare-head':'hsl(150 30% 95%)','--avatar-bg':'hsl(150 30% 88%)','--ring-track':'hsl(150 8% 88%)'
+  };
+
+  applyTokens(theme) {
+    const root = document.getElementById('lk-root');
+    if (!root) return;
+    const t = theme === 'light' ? this.lightTokens : this.darkTokens;
+    for (const k in t) root.style.setProperty(k, t[k]);
+    root.style.setProperty('color-scheme', theme);
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  }
+
+  componentDidMount() {
+    let saved = 'dark';
+    try { saved = localStorage.getItem('lk-theme') || 'dark'; } catch (e) {}
+    this.setState({ theme: saved });
+    this.applyTokens(saved);
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const setup = () => {
+      const els = document.querySelectorAll('[data-reveal]');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      const counts = new Map();
+      els.forEach((el) => {
+        const p = el.parentElement;
+        const i = counts.get(p) || 0; counts.set(p, i + 1);
+        const delay = Math.min(i, 6) * 85;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(26px) scale(.99)';
+        el.style.transition = 'opacity .8s cubic-bezier(.16,1,.3,1) ' + delay + 'ms, transform .8s cubic-bezier(.16,1,.3,1) ' + delay + 'ms';
+        io.observe(el);
+      });
+    };
+    if (reduce) {
+      document.querySelectorAll('[data-reveal]').forEach((el) => { el.style.opacity='1'; });
+    } else {
+      setTimeout(setup, 2300);
+    }
+
+    // Build the habit contribution heatmap (14 cols x 5 rows)
+    const grid = document.querySelector('[data-heatmap]');
+    if (grid && grid.children.length === 0) {
+      const levels = ['hsl(150 3% 16%)','hsl(150 30% 26%)','hsl(150 38% 38%)','hsl(150 42% 50%)','hsl(150 48% 60%)'];
+      for (let i = 0; i < 70; i++) {
+        const cell = document.createElement('span');
+        const seed = (Math.sin(i * 12.9898) * 43758.5453) % 1;
+        const r = Math.abs(seed);
+        const lvl = r < 0.34 ? 0 : r < 0.55 ? 1 : r < 0.74 ? 2 : r < 0.9 ? 3 : 4;
+        cell.style.cssText = 'aspect-ratio:1;border-radius:3px;background:' + levels[lvl] + ';';
+        grid.appendChild(cell);
+      }
+    }
+
+    // Card hover lift
+    const hoverCards = document.querySelectorAll('.lk-coach');
+    hoverCards.forEach((c) => {
+      c.addEventListener('mouseenter', () => {
+        c.style.transform = 'translateY(-4px)';
+        c.style.borderColor = 'hsl(150 30% 30%)';
+        c.style.boxShadow = '0 0 40px hsl(150 50% 30% / 0.16)';
+      });
+      c.addEventListener('mouseleave', () => {
+        c.style.transform = 'translateY(0)';
+        c.style.borderColor = '';
+        c.style.boxShadow = '';
+      });
+    });
+
+    // Nav link hover
+    document.querySelectorAll('.lk-navlinks a').forEach((a) => {
+      a.addEventListener('mouseenter', () => { a.style.color = 'var(--text)'; });
+      a.addEventListener('mouseleave', () => { a.style.color = 'var(--text-muted)'; });
+    });
+
+    // Magnetic pull on primary CTAs
+    if (!reduce) {
+      document.querySelectorAll('.lk-magnet').forEach((btn) => {
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = (e.clientX - r.left - r.width / 2) * 0.18;
+          const y = (e.clientY - r.top - r.height / 2) * 0.3;
+          btn.style.transform = 'translate(' + x + 'px,' + (y - 2) + 'px)';
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
+      });
+    }
+
+    // Scroll progress bar
+    const bar = document.getElementById('lk-progress');
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = (h.scrollHeight - h.clientHeight) || 1;
+      const pct = Math.min(100, (h.scrollTop || window.pageYOffset) / max * 100);
+      if (bar) bar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Count-up stat numbers
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target; cio.unobserve(el);
+        const target = parseFloat(el.getAttribute('data-count')) || 0;
+        const dur = 1200, t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased).toString();
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach((c) => cio.observe(c));
+
+    // Hero mockup 3D mouse tilt
+    if (!reduce) {
+      const header = document.getElementById('top');
+      const tilt = document.querySelector('[data-tilt]');
+      if (header && tilt) {
+        header.addEventListener('mousemove', (e) => {
+          const r = header.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          tilt.style.transform = 'perspective(1500px) rotateY(' + (px * 5).toFixed(2) + 'deg) rotateX(' + (-py * 4).toFixed(2) + 'deg)';
+        });
+        header.addEventListener('mouseleave', () => { tilt.style.transform = 'perspective(1500px) rotateY(0deg) rotateX(0deg)'; });
+      }
+    }
+  }
+
+  renderVals() {
+    const theme = this.state.theme;
+    return {
+      isDark: theme === 'dark',
+      isLight: theme === 'light',
+      noop: () => {},
+      toggleTheme: () => {
+        const next = this.state.theme === 'dark' ? 'light' : 'dark';
+        this.setState({ theme: next });
+        this.applyTokens(next);
+        try { localStorage.setItem('lk-theme', next); } catch (e) {}
+      },
+      skipIntro: () => {
+        const intro = document.getElementById('lk-intro');
+        if (intro) { intro.style.transition = 'opacity .4s ease'; intro.style.opacity = '0'; setTimeout(() => { intro.style.visibility = 'hidden'; intro.style.pointerEvents = 'none'; }, 400); }
+        document.querySelectorAll('[data-reveal]').forEach((el) => { el.style.opacity='1'; el.style.transform='none'; });
+      },
+    };
+  }
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LockinRa for Linux — Download (Beta)</title>
+  <meta name="description" content="Download LockinRa for Linux — a portable AppImage of the local-first focus & productivity workspace. Beta: most features work; desktop distraction detection is limited on Wayland." />
+  <style>
+    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --primary:#4fae7e; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
+    a { color:#86d3a6; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
+    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:56px 22px; text-align:center; }
+    .mark { width:84px; height:84px; border-radius:20px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px; }
+    .mark svg { width:46px; height:46px; }
+    h1 { margin:0; font-size:34px; letter-spacing:-.5px; }
+    .tag { margin:8px 0 0; color:rgba(255,255,255,.85); font-size:18px; }
+    .pill { display:inline-block; margin-top:16px; padding:5px 14px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+    h2 { margin:40px 0 10px; font-size:21px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
+    .muted { color:var(--muted); }
+    .dl { display:inline-flex; align-items:center; gap:10px; margin-top:6px; padding:15px 28px; border-radius:12px; background:var(--primary); color:#06120c; text-decoration:none; font-weight:700; font-size:17px; box-shadow:0 14px 34px rgba(40,120,80,.35); }
+    .dl svg { width:19px; height:19px; }
+    .meta { margin-top:12px; font-size:13px; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.03em; }
+    ul { padding-left:20px; }
+    li { margin:5px 0; }
+    .grid { display:grid; gap:14px; }
+    @media (min-width:620px){ .grid.two { grid-template-columns:1fr 1fr; } }
+    pre { background:#0b110d; border:1px solid var(--line); border-radius:10px; padding:14px 16px; overflow:auto; font-size:13.5px; }
+    code { background:#0c130f; padding:2px 6px; border-radius:6px; font-size:13.5px; }
+    pre code { background:none; padding:0; }
+    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
+    .back { display:inline-block; margin-top:22px; color:var(--muted); text-decoration:none; font-size:14px; }
+  </style>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header>
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
+    </div>
+    <h1>LockinRa for Linux</h1>
+    <p class="tag">The local-first focus workspace — now as a portable AppImage.</p>
+    <span class="pill">Beta</span>
+  </header>
+
+  <div class="wrap">
+    <h2>Download</h2>
+    <div class="card">
+      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.1.0/LockinRa-1.1.0-linux-x86_64.AppImage" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+        Download AppImage
+      </a>
+      <div class="meta">v1.1.0 · Linux x86_64 · ~196 MB · single portable file, no installer</div>
+      <p class="muted" style="margin-bottom:0;">One self-contained file — nothing is installed system-wide, and you can delete it to uninstall. Your data lives in <code>~/.config/LockinRa</code>.</p>
+    </div>
+
+    <h2>Run it</h2>
+    <div class="card">
+      <p>After downloading, make it executable and launch it:</p>
+      <pre><code>chmod +x LockinRa-1.1.0-linux-x86_64.AppImage
+./LockinRa-1.1.0-linux-x86_64.AppImage</code></pre>
+      <p class="muted">Or right-click the file → <em>Properties → Permissions → Allow executing as program</em>, then double-click it.</p>
+      <p style="margin-bottom:0;"><strong>Hit a FUSE error?</strong> Some distros don't ship FUSE 2 by default. Either install it —
+        <code>sudo apt install libfuse2</code> (Debian/Ubuntu) or <code>sudo dnf install fuse</code> (Fedora) —
+        or run it without FUSE:</p>
+      <pre style="margin-bottom:0;"><code>./LockinRa-1.1.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
+    </div>
+
+    <h2>What to expect on Linux</h2>
+    <p class="muted" style="margin-top:6px;">This is an early Linux build. Almost everything works; one feature is limited depending on your display server.</p>
+    <div class="grid two">
+      <div class="card">
+        <strong style="color:var(--primary);">Works</strong>
+        <ul style="margin-bottom:0;">
+          <li>Tasks, voice &amp; text capture</li>
+          <li>Focus sessions, Pomodoro, soundscapes</li>
+          <li>Notes, habits, analytics, calendar</li>
+          <li>Local AI (Ollama) &amp; on-device voice (Whisper)</li>
+          <li>Browser-extension web distraction detection</li>
+          <li>Coach &amp; Copilot, integrations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong style="color:#e2b04a;">Limited</strong>
+        <ul style="margin-bottom:0;">
+          <li><strong>Desktop-app distraction detection</strong> works on X11 but is unreliable on <strong>Wayland</strong> (the default on many distros) — the web/extension path still covers browser distractions.</li>
+          <li>The OS media-session mini-player and the installed-apps Smart Launcher list are Windows-only.</li>
+          <li>No built-in auto-update yet — re-download to upgrade.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>System requirements</h2>
+    <div class="card">
+      <ul style="margin:0;">
+        <li>A 64-bit Linux desktop (glibc-based, e.g. Ubuntu 22.04+, Fedora, Debian 12+).</li>
+        <li>8&nbsp;GB RAM for small local models, 16&nbsp;GB recommended for larger ones.</li>
+        <li>A discrete GPU helps AI inference but isn't required.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:26px;">Prefer Windows? <a href="index.html#download">Download for Windows</a> or get it on the
+      <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">Microsoft Store</a>.
+      Found a bug on Linux? <a href="mailto:abhilokreddydev@gmail.com">Email us</a> — Linux feedback genuinely helps.</p>
+
+    <a class="back" href="index.html">← Back to lockinra.app</a>
+
+    <footer>
+      © <span id="y"></span> LockinRa. <a href="./privacy.html">Privacy Policy</a> · <a href="./support.html">Support</a>
+      <script>document.getElementById('y').textContent = '2026';</script>
+    </footer>
+  </div>
+</body>
+</html>

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="google-site-verification" content="ynwm1QZAcKhX5B0qMXfZrve8gwUPjJP5s4UAPTmSyo4" />
-<title>LockinRa — Local-First AI Focus &amp; Productivity Workspace for Deep Work</title>
-<meta name="description" content="LockinRa is a privacy-first, local-first AI workspace for deep work. An AI focus guardian that catches distractions, smart site blocking, task capture by voice or text, screen-time analytics, habit tracking, notes &amp; whiteboard, and an on-device AI coach — all running on your machine. Free for Windows 10/11 (Microsoft Store), with a Linux build in beta.">
-<meta name="keywords" content="focus app, deep work app, local-first AI, privacy-first productivity, distraction blocker, site blocker, ADHD focus app, offline AI assistant, Ollama, Whisper dictation, screen time tracker, habit tracker, pomodoro timer, AI productivity, on-device AI, task manager">
+<title>LockinRa — Local-First AI Productivity App with a Local LLM &amp; Distraction Blocker</title>
+<meta name="description" content="LockinRa is a local-first AI productivity app for Windows, powered by a local LLM (via Ollama). An AI focus guardian that blocks distracting websites and apps, task capture by voice or text, screen-time analytics, habit tracking, notes &amp; whiteboard, and a private on-device AI coach — all running on your machine. Free on the Microsoft Store, with a Linux build in beta.">
+<meta name="keywords" content="local LLM productivity app, AI productivity app, local-first AI, offline AI assistant, block distractions, distraction blocker, website blocker, focus app, deep work app, privacy-first productivity, Ollama app, on-device AI, ADHD focus app, Whisper dictation, screen time tracker, habit tracker, pomodoro timer, task manager">
 <meta name="author" content="LockinRa">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="theme-color" content="#0f120f">
@@ -18,7 +18,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="LockinRa">
 <meta property="og:title" content="LockinRa — Lock in. The rest goes quiet.">
-<meta property="og:description" content="A privacy-first AI workspace for deep work. AI focus guardian, smart site blocking, on-device coach &amp; copilot — runs entirely on your machine. No account, no cloud, no telemetry.">
+<meta property="og:description" content="A local-first AI productivity app powered by a local LLM. AI focus guardian that blocks distractions, smart site blocking, on-device coach &amp; copilot — runs entirely on your machine. No account, no cloud, no telemetry.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockinra.xyz/">
 <meta property="og:image" content="https://lockinra.xyz/thumbnail.webp">
@@ -27,7 +27,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LockinRa — Lock in. The rest goes quiet.">
-<meta name="twitter:description" content="A privacy-first, local-first AI workspace for deep work. Runs entirely on your machine — no account, no cloud, no telemetry.">
+<meta name="twitter:description" content="A local-first AI productivity app with a local LLM. Blocks distractions, guards deep focus, runs entirely on your machine — no account, no cloud, no telemetry.">
 <meta name="twitter:image" content="https://lockinra.xyz/thumbnail.webp">
 <meta name="twitter:image:alt" content="LockinRa — local-first AI focus workspace">
 <!-- Structured data: SoftwareApplication -->
@@ -42,7 +42,7 @@
   "url": "https://lockinra.xyz/",
   "downloadUrl": "https://github.com/0xabhilok/lockinra-site/releases",
   "image": "https://lockinra.xyz/icon-512.png",
-  "description": "LockinRa is a privacy-first, local-first AI workspace for deep work: an AI focus guardian, smart site blocking, voice and text task capture, screen-time analytics, habit tracking, notes and whiteboard, and an on-device AI coach and copilot. Everything runs on your machine — no account, no cloud, no telemetry.",
+  "description": "LockinRa is a local-first AI productivity app for Windows, powered by a local LLM (via Ollama): an AI focus guardian that blocks distracting websites and apps, smart site blocking, voice and text task capture, screen-time analytics, habit tracking, notes and whiteboard, and a private on-device AI coach and copilot. Everything runs on your machine — no account, no cloud, no telemetry.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "publisher": { "@type": "Organization", "name": "LockinRa", "url": "https://lockinra.xyz/" }
 }
@@ -121,21 +121,87 @@
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     html { scroll-behavior: auto; }
   }
+
+  /* ---- global guards against horizontal bleed on small screens ---- */
+  html, body { max-width: 100%; overflow-x: hidden; }
+  img, svg { max-width: 100%; }
+  #lk-intro { overflow: hidden; }
+
+  /* ---- mobile nav: hamburger + slide-down menu (dormant on desktop) ---- */
+  .lk-burger { display: none; width: 42px; height: 42px; border-radius: 9px; border: 1px solid var(--border); background: transparent; color: var(--text); align-items: center; justify-content: center; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
+  .lk-burger span { display: block; width: 19px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .2s ease; }
+  .lk-burger span + span { margin-top: 4px; }
+  html.lk-menu-open .lk-burger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  html.lk-menu-open .lk-burger span:nth-child(2) { opacity: 0; }
+  html.lk-menu-open .lk-burger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .lk-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100vh - 62px); overflow-y: auto; padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--nav-bg); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border-bottom: 1px solid var(--hairline); box-shadow: 0 26px 46px hsl(150 30% 4% / 0.55); }
+  .lk-menu .lk-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 15px 4px; font-size: 16px; font-weight: 500; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--hairline); }
+  .lk-menu .lk-menu-link:active { color: var(--primary); }
+
+  /* NOTE: the React runtime re-serialises every inline `style` with spaces
+     (`repeat(3, 1fr)`, `padding: 120px 24px`). So responsive selectors match
+     on colon/comma-free value fragments — or list both spacings — to stay
+     robust after hydration. Classes (.lk-*) are used wherever practical. */
   @media (max-width: 920px) {
-    [style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
-    [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"],
+    [style*="1.5fr 1fr 1fr 1fr"] { grid-template-columns: repeat(2, 1fr) !important; }
   }
-  @media (max-width: 760px) {
+
+  @media (max-width: 768px) {
+    /* collapse every multi-column grid down to a single readable column */
+    [style*="repeat(2,1fr)"], [style*="repeat(2, 1fr)"],
+    [style*="repeat(3,1fr)"], [style*="repeat(3, 1fr)"],
+    [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"],
+    [style*="1.5fr 1fr 1fr 1fr"],
+    [style*="1.15fr 1fr"],
+    [style*="1.1fr 0.9fr"],
+    .lk-bento { grid-template-columns: 1fr !important; }
+    /* the features bento is the only grid with explicitly-placed children;
+       React serialises those to the `grid-area` shorthand, so a substring
+       selector can't catch them — reset every child's placement by class,
+       otherwise `grid-column:3` spawns implicit columns and shoves cards
+       off-screen. */
+    .lk-bento > * { grid-column: auto !important; grid-row: auto !important; grid-area: auto !important; }
+
+    /* nav → burger */
     .lk-navlinks { display: none !important; }
-    [style*="grid-template-columns:repeat(3,1fr)"],
-    [style*="grid-template-columns:repeat(2,1fr)"],
-    [style*="grid-template-columns:repeat(4,1fr)"],
-    [style*="grid-template-columns:1.5fr 1fr 1fr 1fr"],
-    [style*="grid-template-columns:1.15fr 1fr"],
-    [style*="grid-template-columns:1.1fr 0.9fr"] { grid-template-columns: 1fr !important; }
-    [style*="grid-column:span 2"], [style*="grid-column:3"] { grid-column: auto !important; }
-    [style*="grid-row:span 2"] { grid-row: auto !important; }
-    section[style*="padding:120px"] { padding-top: 80px !important; padding-bottom: 80px !important; }
+    .lk-nav-cta { display: none !important; }
+    .lk-burger { display: inline-flex !important; }
+    html.lk-menu-open .lk-menu { display: block !important; }
+
+    /* vertical rhythm — matches both `120px 24px` and `24px 120px` paddings */
+    [style*="120px 24px"], [style*="24px 120px"] { padding-top: 72px !important; padding-bottom: 72px !important; }
+    #top { padding-top: 60px !important; }
+    /* final CTA card: relax its generous desktop padding */
+    [style*="80px 40px"] { padding: 56px 26px !important; }
+
+    /* stat band: swap vertical rules for stacked, centered cards */
+    [style*="1.5fr 1fr 1fr 1fr"] > div {
+      padding: 24px 6px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--border) !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+    [style*="1.5fr 1fr 1fr 1fr"] > div:last-child { border-bottom: none !important; }
+
+    /* hero mockup: reserve room for the absolutely-positioned nudge popup */
+    .lk-mock-feed { min-height: 320px !important; }
+
+    /* comparison table stays 3-up but tightens to fit the viewport */
+    .lk-compare > div { padding: 14px 10px !important; font-size: 13px !important; }
+
+    /* primary hero CTAs go full-width for comfortable tapping */
+    .lk-hero-cta > a { flex: 1 1 100% !important; justify-content: center !important; }
+  }
+
+  @media (max-width: 480px) {
+    [style*="120px 24px"], [style*="24px 120px"] { padding-top: 56px !important; padding-bottom: 56px !important; }
+    [style*="80px 40px"] { padding: 44px 20px !important; }
+    .lk-compare > div { padding: 12px 6px !important; font-size: 12px !important; }
+    .lk-compare svg { width: 15px !important; height: 15px !important; }
+    .lk-mock-status { display: none !important; }
+    #lk-intro-sub { white-space: normal !important; letter-spacing: 0.18em !important; font-size: 10px !important; text-align: center; padding: 0 24px; }
   }
 </style>
 </helmet>
@@ -150,7 +216,7 @@
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:lk-rise .8s cubic-bezier(.16,1,.3,1) 1.1s both;">
         <div style="font-size:34px;font-weight:600;letter-spacing:-0.03em;">Lockin<span style="color:var(--primary);">Ra</span></div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:var(--text-subtle);overflow:hidden;white-space:nowrap;">Lock in. The rest goes quiet.</div>
+        <div id="lk-intro-sub" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.32em;text-transform:uppercase;color:var(--text-subtle);overflow:hidden;white-space:nowrap;">Lock in. The rest goes quiet.</div>
       </div>
     </div>
     <div style="position:absolute;bottom:36px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--text-subtle);opacity:0;animation:lk-fadein .6s ease 2.2s both;">click to skip</div>
@@ -190,11 +256,31 @@
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           </sc-if>
         </button>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-win-x64.exe" download style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-win-x64.exe" download class="lk-nav-cta" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
           Download for Windows
         </a>
+        <button id="lk-burger" class="lk-burger" aria-label="Open menu" aria-expanded="false" aria-controls="lk-menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </div>
+    <!-- mobile slide-down menu -->
+    <div id="lk-menu" class="lk-menu">
+      <a class="lk-menu-link" href="#features">Features</a>
+      <a class="lk-menu-link" href="#privacy">Privacy</a>
+      <a class="lk-menu-link" href="#how">How it works</a>
+      <a class="lk-menu-link" href="#pricing">Pricing</a>
+      <a class="lk-menu-link" href="#faq">FAQ</a>
+      <a class="lk-menu-link" href="linux.html">Linux (beta)<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">BETA</span></a>
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15.5px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.35);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+        Download for Windows
+      </a>
+      <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;font-size:13.5px;font-weight:500;color:var(--text-muted);text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 23 23"><path fill="#f25022" d="M1 1h10v10H1z"></path><path fill="#7fba00" d="M12 1h10v10H12z"></path><path fill="#00a4ef" d="M1 12h10v10H1z"></path><path fill="#ffb900" d="M12 12h10v10H12z"></path></svg>
+        Also on the Microsoft Store
+      </a>
     </div>
   </nav>
 
@@ -206,7 +292,7 @@
     </div>
     <h1 data-reveal style="font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-0.035em;font-weight:600;margin:0 auto 26px;max-width:18ch;">Lock in. The rest <span style="background:linear-gradient(90deg,var(--primary),hsl(150 60% 68%),var(--primary));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lk-shimmer 4.5s linear infinite;">goes quiet.</span></h1>
     <p data-reveal style="font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.55;color:var(--text-muted);max-width:46ch;margin:0 auto 36px;">A privacy-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running <span style="color:var(--text);font-weight:500;">on your machine.</span></p>
-    <div data-reveal style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
+    <div data-reveal class="lk-hero-cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
       <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
         Download for Windows
@@ -242,7 +328,7 @@
             <span style="width:14px;height:14px;border-radius:4px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
             LockinRa — Deep Focus
           </div>
-          <div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--primary);"><span style="width:7px;height:7px;border-radius:50%;background:var(--primary);animation:lk-pulse 2s ease-in-out infinite;"></span>SESSION ACTIVE</div>
+          <div class="lk-mock-status" style="margin-left:auto;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--primary);"><span style="width:7px;height:7px;border-radius:50%;background:var(--primary);animation:lk-pulse 2s ease-in-out infinite;"></span>SESSION ACTIVE</div>
         </div>
         <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:0;min-height:340px;">
           <!-- focus session -->
@@ -282,7 +368,7 @@
             </div>
           </div>
           <!-- guardian feed -->
-          <div style="padding:24px 26px;position:relative;display:flex;flex-direction:column;gap:12px;background:var(--bg-subtle);">
+          <div class="lk-mock-feed" style="padding:24px 26px;position:relative;display:flex;flex-direction:column;gap:12px;background:var(--bg-subtle);">
             <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;color:var(--text-subtle);text-transform:uppercase;">// FOCUS GUARDIAN</div>
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--border);">
               <span style="width:24px;height:24px;border-radius:6px;background:hsl(150 40% 50% / 0.15);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
@@ -370,7 +456,7 @@
       <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">One calm surface for the whole loop.</h2>
       <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">Capture, focus, get nudged, review. Every piece talks to the same local AI brain — no tabs, no context-switching, no cloud.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+    <div class="lk-bento" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
 
       <!-- Focus Guardian (wide) -->
       <div data-reveal style="grid-column:span 2;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:22px;overflow:hidden;">
@@ -648,7 +734,7 @@
       <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">LockinRa vs. the cloud tab.</h2>
     </div>
     <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;">
-      <div style="display:grid;grid-template-columns:1.6fr 1fr 1fr;">
+      <div class="lk-compare" style="display:grid;grid-template-columns:1.6fr 1fr 1fr;">
         <div style="padding:18px 24px;border-bottom:1px solid var(--border);"></div>
         <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;background:var(--compare-head);"><div style="display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;"><span style="width:20px;height:20px;border-radius:6px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>LockinRa</div></div>
         <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;font-weight:500;font-size:14px;color:var(--text-muted);">Typical cloud app</div>
@@ -942,6 +1028,26 @@ class Component extends DCLogic {
       a.addEventListener('mouseenter', () => { a.style.color = 'var(--text)'; });
       a.addEventListener('mouseleave', () => { a.style.color = 'var(--text-muted)'; });
     });
+
+    // Mobile nav menu (state lives on <html> so a theme re-render can't reset it)
+    const burger = document.getElementById('lk-burger');
+    const menu = document.getElementById('lk-menu');
+    if (burger && menu) {
+      const root = document.documentElement;
+      const closeMenu = () => {
+        root.classList.remove('lk-menu-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-label', 'Open menu');
+      };
+      burger.addEventListener('click', () => {
+        const open = root.classList.toggle('lk-menu-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+      window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    }
 
     // Magnetic pull on primary CTAs
     if (!reduce) {

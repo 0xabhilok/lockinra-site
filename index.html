@@ -85,6 +85,26 @@
       "@type": "Question",
       "name": "What are the system requirements?",
       "acceptedAnswer": { "@type": "Answer", "text": "Windows 10 or 11, 8GB RAM for small models and 16GB recommended for larger ones. A discrete GPU helps inference but isn't required — LockinRa picks a model that fits your hardware and tells you the trade-offs up front." }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it slow my computer down?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The always-on part is a lightweight rule engine — under 1% CPU. The local LLM only wakes for genuinely ambiguous calls, and models release their RAM after you go idle. Monitoring steps down when you're away from the keyboard, so an open LockinRa doesn't tax a laptop on battery." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a GPU?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Every model in the catalog runs on CPU; a GPU just makes responses snappier. On setup, LockinRa reads your hardware, recommends a model that fits your RAM, and shows the speed and accuracy trade-offs before you commit." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which browsers and apps does it work with?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The browser extension covers Chrome and Chromium-based browsers like Edge and Brave (Firefox isn't supported yet). Outside the browser, the desktop app watches the active window directly — VS Code, games, design tools, anything — no plugin needed." }
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is the distraction detection?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Around 90% in practice. Classification is a three-stage cascade: instant hard rules, then semantic matching against your current task, and the local LLM only for the genuinely ambiguous. When it misfires, one click on Wrong guess corrects it — and it learns your patterns from there." }
     }
   ]
 }
@@ -162,6 +182,144 @@
   .lk-menu .lk-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 15px 4px; font-size: 16px; font-weight: 500; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--hairline); }
   .lk-menu .lk-menu-link:active { color: var(--primary); }
 
+  /* ---- anchor targets clear the sticky nav ---- */
+  section[id], header[id], div[id] { scroll-margin-top: 74px; }
+
+  /* ---- platform-aware download CTAs: html.lk-linux swaps Windows→Linux ---- */
+  .lk-dl-linux { display: none !important; }
+  html.lk-linux .lk-dl-win { display: none !important; }
+  html.lk-linux .lk-dl-linux { display: inline-flex !important; }
+
+  /* ================= LIVE DEMO (cinematic scripted tour) =================
+     One 32s CSS timeline, four 8s scenes. The stage is always dark — it
+     depicts the app's own UI — so it is deliberately theme-independent. */
+  .lk-dstage { position: relative; min-height: 430px; background: #0d0f0d; }
+  .lk-dscene { position: absolute; inset: 0; padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; opacity: 0; animation: none 32s linear infinite; }
+  .lk-ds1 { animation-name: lk-dS1; }
+  .lk-ds2 { animation-name: lk-dS2; }
+  .lk-ds3 { animation-name: lk-dS3; }
+  .lk-ds4 { animation-name: lk-dS4; }
+  @media (prefers-reduced-motion: reduce) { .lk-ds2, .lk-ds3, .lk-ds4 { display: none; } .lk-ds1 { opacity: 1; } }
+  @keyframes lk-dS1 { 0% { opacity:0; } 2%,22.5% { opacity:1; } 25%,100% { opacity:0; } }
+  @keyframes lk-dS2 { 0%,25% { opacity:0; } 27%,47.5% { opacity:1; } 50%,100% { opacity:0; } }
+  @keyframes lk-dS3 { 0%,50% { opacity:0; } 52%,72.5% { opacity:1; } 75%,100% { opacity:0; } }
+  @keyframes lk-dS4 { 0%,75% { opacity:0; } 77%,99% { opacity:1; } 100% { opacity:0; } }
+  /* demo internal palette (fixed, app-dark) */
+  .lk-dk { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #6b746b; text-transform: uppercase; }
+  .lk-dcard { background: #161916; border: 1px solid #262a26; border-radius: 12px; }
+  .lk-dtext { color: #f2f4f2; } .lk-dmut { color: #9aa39a; } .lk-dsub { color: #6b746b; }
+  /* scene 1: spoken line types on, tasks pop in */
+  .lk-d1line { clip-path: inset(0 0 0 0); animation: lk-d1t 32s steps(34) infinite; }
+  @keyframes lk-d1t { 0%,3.5% { clip-path: inset(0 100% 0 0); } 12% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
+  .lk-d1r { opacity: 1; }
+  .lk-d1r.a { animation: lk-d1rA 32s cubic-bezier(.16,1,.3,1) infinite; }
+  .lk-d1r.b { animation: lk-d1rB 32s cubic-bezier(.16,1,.3,1) infinite; }
+  .lk-d1r.c { animation: lk-d1rC 32s cubic-bezier(.16,1,.3,1) infinite; }
+  @keyframes lk-d1rA { 0%,13% { opacity:0; transform:translateY(10px); } 15.5%,23% { opacity:1; transform:none; } 25%,100% { opacity:0; } }
+  @keyframes lk-d1rB { 0%,15% { opacity:0; transform:translateY(10px); } 17.5%,23% { opacity:1; transform:none; } 25%,100% { opacity:0; } }
+  @keyframes lk-d1rC { 0%,17% { opacity:0; transform:translateY(10px); } 19.5%,23% { opacity:1; transform:none; } 25%,100% { opacity:0; } }
+  /* scene 2: a tab flips to distraction, the nudge lands */
+  .lk-d2flip { position: relative; }
+  .lk-d2red { position: absolute; inset: 0; opacity: 0; animation: lk-d2redK 32s ease infinite; background: hsl(8 55% 60% / 0.1); border: 1px solid hsl(8 55% 50% / 0.4); border-radius: 12px; }
+  @keyframes lk-d2redK { 0%,31% { opacity:0; } 32.5%,48% { opacity:1; } 50%,100% { opacity:0; } }
+  .lk-d2pop { opacity: 0; animation: lk-d2popK 32s cubic-bezier(.16,1,.3,1) infinite; }
+  @keyframes lk-d2popK { 0%,34% { opacity:0; transform:translateY(16px); } 36.5%,47.5% { opacity:1; transform:none; } 50%,100% { opacity:0; } }
+  .lk-d2bar { width: 0%; animation: lk-d2barK 32s linear infinite; }
+  @keyframes lk-d2barK { 0%,37% { width:100%; } 47%,100% { width:0%; } }
+  /* scene 3: coach streams a take, token by token */
+  .lk-d3chip { animation: lk-d3chipK 32s ease infinite; }
+  @keyframes lk-d3chipK { 0%,51% { opacity:0; } 53%,72.5% { opacity:1; } 75%,100% { opacity:0; } }
+  .lk-d3a { clip-path: inset(0 0 0 0); animation: lk-d3aK 32s steps(38) infinite; }
+  .lk-d3b { clip-path: inset(0 0 0 0); animation: lk-d3bK 32s steps(30) infinite; }
+  @keyframes lk-d3aK { 0%,54% { clip-path: inset(0 100% 0 0); } 61.5% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
+  @keyframes lk-d3bK { 0%,62% { clip-path: inset(0 100% 0 0); } 68.5% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
+  .lk-d3cur { display: inline-block; width: 7px; height: 14px; background: hsl(150 38% 52%); vertical-align: -2px; animation: lk-blink 0.9s steps(1) infinite; }
+  /* scene 4: the day, measured — bars grow, ring draws */
+  .lk-d4b { transform-origin: bottom; transform: scaleY(1); border-radius: 4px 4px 2px 2px; }
+  .lk-d4b.a { animation: lk-d4bA 32s cubic-bezier(.16,1,.3,1) infinite; }
+  .lk-d4b.b { animation: lk-d4bB 32s cubic-bezier(.16,1,.3,1) infinite; }
+  .lk-d4b.c { animation: lk-d4bC 32s cubic-bezier(.16,1,.3,1) infinite; }
+  @keyframes lk-d4bA { 0%,78% { transform:scaleY(0.04); } 82% { transform:scaleY(1); } 100% { transform:scaleY(1); } }
+  @keyframes lk-d4bB { 0%,79.5% { transform:scaleY(0.04); } 83.5% { transform:scaleY(1); } 100% { transform:scaleY(1); } }
+  @keyframes lk-d4bC { 0%,81% { transform:scaleY(0.04); } 85% { transform:scaleY(1); } 100% { transform:scaleY(1); } }
+  .lk-d4ring { stroke-dasharray: 364; stroke-dashoffset: 96; animation: lk-d4ringK 32s cubic-bezier(.16,1,.3,1) infinite; }
+  @keyframes lk-d4ringK { 0%,77% { stroke-dashoffset:364; } 90%,100% { stroke-dashoffset:96; } }
+  .lk-d4late { animation: lk-d4lateK 32s ease infinite; }
+  @keyframes lk-d4lateK { 0%,86% { opacity:0; } 89%,99% { opacity:1; } 100% { opacity:0; } }
+  /* caption chips under the stage highlight in sync */
+  .lk-dcaps { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+  .lk-dcap { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-subtle); font-size: 13px; font-weight: 500; background: transparent; }
+  .lk-dcap svg { flex-shrink: 0; }
+  .lk-dcap.c1 { animation: lk-dcap1 32s ease infinite; }
+  .lk-dcap.c2 { animation: lk-dcap2 32s ease infinite; }
+  .lk-dcap.c3 { animation: lk-dcap3 32s ease infinite; }
+  .lk-dcap.c4 { animation: lk-dcap4 32s ease infinite; }
+  @keyframes lk-dcap1 { 0%,22.5% { color:var(--text); border-color:var(--primary); background:var(--chip-bg); } 25%,100% { color:var(--text-subtle); border-color:var(--border); background:transparent; } }
+  @keyframes lk-dcap2 { 0%,25% { color:var(--text-subtle); border-color:var(--border); } 27%,47.5% { color:var(--text); border-color:var(--primary); background:var(--chip-bg); } 50%,100% { color:var(--text-subtle); border-color:var(--border); background:transparent; } }
+  @keyframes lk-dcap3 { 0%,50% { color:var(--text-subtle); border-color:var(--border); } 52%,72.5% { color:var(--text); border-color:var(--primary); background:var(--chip-bg); } 75%,100% { color:var(--text-subtle); border-color:var(--border); background:transparent; } }
+  @keyframes lk-dcap4 { 0%,75% { color:var(--text-subtle); border-color:var(--border); } 77%,99% { color:var(--text); border-color:var(--primary); background:var(--chip-bg); } 100% { color:var(--text-subtle); border-color:var(--border); } }
+
+  /* ================= HOW-IT-WORKS LOOP DIAGRAM ================= */
+  .lk-pipe { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 4px; margin: 0 auto 56px; max-width: 980px; }
+  .lk-pipe-node { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); font-size: 13.5px; font-weight: 600; color: var(--text); white-space: nowrap; }
+  .lk-pipe-node svg { color: var(--primary); flex-shrink: 0; }
+  .lk-pipe-arrow { font-family: 'JetBrains Mono', monospace; color: var(--text-subtle); font-size: 14px; padding: 0 5px; user-select: none; }
+  .lk-pipe-loop { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border-radius: 11px; background: var(--primary-subtle); border: 1px solid var(--soft-border); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: var(--primary-subtle-fg); white-space: nowrap; }
+
+  /* ================= PRIVACY PILLS ================= */
+  .lk-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 0 52px; }
+  .lk-pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 17px; border-radius: 999px; border: 1px solid hsl(150 40% 40% / 0.35); background: hsl(150 40% 30% / 0.1); font-size: 13.5px; font-weight: 600; color: var(--text); }
+  .lk-pill svg { color: var(--primary); flex-shrink: 0; }
+
+  /* ================= MADE FOR / PERSONAS ================= */
+  .lk-per { display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: 16px; }
+  .lk-per-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 22px; }
+  .lk-per-icon { width: 40px; height: 40px; border-radius: 10px; background: hsl(150 40% 50% / 0.14); color: var(--primary); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .lk-per-card h3 { font-size: 16px; font-weight: 600; margin: 0 0 7px; letter-spacing: -0.01em; }
+  .lk-per-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
+  /* ================= PERFORMANCE ================= */
+  .lk-perf { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .lk-perf-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; }
+  .lk-perf-num { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+  .lk-perf-num em { font-style: normal; font-size: 0.55em; color: var(--text-muted); }
+  .lk-perf-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
+  /* ================= COMPETITOR COMPARISON ================= */
+  .lk-vswrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); }
+  .lk-vs { display: grid; grid-template-columns: 1.7fr repeat(5, 1fr); min-width: 780px; }
+  .lk-vs > div { padding: 15px 16px; font-size: 13.5px; border-bottom: 1px solid var(--hairline); display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-subtle); }
+  .lk-vs > .lk-vs-f { justify-content: flex-start; text-align: left; color: var(--text); font-size: 14px; padding-left: 24px; }
+  .lk-vs > .lk-vs-h { font-weight: 600; color: var(--text-muted); background: var(--band); font-size: 13px; }
+  .lk-vs > .lk-vs-us { background: var(--tint); color: var(--text); font-weight: 600; border-left: 1px solid var(--soft-border); border-right: 1px solid var(--soft-border); }
+  .lk-vs > .lk-vs-us.lk-vs-h { background: var(--compare-head); color: var(--text); }
+  .lk-vs > div:nth-last-child(-n+6) { border-bottom: none; }
+  .lk-y { color: var(--primary); font-weight: 700; font-size: 15px; }
+  .lk-n { color: var(--text-subtle); opacity: 0.75; }
+  .lk-vs-note { margin-top: 14px; font-size: 12.5px; color: var(--text-subtle); text-align: center; line-height: 1.5; }
+
+  /* ================= ROADMAP ================= */
+  .lk-road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .lk-road-col { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; }
+  .lk-road-col.now { border-color: var(--soft-border); background: var(--soft-grad); }
+  .lk-road-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .lk-road-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; font-size: 14px; color: var(--text-muted); line-height: 1.5; border-bottom: 1px solid var(--hairline); }
+  .lk-road-item:last-child { border-bottom: none; }
+  .lk-road-item strong { color: var(--text); font-weight: 600; }
+  .lk-road-item svg { flex-shrink: 0; margin-top: 2px; }
+
+  @media (max-width: 920px) {
+    .lk-perf { grid-template-columns: repeat(2, 1fr); }
+    .lk-road { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .lk-perf { grid-template-columns: 1fr; }
+    .lk-dstage { min-height: 480px; }
+    .lk-dscene { padding: 20px 18px; }
+    .lk-pipe-arrow { display: none; }
+    .lk-pipe { gap: 8px; }
+  }
+
   /* NOTE: the React runtime re-serialises every inline `style` with spaces
      (`repeat(3, 1fr)`, `padding: 120px 24px`). So responsive selectors match
      on colon/comma-free value fragments — or list both spacings — to stay
@@ -190,6 +348,7 @@
     /* nav → burger */
     .lk-navlinks { display: none !important; }
     .lk-nav-cta { display: none !important; }
+    html.lk-linux .lk-nav-cta { display: none !important; }
     .lk-burger { display: inline-flex !important; }
     html.lk-menu-open .lk-menu { display: block !important; }
 
@@ -212,9 +371,6 @@
     /* hero mockup: reserve room for the absolutely-positioned nudge popup */
     .lk-mock-feed { min-height: 320px !important; }
 
-    /* comparison table stays 3-up but tightens to fit the viewport */
-    .lk-compare > div { padding: 14px 10px !important; font-size: 13px !important; }
-
     /* primary hero CTAs go full-width for comfortable tapping */
     .lk-hero-cta > a { flex: 1 1 100% !important; justify-content: center !important; }
   }
@@ -222,8 +378,6 @@
   @media (max-width: 480px) {
     [style*="120px 24px"], [style*="24px 120px"] { padding-top: 56px !important; padding-bottom: 56px !important; }
     [style*="80px 40px"] { padding: 44px 20px !important; }
-    .lk-compare > div { padding: 12px 6px !important; font-size: 12px !important; }
-    .lk-compare svg { width: 15px !important; height: 15px !important; }
     .lk-mock-status { display: none !important; }
     #lk-intro-sub { white-space: normal !important; letter-spacing: 0.18em !important; font-size: 10px !important; text-align: center; padding: 0 24px; }
   }
@@ -265,9 +419,10 @@
         <span style="font-weight:600;font-size:17px;letter-spacing:-0.02em;">Lockin<span style="color:var(--primary);">Ra</span></span>
       </a>
       <div style="display:flex;align-items:center;gap:30px;" class="lk-navlinks">
-        <a href="#features" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;transition:color .15s;" onMouseOver="{{ noop }}">Features</a>
+        <a href="#demo" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;transition:color .15s;" onMouseOver="{{ noop }}">Demo</a>
+        <a href="#features" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Features</a>
         <a href="#privacy" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Privacy</a>
-        <a href="#how" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">How it works</a>
+        <a href="#compare" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Compare</a>
         <a href="#pricing" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">Pricing</a>
         <a href="#faq" style="text-decoration:none;color:var(--text-muted);font-size:14px;font-weight:500;">FAQ</a>
       </div>
@@ -280,9 +435,13 @@
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           </sc-if>
         </button>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.4.0/LockinRa-1.4.0-win-x64.exe" download class="lk-nav-cta" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.4.0/LockinRa-1.4.0-win-x64.exe" download class="lk-nav-cta lk-dl-win" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
           Download for Windows
+        </a>
+        <a href="linux.html" class="lk-nav-cta lk-dl-linux" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+          Download for Linux
         </a>
         <button id="lk-burger" class="lk-burger" aria-label="Open menu" aria-expanded="false" aria-controls="lk-menu">
           <span></span><span></span><span></span>
@@ -291,9 +450,11 @@
     </div>
     <!-- mobile slide-down menu -->
     <div id="lk-menu" class="lk-menu">
+      <a class="lk-menu-link" href="#demo">Demo</a>
       <a class="lk-menu-link" href="#features">Features</a>
       <a class="lk-menu-link" href="#privacy">Privacy</a>
-      <a class="lk-menu-link" href="#how">How it works</a>
+      <a class="lk-menu-link" href="#compare">Compare</a>
+      <a class="lk-menu-link" href="#roadmap">Roadmap</a>
       <a class="lk-menu-link" href="#pricing">Pricing</a>
       <a class="lk-menu-link" href="#faq">FAQ</a>
       <a class="lk-menu-link" href="linux.html">Linux (beta)<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">BETA</span></a>
@@ -317,13 +478,17 @@
     <h1 data-reveal style="font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-0.035em;font-weight:600;margin:0 auto 26px;max-width:18ch;">Lock in. The rest <span style="background:linear-gradient(90deg,var(--primary),hsl(150 60% 68%),var(--primary));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lk-shimmer 4.5s linear infinite;">goes quiet.</span></h1>
     <p data-reveal style="font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.55;color:var(--text-muted);max-width:46ch;margin:0 auto 36px;">A privacy-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running <span style="color:var(--text);font-weight:500;">on your machine.</span></p>
     <div data-reveal class="lk-hero-cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.4.0/LockinRa-1.4.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.4.0/LockinRa-1.4.0-win-x64.exe" download class="lk-magnet lk-dl-win" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
         Download for Windows
       </a>
-      <a href="#how" style="display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);font-weight:600;font-size:16px;padding:14px 24px;border-radius:11px;text-decoration:none;border:1px solid var(--border);transition:background .15s,border-color .15s;">
-        See how it works
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      <a href="linux.html" class="lk-magnet lk-dl-linux" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+        Download for Linux (beta)
+      </a>
+      <a href="#demo" style="display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);font-weight:600;font-size:16px;padding:14px 24px;border-radius:11px;text-decoration:none;border:1px solid var(--border);transition:background .15s,border-color .15s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+        Watch the 60-second demo
       </a>
     </div>
     <div data-reveal style="display:flex;align-items:center;gap:9px;justify-content:center;flex-wrap:wrap;font-size:13.5px;color:var(--text-muted);margin-bottom:22px;">
@@ -336,7 +501,7 @@
       <a href="linux.html" style="color:var(--text);font-weight:600;text-decoration:none;border-bottom:1px solid var(--border-strong);">Linux (beta)</a>
     </div>
     <div data-reveal style="display:flex;align-items:center;gap:8px;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-subtle);letter-spacing:0.04em;flex-wrap:wrap;">
-      <span style="color:var(--primary);">●</span> 100% on-device<span style="opacity:.4;">·</span>no account<span style="opacity:.4;">·</span>open about privacy
+      <span style="color:var(--primary);">●</span> 100% on-device<span style="opacity:.4;">·</span>no account<span style="opacity:.4;">·</span>live on the Microsoft Store<span style="opacity:.4;">·</span>5 releases since June
     </div>
 
     <!-- PRODUCT MOCKUP -->
@@ -421,6 +586,157 @@
       </div>
     </div>
   </header>
+  <!-- ===================== LIVE DEMO ===================== -->
+  <section id="demo" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:110px 24px 20px;">
+    <div data-reveal style="text-align:center;max-width:46ch;margin:0 auto 44px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// SEE IT WORK</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">Watch it catch a distraction.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">A real day in LockinRa, in sixty seconds: brain-dump a plan, lock in, drift once, get caught, end with the day measured.</p>
+    </div>
+    <div data-reveal style="position:relative;max-width:860px;margin:0 auto;">
+      <div style="position:absolute;inset:-4% 10% 8%;background:radial-gradient(ellipse 60% 50% at 50% 45%,hsl(150 60% 40% / 0.22),transparent 70%);filter:blur(60px);z-index:0;"></div>
+      <div style="position:relative;z-index:1;border:1px solid var(--border);border-radius:18px;box-shadow:0 40px 90px hsl(150 30% 4% / 0.6),inset 0 1px 0 hsl(0 0% 100% / 0.05);overflow:hidden;text-align:left;background:#0d0f0d;">
+        <!-- window bar -->
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid #262a26;background:#111411;">
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.4);"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.4);"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:hsl(150 6% 60% / 0.4);"></span>
+          <div style="margin-left:10px;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b746b;">
+            <span style="width:14px;height:14px;border-radius:4px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            LockinRa — live demo
+          </div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:hsl(150 38% 52%);"><span style="width:7px;height:7px;border-radius:50%;background:hsl(150 38% 52%);animation:lk-pulse 2s ease-in-out infinite;"></span>AUTO-PLAYING</div>
+        </div>
+        <!-- stage -->
+        <div class="lk-dstage">
+
+          <!-- SCENE 1 · capture -->
+          <div class="lk-dscene lk-ds1">
+            <div class="lk-dk">// 07:58 — SPEAKIN · BRAIN-DUMP</div>
+            <div class="lk-dcard" style="padding:16px 18px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="display:flex;align-items:flex-end;gap:2.5px;height:16px;flex-shrink:0;">
+                  <span style="width:3px;background:hsl(150 38% 52%);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out infinite;"></span>
+                  <span style="width:3px;background:hsl(150 38% 52%);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .2s infinite;"></span>
+                  <span style="width:3px;background:hsl(150 38% 52%);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .35s infinite;"></span>
+                  <span style="width:3px;background:hsl(150 38% 52%);border-radius:2px;height:100%;transform-origin:bottom;animation:lk-eq 1s ease-in-out .1s infinite;"></span>
+                </div>
+                <div class="lk-d1line lk-dmut" style="font-size:14px;font-style:italic;white-space:nowrap;overflow:hidden;">"finish the onboarding flow, review Sam's PR, ship the build friday…"</div>
+              </div>
+            </div>
+            <div class="lk-dk" style="margin-top:6px;">WHISPER RAN LOCALLY · 3 TASKS EXTRACTED</div>
+            <div class="lk-d1r a lk-dcard" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+              <span style="width:20px;height:20px;border-radius:6px;background:hsl(150 40% 50% / 0.18);color:hsl(150 38% 52%);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">Finish the onboarding flow</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(150 38% 52%);">TODAY</span>
+            </div>
+            <div class="lk-d1r b lk-dcard" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+              <span style="width:20px;height:20px;border-radius:6px;background:hsl(150 40% 50% / 0.18);color:hsl(150 38% 52%);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">Review Sam's PR</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#9aa39a;">TODAY</span>
+            </div>
+            <div class="lk-d1r c lk-dcard" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+              <span style="width:20px;height:20px;border-radius:6px;background:hsl(150 40% 50% / 0.18);color:hsl(150 38% 52%);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">Ship v1.4 build</span>
+              <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:hsl(150 38% 52%);">FRI</span>
+            </div>
+          </div>
+
+          <!-- SCENE 2 · guardian -->
+          <div class="lk-dscene lk-ds2">
+            <div class="lk-dk">// 10:34 — FOCUS SESSION · GUARDIAN WATCHING</div>
+            <div class="lk-dcard" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:hsl(150 38% 52%);box-shadow:0 0 8px hsl(150 38% 52%);flex-shrink:0;"></span>
+              <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">vscode — onboarding.tsx</span>
+              <span class="lk-dsub" style="margin-left:auto;font-size:11.5px;">Relevant · on task</span>
+            </div>
+            <div class="lk-d2flip">
+              <div class="lk-dcard" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:#6b746b;flex-shrink:0;"></span>
+                <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">youtube.com</span>
+                <span class="lk-dsub" style="margin-left:auto;font-size:11.5px;">Classifying…</span>
+              </div>
+              <div class="lk-d2red" style="display:flex;align-items:center;gap:11px;padding:12px 15px;">
+                <span style="width:8px;height:8px;border-radius:50%;background:hsl(0 65% 60%);box-shadow:0 0 8px hsl(0 65% 60%);flex-shrink:0;"></span>
+                <span class="lk-dtext" style="font-size:13.5px;font-weight:500;">youtube.com — "race highlights"</span>
+                <span style="margin-left:auto;font-size:11.5px;color:hsl(0 65% 60%);font-weight:600;">Distraction</span>
+              </div>
+            </div>
+            <div class="lk-d2pop" style="margin-top:auto;background:#1a1e1a;border:1px solid #343a34;border-radius:14px;padding:16px;box-shadow:0 24px 50px hsl(150 40% 4% / 0.6),0 0 0 1px hsl(150 50% 40% / 0.2),0 0 40px hsl(150 55% 35% / 0.2);">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="width:22px;height:22px;border-radius:6px;background:hsl(8 55% 60% / 0.18);color:hsl(0 65% 60%);display:inline-flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></span>
+                <span class="lk-dtext" style="font-size:13px;font-weight:600;">That looks like a distraction.</span>
+              </div>
+              <p class="lk-dmut" style="margin:0 0 11px;font-size:12.5px;line-height:1.5;">"Race highlights" isn't the onboarding flow. You're 22 minutes into a good block — don't trade it for this.</p>
+              <div style="height:3px;border-radius:2px;background:#262a26;overflow:hidden;margin-bottom:11px;"><div class="lk-d2bar" style="height:100%;background:hsl(0 65% 60%);"></div></div>
+              <div style="display:flex;gap:7px;">
+                <span style="flex:1;text-align:center;background:hsl(150 38% 52%);color:hsl(150 40% 8%);border-radius:8px;padding:8px;font-size:12px;font-weight:600;">Let's grind</span>
+                <span style="background:#161916;color:#9aa39a;border:1px solid #262a26;border-radius:8px;padding:8px 11px;font-size:12px;">Snooze 5m</span>
+                <span style="background:transparent;color:#6b746b;border:1px solid #262a26;border-radius:8px;padding:8px 11px;font-size:12px;">Wrong guess</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCENE 3 · coach -->
+          <div class="lk-dscene lk-ds3">
+            <div class="lk-dk">// 18:12 — END-OF-DAY · COACH</div>
+            <div class="lk-d3chip" style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:6px 13px;border-radius:999px;background:#161916;border:1px solid #262a26;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:hsl(150 6% 70%);">DARK HUMOR</span>
+              <span class="lk-dsub" style="font-size:10.5px;">streaming from llama3.2 · local</span>
+            </div>
+            <div class="lk-dcard" style="padding:20px 22px;max-width:560px;">
+              <p class="lk-d3a lk-dtext" style="margin:0 0 6px;font-size:15px;line-height:1.6;font-style:italic;">"One YouTube detour at 10:34 — caught in nine seconds. Otherwise,</p>
+              <p class="lk-dtext" style="margin:0;font-size:15px;line-height:1.6;font-style:italic;"><span class="lk-d3b" style="display:inline-block;">4h 12m deep. Do that twice more and Friday ships itself."</span> <span class="lk-d3cur"></span></p>
+            </div>
+            <div class="lk-dk" style="margin-top:4px;">NOTHING LEFT YOUR MACHINE TO WRITE THIS</div>
+          </div>
+
+          <!-- SCENE 4 · analytics -->
+          <div class="lk-dscene lk-ds4">
+            <div class="lk-dk">// TODAY, MEASURED</div>
+            <div style="display:flex;gap:26px;align-items:center;flex-wrap:wrap;">
+              <div style="position:relative;width:120px;height:120px;flex-shrink:0;">
+                <svg width="120" height="120" viewBox="0 0 132 132" style="transform:rotate(-90deg);">
+                  <circle cx="66" cy="66" r="58" fill="none" stroke="#262a26" stroke-width="9"></circle>
+                  <circle class="lk-d4ring" cx="66" cy="66" r="58" fill="none" stroke="hsl(150 42% 50%)" stroke-width="9" stroke-linecap="round"></circle>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <div class="lk-dtext" style="font-size:26px;font-weight:600;">86</div>
+                  <div class="lk-dk" style="font-size:9px;">FOCUS SCORE</div>
+                </div>
+              </div>
+              <div style="flex:1;min-width:230px;">
+                <div style="display:flex;align-items:flex-end;gap:9px;height:110px;padding:0 4px;">
+                  <div class="lk-d4b a" style="flex:1;height:38%;background:hsl(150 30% 30%);"></div>
+                  <div class="lk-d4b b" style="flex:1;height:56%;background:hsl(150 34% 38%);"></div>
+                  <div class="lk-d4b c" style="flex:1;height:44%;background:hsl(150 32% 34%);"></div>
+                  <div class="lk-d4b a" style="flex:1;height:72%;background:hsl(150 38% 44%);"></div>
+                  <div class="lk-d4b b" style="flex:1;height:90%;background:hsl(150 42% 50%);"></div>
+                  <div class="lk-d4b c" style="flex:1;height:64%;background:hsl(150 36% 42%);"></div>
+                  <div class="lk-d4b b" style="flex:1;height:80%;background:hsl(150 40% 47%);"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:6px 4px 0;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#6b746b;"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+              </div>
+            </div>
+            <div class="lk-d4late" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;">
+              <div class="lk-dcard" style="flex:1;min-width:130px;padding:12px 15px;"><div class="lk-dtext" style="font-size:17px;font-weight:600;">4h 12m</div><div class="lk-dsub" style="font-size:11px;">deep focus today</div></div>
+              <div class="lk-dcard" style="flex:1;min-width:130px;padding:12px 15px;"><div class="lk-dtext" style="font-size:17px;font-weight:600;">1</div><div class="lk-dsub" style="font-size:11px;">drift — caught in 9s</div></div>
+              <div class="lk-dcard" style="flex:1;min-width:130px;padding:12px 15px;"><div class="lk-dtext" style="font-size:17px;font-weight:600;">11-day</div><div class="lk-dsub" style="font-size:11px;">focus streak</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- caption rail -->
+    <div data-reveal class="lk-dcaps">
+      <span class="lk-dcap c1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg>Speak the plan</span>
+      <span class="lk-dcap c2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Guardian catches the drift</span>
+      <span class="lk-dcap c3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Coach reads the day</span>
+      <span class="lk-dcap c4"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="12" width="3" height="6"></rect><rect x="12" y="8" width="3" height="10"></rect><rect x="17" y="4" width="3" height="14"></rect></svg>Day, measured</span>
+    </div>
+  </section>
+
   <!-- ===================== STAT BAND ===================== -->
   <section style="position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--band);margin-top:96px;">
     <div style="max-width:1240px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;align-items:stretch;">
@@ -640,6 +956,44 @@
     </div>
   </section>
 
+  <!-- ===================== MADE FOR ===================== -->
+  <section id="made-for" style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
+    <div style="max-width:1240px;margin:0 auto;padding:110px 24px;">
+      <div data-reveal style="max-width:50ch;margin:0 0 44px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// MADE FOR</div>
+        <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">Anyone whose work needs a locked door.</h2>
+        <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">Different work, same enemy. The Guardian learns what "on task" means for <em style="font-style:normal;color:var(--text);">your</em> kind of day.</p>
+      </div>
+      <div class="lk-per">
+        <div data-reveal class="lk-per-card">
+          <div class="lk-per-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"></path></svg></div>
+          <h3>Developers</h3>
+          <p>Stack Overflow is research; Reddit isn't. The classifier reads the actual page against your ticket, so docs stay open and rabbit-holes get called out.</p>
+        </div>
+        <div data-reveal class="lk-per-card">
+          <div class="lk-per-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5zM6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"></path></svg></div>
+          <h3>Students</h3>
+          <p>Exam season with Drill Sergeant on is a different sport. Streaks, screen-time truth, and a coach that knows you said "two chapters by six."</p>
+        </div>
+        <div data-reveal class="lk-per-card">
+          <div class="lk-per-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></div>
+          <h3>Researchers</h3>
+          <p>Literature reviews are one long rabbit-hole risk. Keep the sources, lose the sidetracks — and capture citations to notes without switching apps.</p>
+        </div>
+        <div data-reveal class="lk-per-card">
+          <div class="lk-per-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg></div>
+          <h3>Creators</h3>
+          <p>Editing days need long, unbroken stretches. Set a soundscape, launch the project workspace, and let YouTube stay "reference only" — the Guardian knows the difference.</p>
+        </div>
+        <div data-reveal class="lk-per-card">
+          <div class="lk-per-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg></div>
+          <h3>Founders</h3>
+          <p>Twelve contexts a day and no manager to protect your calendar. The morning briefing front-loads what matters; the wrap tells you where the day actually went.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== PRIVACY ===================== -->
   <section id="privacy" style="position:relative;z-index:1;border-top:1px solid var(--border);background:radial-gradient(ellipse 70% 80% at 50% 0%,var(--tint),transparent 70%);">
     <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse at center,hsl(150 55% 35% / 0.18),transparent 70%);filter:blur(60px);pointer-events:none;"></div>
@@ -651,6 +1005,14 @@
         </div>
         <h2 style="font-size:clamp(2.2rem,4vw,3.4rem);font-weight:600;letter-spacing:-0.03em;line-height:1.08;margin:0 0 18px;">Your AI. Your machine.<br><span style="color:var(--primary);">Nobody else's.</span></h2>
         <p style="font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--text-muted);line-height:1.6;margin:0;">No accounts. No cloud. No telemetry. The models run locally, the data stays put, and you can pull the network cable and it still works.</p>
+      </div>
+      <div data-reveal class="lk-pills">
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>No account</span>
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>No cloud</span>
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>No tracking</span>
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Runs offline</span>
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Local AI</span>
+        <span class="lk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Encrypted at rest</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
         <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;">
@@ -681,11 +1043,55 @@
     </div>
   </section>
 
+  <!-- ===================== PERFORMANCE ===================== -->
+  <section id="performance" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:110px 24px;">
+    <div data-reveal style="max-width:52ch;margin:0 0 44px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// LIGHT ON YOUR MACHINE</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">"An app that watches all day" — without eating the day's battery.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">The watching is a cheap rule engine. The heavy AI only wakes when there's a real question to answer — and goes back to sleep when you step away.</p>
+    </div>
+    <div class="lk-perf">
+      <div data-reveal class="lk-perf-card">
+        <div class="lk-perf-num">&lt;1<em>% CPU</em></div>
+        <p>while monitoring. Classification is a three-stage cascade — hard rules first, the LLM only for the genuinely ambiguous.</p>
+      </div>
+      <div data-reveal class="lk-perf-card">
+        <div class="lk-perf-num">On-demand<em> AI</em></div>
+        <p>Models load when needed and release their RAM after idle — 15 minutes while you work, faster when you're away.</p>
+      </div>
+      <div data-reveal class="lk-perf-card">
+        <div class="lk-perf-num">0<em> network calls</em></div>
+        <p>in the background. No sync loops, no telemetry pings, no update nags — the network stays quiet unless you opt into an integration.</p>
+      </div>
+      <div data-reveal class="lk-perf-card">
+        <div class="lk-perf-num">Presence-<em>aware</em></div>
+        <p>Steps down when you're away and fully unloads models on long idle, so an open LockinRa never taxes an unattended laptop.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== HOW IT WORKS ===================== -->
   <section id="how" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:120px 24px;">
     <div data-reveal style="text-align:center;max-width:40ch;margin:0 auto 64px;">
       <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// HOW IT WORKS</div>
       <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">Four moves. One quiet loop.</h2>
+    </div>
+    <div data-reveal class="lk-pipe" aria-label="How LockinRa works: voice becomes tasks, tasks become a plan, you focus, the guardian watches, analytics measure the day, the coach reviews it, and tomorrow starts planned.">
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg>Voice</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>Tasks</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>AI plan</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"></path></svg>Focus</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Guardian</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg>Analytics</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-node"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Coach</span>
+      <span class="lk-pipe-arrow">→</span>
+      <span class="lk-pipe-loop">⟳ TOMORROW, PLANNED</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;">
       <div data-reveal style="position:relative;">
@@ -752,38 +1158,86 @@
   </section>
 
   <!-- ===================== COMPARISON ===================== -->
-  <section style="position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:120px 24px;">
-    <div data-reveal style="text-align:center;max-width:40ch;margin:0 auto 56px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// THE DIFFERENCE</div>
-      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">LockinRa vs. the cloud tab.</h2>
+  <section id="compare" style="position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:120px 24px;">
+    <div data-reveal style="text-align:center;max-width:46ch;margin:0 auto 48px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// WHY LOCKINRA</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">The tools you'd otherwise stitch together.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">A task manager, a blocker, a tracker, and an AI planner — each solves a slice. LockinRa is the whole loop, and it's the only one that never sees your data.</p>
     </div>
-    <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;">
-      <div class="lk-compare" style="display:grid;grid-template-columns:1.6fr 1fr 1fr;">
-        <div style="padding:18px 24px;border-bottom:1px solid var(--border);"></div>
-        <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;background:var(--compare-head);"><div style="display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;"><span style="width:20px;height:20px;border-radius:6px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>LockinRa</div></div>
-        <div style="padding:18px 20px;border-bottom:1px solid var(--border);border-left:1px solid var(--border);text-align:center;font-weight:500;font-size:14px;color:var(--text-muted);">Typical cloud app</div>
+    <div data-reveal class="lk-vswrap">
+      <div class="lk-vs">
+        <div class="lk-vs-f lk-vs-h">What matters for deep work</div>
+        <div class="lk-vs-h lk-vs-us"><span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:18px;height:18px;border-radius:5px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:inline-flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>LockinRa</span></div>
+        <div class="lk-vs-h">Todoist</div>
+        <div class="lk-vs-h">Motion</div>
+        <div class="lk-vs-h">Opal</div>
+        <div class="lk-vs-h">RescueTime</div>
 
-        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Where AI runs</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">On your device</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Their servers</div>
+        <div class="lk-vs-f">Where the AI runs</div>
+        <div class="lk-vs-us" style="color:var(--primary);">Your device</div>
+        <div>Cloud</div>
+        <div>Cloud</div>
+        <div>—</div>
+        <div>Cloud</div>
 
-        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Distraction detection</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13px;color:var(--text-subtle);">Blunt blocklist</div>
+        <div class="lk-vs-f">Understands your current task</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
 
-        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Account required</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">None</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Sign up + sync</div>
+        <div class="lk-vs-f">Context-aware distraction blocking</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div>Blocklists</div>
+        <div><span class="lk-n">✗</span></div>
 
-        <div style="padding:16px 24px;font-size:14.5px;border-bottom:1px solid var(--hairline);">Telemetry</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;font-weight:600;color:var(--primary);">Zero</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);border-bottom:1px solid var(--hairline);text-align:center;font-size:13.5px;color:var(--text-subtle);">Tracked</div>
+        <div class="lk-vs-f">Screen-time analytics</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-y">✓</span></div>
+        <div><span class="lk-y">✓</span></div>
 
-        <div style="padding:16px 24px;font-size:14.5px;">Works offline</div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
-        <div style="padding:16px 20px;border-left:1px solid var(--border);text-align:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-subtle)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></div>
+        <div class="lk-vs-f">Tasks, notes, habits &amp; focus in one</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div>Tasks only</div>
+        <div>Tasks only</div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+
+        <div class="lk-vs-f">On-device voice capture</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+
+        <div class="lk-vs-f">Works fully offline</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+
+        <div class="lk-vs-f">No account required</div>
+        <div class="lk-vs-us"><span class="lk-y">✓</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+        <div><span class="lk-n">✗</span></div>
+
+        <div class="lk-vs-f">Pricing model</div>
+        <div class="lk-vs-us" style="color:var(--primary);">Free beta → one-time</div>
+        <div>Free tier + sub.</div>
+        <div>Subscription</div>
+        <div>Free tier + sub.</div>
+        <div>Subscription</div>
       </div>
     </div>
+    <p data-reveal class="lk-vs-note">Based on each product's public positioning, July 2026. They're good tools — they're just a different shape: cloud-first slices of the loop, where LockinRa is the local-first whole.</p>
   </section>
   <!-- ===================== TESTIMONIALS ===================== -->
   <section style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
@@ -814,6 +1268,37 @@
             <div><div style="font-size:13.5px;font-weight:600;">Tomas Öberg</div><div style="font-size:12px;color:var(--text-subtle);">Founder, 2-person startup</div></div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ROADMAP ===================== -->
+  <section id="roadmap" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:110px 24px 10px;">
+    <div data-reveal style="text-align:center;max-width:44ch;margin:0 auto 48px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// ROADMAP</div>
+      <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 14px;">Where this is going.</h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.6;margin:0;">Five releases since June, shipping in the open. Here's what's landed and what's next.</p>
+    </div>
+    <div class="lk-road">
+      <div data-reveal class="lk-road-col now">
+        <div class="lk-road-tag" style="color:var(--primary);"><span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);"></span>Shipped</div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Windows</strong> — direct download &amp; Microsoft Store</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Linux</strong> — portable AppImage (beta)</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>10+ local models</strong> — Llama, Qwen, Gemma, Phi, Mistral, GLM, bring-your-own</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>On-device voice</strong> — Whisper dictation &amp; capture</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Semantic screen time</strong> — AI-classified, opt-in, local</span></div>
+      </div>
+      <div data-reveal class="lk-road-col">
+        <div class="lk-road-tag" style="color:var(--warning);"><span style="width:7px;height:7px;border-radius:50%;background:var(--warning);"></span>In progress</div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>macOS build</strong></span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Deeper Linux support</strong> — Wayland app detection</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Smarter drift prediction</strong> — semantic memory of your patterns</span></div>
+      </div>
+      <div data-reveal class="lk-road-col">
+        <div class="lk-road-tag" style="color:var(--text-subtle);"><span style="width:7px;height:7px;border-radius:50%;background:var(--text-subtle);"></span>Planned</div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M12 8v8M8 12h8"></path></svg><span><strong>Memory replay &amp; OCR recall</strong> — Pro</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M12 8v8M8 12h8"></path></svg><span><strong>P2P co-focus sessions</strong> — accountability without a server</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-subtle)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><path d="M12 8v8M8 12h8"></path></svg><span><strong>Android companion</strong> &amp; web dashboard</span></div>
       </div>
     </div>
   </section>
@@ -850,13 +1335,20 @@
         </div>
       </div>
       <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;">
-        <div style="font-size:14px;font-weight:600;color:var(--text-muted);margin-bottom:22px;font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">PRO · LATER</div>
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;"><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;color:var(--text-muted);">One-time</span></div>
-        <p style="font-size:14px;color:var(--text-subtle);line-height:1.6;margin:0 0 26px;">When beta ends, you keep everything you have. Pro adds the heavier stuff — memory replay, OCR recall, P2P co-focus — for a single one-time price. Never a subscription.</p>
-        <div style="margin-top:auto;display:flex;flex-direction:column;gap:11px;">
+        <div style="font-size:14px;font-weight:600;color:var(--text-muted);margin-bottom:22px;font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;">FUTURE PRO · ONE-TIME</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;"><span style="font-size:40px;font-weight:600;letter-spacing:-0.03em;color:var(--text-muted);">One-time</span><span style="font-size:14px;color:var(--text-subtle);">never a subscription</span></div>
+        <p style="font-size:14px;color:var(--text-subtle);line-height:1.6;margin:0 0 22px;">When beta ends, everything on this page stays free for beta users. Pro adds the heavier machinery — paid once, owned forever.</p>
+        <div style="display:flex;flex-direction:column;gap:11px;">
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>Personal memory engine + OCR recall</div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>Timeline replay of your work</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>AI workspace memory &amp; deeper recall</div>
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-subtle);"><span style="width:16px;height:16px;border-radius:5px;border:1px solid var(--border-strong);display:inline-flex;flex-shrink:0;"></span>P2P accountability sessions</div>
+        </div>
+        <div style="margin-top:auto;padding-top:22px;">
+          <div style="display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:11px;background:var(--bg-subtle);border:1px solid var(--hairline);font-size:13px;color:var(--text-muted);line-height:1.5;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M20 6 9 17l-5-5"></path></svg>
+            Still local-first. Pro features run on your machine too — paying doesn't add a cloud.
+          </div>
         </div>
       </div>
     </div>
@@ -892,6 +1384,22 @@
       <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
         <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">What are the system requirements?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
         <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Windows 10/11, 8GB RAM for small models, 16GB recommended for the larger ones. A discrete GPU helps inference but isn't required — LockinRa picks a model that fits your hardware and tells you the trade-offs up front.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Will it slow my computer down?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">No. The always-on part is a lightweight rule engine — under 1% CPU. The LLM only wakes for genuinely ambiguous calls, and models release their RAM after you go idle. Monitoring steps down when you're away from the keyboard, so an open LockinRa doesn't tax a laptop on battery.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Do I need a GPU?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">No. Every model in the catalog runs on CPU; a GPU just makes responses snappier. On setup, LockinRa reads your hardware, recommends a model that fits your RAM, and shows the speed/accuracy trade-offs before you commit.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Which browsers and apps does it work with?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">The browser extension covers Chrome and Chromium-based browsers like Edge and Brave (Firefox isn't supported yet). Outside the browser, the desktop app watches the active window directly — VS Code, games, design tools, anything — no plugin needed.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">How accurate is the distraction detection?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Around 90% in practice. Classification is a three-stage cascade: instant hard rules, then semantic matching against your current task, and the local LLM only for the genuinely ambiguous. When it does misfire, one click on "Wrong guess" corrects it — and it learns your patterns from there.</p>
       </details>
     </div>
   </section>
@@ -938,10 +1446,14 @@
           <div>
             <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--text-subtle);text-transform:uppercase;margin-bottom:16px;">Product</div>
             <div style="display:flex;flex-direction:column;gap:11px;">
+              <a href="#demo" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Demo</a>
               <a href="#features" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Features</a>
               <a href="#privacy" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Privacy</a>
+              <a href="#compare" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Compare</a>
+              <a href="#roadmap" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Roadmap</a>
               <a href="#pricing" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Pricing</a>
               <a href="#faq" style="font-size:14px;color:var(--text-muted);text-decoration:none;">FAQ</a>
+              <a href="linux.html" style="font-size:14px;color:var(--text-muted);text-decoration:none;">Linux (beta)</a>
             </div>
           </div>
           <div>
@@ -1052,6 +1564,12 @@ class Component extends DCLogic {
       a.addEventListener('mouseenter', () => { a.style.color = 'var(--text)'; });
       a.addEventListener('mouseleave', () => { a.style.color = 'var(--text-muted)'; });
     });
+
+    // Platform-aware download CTAs (class on <html> so a re-render can't reset it)
+    try {
+      const ua = navigator.userAgent || '';
+      if (/Linux|X11/.test(ua) && !/Android/.test(ua)) document.documentElement.classList.add('lk-linux');
+    } catch (e) {}
 
     // Mobile nav menu (state lives on <html> so a theme re-render can't reset it)
     const burger = document.getElementById('lk-burger');

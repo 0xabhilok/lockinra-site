@@ -802,6 +802,53 @@
     text-underline-offset: 0.2em;
   }
 
+  /* ── Block: doc (privacy / support / linux) ─────────────────────────────
+   * Long-form prose brought into the system. The secondary pages were three
+   * separate hand-rolled stylesheets with their own palettes — that is how
+   * lockinra.app survived on some pages and lockinra.xyz on others. */
+  .doc { max-inline-size: var(--w-prose); }
+  .doc > * + * { margin-block-start: var(--s-4); }
+  .doc h1 { font-size: var(--fs-h1); max-inline-size: 20ch; }
+  .doc h2 { margin-block-start: var(--s-12); }
+  .doc h3 { margin-block-start: var(--s-6); }
+  .doc p { color: hsl(var(--text-muted)); }
+  .doc .beat__lede { color: hsl(var(--text-muted)); }
+  .doc strong { color: hsl(var(--text)); }
+  .doc > ul { display: flex; flex-direction: column; gap: var(--s-2); }
+  .doc li { color: hsl(var(--text-muted)); padding-inline-start: var(--s-4); position: relative; }
+  .doc > ul > li::before,
+  .doc .cluster-card li::before {
+    content: "";
+    position: absolute; inset-inline-start: 0; inset-block-start: .7em;
+    inline-size: 6px; block-size: 1px;
+    background: hsl(var(--border-strong));
+  }
+  .doc .grid { margin-block-start: var(--s-6); }
+  .doc .cluster-card ul { display: flex; flex-direction: column; gap: var(--s-2); margin-block-start: var(--s-2); }
+  .doc .cluster-card li { font-size: var(--fs-sm); }
+  .doc .disclosure h2 { margin-block-start: 0; }
+
+  .doc pre {
+    padding: var(--s-4);
+    background: hsl(var(--bg-subtle));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--r-md);
+    overflow-x: auto;
+    font-size: var(--fs-sm);
+    color: hsl(var(--text));
+  }
+  .doc code { color: hsl(var(--text)); }
+  .doc :not(pre) > code {
+    padding: .1em .4em;
+    background: hsl(var(--bg-subtle));
+    border: 1px solid hsl(var(--border-subtle));
+    border-radius: var(--r-sm);
+  }
+
+  /* Dashed AND coloured, never colour alone. */
+  .cluster-card--warn { border-style: dashed; border-color: hsl(var(--warning)); }
+  .cluster-card--warn h3 { color: hsl(var(--warning)); }
+
   /* ── Beat modifiers ──────────────────────────────────────────────────── */
   .beat--quiet { --stack-gap: var(--s-8); }
   .beat--decide { text-align: start; }

@@ -1,85 +1,155 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <title>LockinRa — Support &amp; Help</title>
-  <meta name="description" content="Support and help for LockinRa, a local-first, privacy-first focus & productivity app for Windows and Linux. Setup, troubleshooting, and contact." />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0f1713" />
-  <link rel="canonical" href="https://lockinra.xyz/support.html" />
-  <meta property="og:site_name" content="LockinRa" />
-  <meta property="og:title" content="LockinRa — Support &amp; Help" />
-  <meta property="og:description" content="Setup, troubleshooting, and contact for LockinRa — the local-first focus & productivity workspace." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lockinra.xyz/support.html" />
-  <meta property="og:image" content="https://lockinra.xyz/thumbnail.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://lockinra.xyz/thumbnail.webp" />
-  <style>
-    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
-    * { box-sizing: border-box; }
-    body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
-    a { color:#86d3a6; }
-    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
-    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:56px 22px; text-align:center; }
-    .mark { width:84px; height:84px; border-radius:20px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px; }
-    .mark svg { width:46px; height:46px; }
-    h1 { margin:0; font-size:34px; letter-spacing:-.5px; }
-    .tag { margin:8px 0 0; color:rgba(255,255,255,.85); font-size:18px; }
-    h2 { margin:40px 0 10px; font-size:21px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
-    .muted { color:var(--muted); }
-    .btn { display:inline-block; margin-top:8px; padding:10px 18px; border-radius:10px; background:var(--tile1); color:#fff; text-decoration:none; font-weight:600; }
-    ul { padding-left:20px; }
-    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
-    code { background:#0c130f; padding:2px 6px; border-radius:6px; }
-  </style>
-  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- #chrome:head start -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Search Console ownership. Carried over from the pre-rebuild site —
+     removing it silently un-verifies the property. -->
+<meta name="google-site-verification" content="ynwm1QZAcKhX5B0qMXfZrve8gwUPjJP5s4UAPTmSyo4">
+<meta name="author" content="LockinRa">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="alternate icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0f100f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f8faf9" media="(prefers-color-scheme: light)">
+<!-- Sets the JS scope before first paint. Content is visible by DEFAULT and JS
+     opts into hiding it, so a blocked or failed script leaves a complete page.
+     This is the only inline script on the site. -->
+<script>document.documentElement.classList.add('js')</script>
+<!-- Cloudflare Web Analytics — cookieless, deferred, and the ONLY third party
+     on this site. Kept deliberately (four origins became one) and disclosed in
+     the footer and in Beat 4, because a page arguing that nothing leaves your
+     machine cannot quietly ship an undisclosed request. -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script>
+<!-- #chrome:head end -->
+
+<title>Support — LockinRa</title>
+<meta name="description" content="Setup, troubleshooting and contact for LockinRa — the local-first focus guardian for Windows, with a Linux build in beta.">
+<link rel="canonical" href="https://lockinra.xyz/support.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockinra.xyz/support.html">
+<meta property="og:site_name" content="LockinRa">
+<meta property="og:title" content="Support — LockinRa">
+<meta property="og:description" content="Setup, troubleshooting and contact for the local-first focus guardian.">
+<meta property="og:image" content="https://lockinra.xyz/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lockinra.xyz/assets/og.png">
 </head>
 <body>
-  <header>
-    <div class="mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
-    </div>
-    <h1>LockinRa</h1>
-    <p class="tag">Focus &amp; productivity for Windows — your data stays on your device.</p>
-  </header>
 
-  <div class="wrap">
-    <h2>Get support</h2>
-    <div class="card">
-      <p>Questions, bugs, or feedback? We're happy to help.</p>
-      <p><strong>Email:</strong> <a href="mailto:abhilokreddydev@gmail.com">abhilokreddydev@gmail.com</a></p>
-      <p class="muted">We typically respond within a few business days.</p>
-    </div>
-
-    <h2>About LockinRa</h2>
-    <div class="card">
-      <p>LockinRa is a local-first focus and productivity app: capture tasks (by voice or text),
-         run focus sessions with distraction reminders, track habits, take notes, and play focus
-         soundscapes — all stored on your own device.</p>
-      <ul>
-        <li>Works offline; no account required.</li>
-        <li>On-device voice transcription and on-device AI by default.</li>
-        <li>Optional integrations (Google, Microsoft, GitHub, Slack) and cloud AI are opt-in.</li>
-      </ul>
-    </div>
-
-    <h2>Privacy</h2>
-    <div class="card">
-      <p>We don't track you, show ads, or sell your data.</p>
-      <p><a class="btn" href="./privacy.html">Read the Privacy Policy</a></p>
-    </div>
-
-    <footer>
-      © <span id="y"></span> LockinRa. <a href="./privacy.html">Privacy Policy</a>
-      <script>document.getElementById('y').textContent = '2026';</script>
-    </footer>
+<!-- #chrome:header start -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="chrome">
+  <div class="wrap chrome__inner">
+    <a class="chrome__mark" href="/" aria-label="LockinRa — home">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 5 V17 H17"/>
+      </svg>
+      <span>LockinRa</span>
+    </a>
+    <nav aria-label="Primary">
+      <a class="chrome__cta" href="/#download">Download</a>
+    </nav>
   </div>
+</header>
+<!-- #chrome:header end -->
+
+<main id="main" tabindex="-1">
+  <article class="beat" aria-labelledby="sup-h">
+    <div class="threshold" aria-hidden="true"><span class="threshold__glow"></span></div>
+    <div class="wrap beat__content doc">
+      <p class="mono">Support</p>
+      <h1 id="sup-h">Email a person.</h1>
+      <p class="beat__lede">
+        There is no ticket system and no chat widget. Write to
+        <a href="mailto:abhilokreddydev@gmail.com">abhilokreddydev@gmail.com</a> and you
+        will usually hear back within a few business days.
+      </p>
+
+      <!-- A mailto, not a form. A form on a static site needs a third-party
+           endpoint — a second origin on a site whose thesis is that nothing
+           leaves your machine. This sends from your own client, to a real
+           inbox, with nothing in between (05-interaction.md §1.1). -->
+      <p>
+        Sending from your own mail client means the message goes straight to that
+        inbox — there is no form handler in between, and nothing about your message
+        touches this website.
+      </p>
+
+      <h2>Before you write</h2>
+      <p>Three things solve most of what arrives:</p>
+      <ul>
+        <li>
+          <strong>“Browser not connected” while the extension is installed.</strong>
+          Fixed in v1.5.1 — update to the current release. If it persists, quit every
+          LockinRa window and start it once.
+        </li>
+        <li>
+          <strong>Desktop distraction detection isn't firing on Linux.</strong> It works
+          on X11 but is unreliable on Wayland, which is the default on many distros.
+          The browser-extension path still covers web distractions. See
+          <a href="/linux.html">the Linux page</a>.
+        </li>
+        <li>
+          <strong>A model won't download.</strong> Nothing is downloaded until you pick
+          one, and the smaller models are CPU-only. If a pull stalls, restart the app
+          and try a smaller model first.
+        </li>
+      </ul>
+
+      <h2>What LockinRa is</h2>
+      <p>
+        A local-first focus guardian: capture tasks by voice or text, run focus sessions
+        with real interventions, track habits, take notes, and see where the time
+        actually went — all stored on your own device.
+      </p>
+      <ul>
+        <li>Works offline. No account required.</li>
+        <li>On-device voice transcription and on-device AI by default.</li>
+        <li>Integrations (Google, Microsoft, GitHub, Slack) and cloud AI are opt-in and off until you connect them.</li>
+      </ul>
+
+      <h2>Diagnostics</h2>
+      <p>
+        If a bug needs logs, the app can export a diagnostic bundle. You review and edit
+        it before it leaves your machine — nothing is sent automatically, and there is
+        no crash reporter.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        We don't track you, show ads, or sell your data. The full detail, including what
+        is <em>not</em> encrypted, is on the <a href="/privacy.html">privacy page</a>.
+      </p>
+    </div>
+  </article>
+</main>
+
+<!-- #chrome:footer start -->
+<footer class="chrome-footer">
+  <div class="wrap stack">
+    <p class="chrome-footer__tagline">The local-first focus guardian.</p>
+    <nav class="cluster chrome-footer__nav" aria-label="Footer">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/support.html">Support</a>
+      <a href="/linux.html">Linux</a>
+      <a href="https://github.com/0xabhilok/lockinra-site/releases">Releases on GitHub</a>
+      <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a>
+    </nav>
+    <p class="chrome-footer__disclosure measure">
+      This page loads one cookieless analytics script from Cloudflare. Nothing else.
+      Open devtools and check.
+    </p>
+    <p class="chrome-footer__legal">© 2026 LockinRa. Free while in beta.</p>
+  </div>
+</footer>
+<!-- #chrome:footer end -->
+
 </body>
 </html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LockinRa — three brand directions (Phase 4 prototype)</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 4 PROTOTYPE — not production code.
+   Three genuinely distinct directions, same content, same tokens
+   underneath, so the comparison isolates DIRECTION not palette.
+   Base tokens inherited from the app's ADR 0013 design language.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  /* ADR 0013 dark tokens — bare HSL triplets, as the app stores them */
+  --bg:150 3% 6%; --bg-subtle:150 3% 9%; --surface:150 3% 11%;
+  --surface-elevated:150 3% 14%; --surface-overlay:150 3% 17%;
+  --text:150 8% 93%; --text-muted:150 6% 68%; --text-subtle:150 5% 50%;
+  --border:150 8% 20%; --border-strong:150 10% 30%; --border-subtle:150 7% 16%;
+  --primary:150 38% 52%; --primary-fg:150 40% 8%;
+  --danger:0 65% 60%; --warning:38 70% 58%;
+  --focus-ring:150 55% 55%;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+
+  --sans: "Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  --mono: ui-monospace,"Cascadia Code","Segoe UI Mono","SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:hsl(var(--bg));color:hsl(var(--text));
+     -webkit-font-smoothing:antialiased;line-height:1.5}
+.lab{max-width:1100px;margin:0 auto;padding:48px 24px 96px}
+.lab-h{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+       color:hsl(var(--text-subtle));border-bottom:1px solid hsl(var(--border));
+       padding-bottom:12px;margin:72px 0 8px}
+.lab-h:first-of-type{margin-top:0}
+.lab-note{font-size:13.5px;color:hsl(var(--text-muted));max-width:70ch;margin-bottom:28px}
+.lab-note b{color:hsl(var(--text));font-weight:600}
+.frame{border:1px solid hsl(var(--border));border-radius:12px;overflow:hidden}
+
+/* ═══ DIRECTION A — "THE INSTRUMENT" ═══════════════════════════
+   Thesis: a precision instrument for attention. Dense, ruled,
+   annotated. Device: THE MEASUREMENT RULE — a hairline grid with
+   mono tick labels annotating every claim with its source.
+   Depth comes from hairlines + surface tone. Zero shadow, zero glow. */
+.A{background:hsl(var(--bg));padding:0;position:relative}
+.A-grid{display:grid;grid-template-columns:56px 1fr;min-height:440px}
+.A-rule{border-right:1px solid hsl(var(--border));display:flex;flex-direction:column;
+        justify-content:space-between;padding:20px 0;background:hsl(var(--bg-subtle))}
+.A-tick{font-family:var(--mono);font-size:9px;color:hsl(var(--text-subtle));
+        text-align:center;letter-spacing:.08em}
+.A-body{padding:44px 40px;display:flex;flex-direction:column;gap:0}
+.A-kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+        color:hsl(var(--primary));margin-bottom:22px}
+.A h1{font-size:clamp(2rem,4.2vw,3.1rem);font-weight:650;line-height:1.06;
+      letter-spacing:-.028em;max-width:19ch;margin-bottom:18px}
+.A p{font-size:16px;color:hsl(var(--text-muted));max-width:52ch;line-height:1.6;margin-bottom:30px}
+.A-panel{border:1px solid hsl(var(--border));border-radius:8px;background:hsl(var(--surface));
+         margin-bottom:26px}
+.A-row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;
+       padding:11px 14px;border-bottom:1px solid hsl(var(--border-subtle));font-size:13.5px}
+.A-row:last-child{border-bottom:none}
+.A-src{font-family:var(--mono);font-size:10px;color:hsl(var(--text-subtle));letter-spacing:.04em}
+.A-verdict{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px}
+.A-ok{color:hsl(var(--primary));background:hsl(var(--primary)/.12);border:1px solid hsl(var(--primary)/.3)}
+.A-no{color:hsl(var(--danger));background:hsl(var(--danger)/.1);border:1px solid hsl(var(--danger)/.3)}
+.A-nu{color:hsl(var(--text-subtle));background:hsl(var(--text-subtle)/.08);border:1px solid hsl(var(--border))}
+.A-cta{display:inline-flex;align-items:center;gap:9px;background:hsl(var(--primary));
+       color:hsl(var(--primary-fg));font-weight:600;font-size:14.5px;padding:11px 20px;
+       border-radius:6px;text-decoration:none;align-self:flex-start}
+.A-foot{font-family:var(--mono);font-size:10px;color:hsl(var(--text-subtle));margin-top:18px;letter-spacing:.04em}
+
+/* ═══ DIRECTION B — "THE QUIET ROOM" ═══════════════════════════
+   Thesis: the emotional promise — the door locks, the noise stops.
+   Device: THE THRESHOLD — a single lit horizontal line dividing
+   "inside the block" (calm, lit, saturated) from "outside" (dim,
+   desaturated, receding). Enormous negative space. Few elements. */
+.B{background:
+     radial-gradient(ellipse 90% 55% at 50% 88%, hsl(var(--primary)/.10), transparent 70%),
+     hsl(var(--bg));
+   padding:0;position:relative;overflow:hidden}
+.B-outside{padding:40px 40px 0;text-align:center}
+.B-noise{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+         filter:saturate(.25);opacity:.42}
+.B-chip{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid hsl(var(--border));
+        color:hsl(var(--text-subtle));background:hsl(var(--surface))}
+.B-thresh{position:relative;height:1px;background:linear-gradient(90deg,
+          transparent, hsl(var(--primary)/.85) 20%, hsl(var(--primary)) 50%,
+          hsl(var(--primary)/.85) 80%, transparent);
+          margin:38px 0 0;box-shadow:0 0 18px hsl(var(--primary)/.45)}
+.B-thresh::after{content:"";position:absolute;inset:-40px 0 auto;height:40px;
+          background:linear-gradient(to top, hsl(var(--primary)/.10), transparent)}
+.B-inside{padding:56px 40px 52px;text-align:center;
+          background:linear-gradient(to bottom, hsl(var(--primary)/.06), transparent 55%)}
+.B h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:600;line-height:1.03;
+      letter-spacing:-.032em;max-width:16ch;margin:0 auto 20px}
+.B h1 em{font-style:normal;color:hsl(var(--primary))}
+.B p{font-size:17px;color:hsl(var(--text-muted));max-width:44ch;margin:0 auto 34px;line-height:1.6}
+.B-cta{display:inline-flex;align-items:center;gap:10px;background:hsl(var(--primary));
+       color:hsl(var(--primary-fg));font-weight:600;font-size:16px;padding:14px 28px;
+       border-radius:10px;text-decoration:none}
+.B-sub{font-family:var(--mono);font-size:11px;color:hsl(var(--text-subtle));
+       letter-spacing:.1em;margin-top:20px}
+.B-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+         color:hsl(var(--text-subtle));margin-bottom:14px}
+
+/* ═══ DIRECTION C — "THE EVIDENCE FILE" ════════════════════════
+   Thesis: this is a trust product, so the site is a dossier.
+   Device: THE CITATION — every claim carries a superscript marker
+   resolving to a real, checkable source. Editorial/print structure. */
+.C{background:hsl(var(--bg));padding:44px 40px 40px}
+.C-doc{max-width:64ch;margin:0 auto}
+.C-meta{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;
+        letter-spacing:.1em;text-transform:uppercase;color:hsl(var(--text-subtle));
+        padding-bottom:14px;border-bottom:1px solid hsl(var(--border-strong));margin-bottom:30px}
+.C h1{font-size:clamp(1.9rem,3.8vw,2.7rem);font-weight:600;line-height:1.14;
+      letter-spacing:-.022em;margin-bottom:20px}
+.C-lede{font-size:17.5px;line-height:1.62;color:hsl(var(--text-muted));margin-bottom:14px}
+.C-lede b{color:hsl(var(--text));font-weight:600}
+sup{font-family:var(--mono);font-size:9.5px;color:hsl(var(--primary));
+    vertical-align:super;line-height:0;padding-left:2px;font-weight:600}
+.C-refs{border-top:1px solid hsl(var(--border));margin-top:30px;padding-top:16px;
+        display:flex;flex-direction:column;gap:7px}
+.C-ref{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:12px;
+       color:hsl(var(--text-subtle));line-height:1.5}
+.C-ref span:first-child{font-family:var(--mono);color:hsl(var(--primary));font-size:10px;font-weight:600}
+.C-ref b{color:hsl(var(--text-muted));font-weight:500}
+.C-cta{display:inline-flex;align-items:center;gap:9px;margin-top:28px;
+       border:1px solid hsl(var(--primary)/.5);background:hsl(var(--primary)/.1);
+       color:hsl(var(--text));font-weight:600;font-size:15px;padding:12px 22px;
+       border-radius:6px;text-decoration:none}
+
+/* ═══ VERDICT BLOCKS ═══ */
+.v{margin-top:20px;border-left:2px solid hsl(var(--border-strong));padding-left:18px;
+   font-size:13.5px;color:hsl(var(--text-muted));line-height:1.65;max-width:78ch}
+.v b{color:hsl(var(--text));font-weight:600}
+.v .bad{color:hsl(var(--danger))}
+.v .good{color:hsl(var(--primary))}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:700px){
+  .A-grid{grid-template-columns:36px 1fr}
+  .A-body,.B-inside,.B-outside,.C{padding-left:20px;padding-right:20px}
+  .A-row{grid-template-columns:1fr auto;gap:8px}
+  .A-src{display:none}
+}
+</style>
+</head>
+<body>
+<div class="lab">
+
+<p class="lab-h">Phase 4 · brand directions · same content, same base tokens</p>
+<p class="lab-note">Three <b>genuinely distinct</b> directions — not three tints of one idea. All three carry the identical hero message and inherit the app's ADR&nbsp;0013 tokens, so the comparison isolates <b>direction</b>, not palette. Judged in the browser, not as descriptions.</p>
+
+<!-- ─────────────── A ─────────────── -->
+<p class="lab-h">Direction A — “The Instrument”</p>
+<p class="lab-note"><b>Thesis:</b> LockinRa is a precision instrument for attention. Everything is ruled, labelled, and sourced. <b>Device:</b> the measurement rule — a hairline column with mono ticks that annotates every claim with where it came from. Depth from hairlines and surface tone only; no shadow, no glow.</p>
+<div class="frame A">
+  <div class="A-grid">
+    <div class="A-rule">
+      <div class="A-tick">09:00</div><div class="A-tick">11:20</div>
+      <div class="A-tick">14:02</div><div class="A-tick">17:45</div>
+    </div>
+    <div class="A-body">
+      <div class="A-kick">// local-first focus guardian</div>
+      <h1>It reads what you're doing, and compares it to what you said.</h1>
+      <p>A three-stage cascade classifies every tab and window against your current task. Most calls never reach a model — and the ones that do run on your machine.</p>
+      <div class="A-panel">
+        <div class="A-row"><span>github.com/onboarding</span><span class="A-src">STAGE 1 · RULE</span><span class="A-verdict A-ok">RELEVANT</span></div>
+        <div class="A-row"><span>docs.stripe.com/webhooks</span><span class="A-src">STAGE 2 · SEMANTIC</span><span class="A-verdict A-ok">RELEVANT</span></div>
+        <div class="A-row"><span>File Explorer</span><span class="A-src">STAGE 1 · RULE</span><span class="A-verdict A-nu">NEUTRAL</span></div>
+        <div class="A-row"><span>youtube.com — “race highlights”</span><span class="A-src">STAGE 3 · LOCAL LLM</span><span class="A-verdict A-no">DISTRACTION</span></div>
+      </div>
+      <a class="A-cta" href="#">Download for Windows</a>
+      <div class="A-foot">v1.6.0 · 254 MB · 8 releases since 19 Jun 2026 · no account</div>
+    </div>
+  </div>
+</div>
+<div class="v"><b>Verdict:</b> <span class="good">Strongest at making the mechanism legible</span> — the cascade is visible and self-explaining, which is exactly what replaces the deleted “~90%” statistic. The mono source column is a genuinely ownable device. <span class="bad">Risk:</span> reads as a dashboard, not a product with a point of view. It informs but doesn't <em>move</em> anyone — no emotional hook for personas 1 and 2, who arrive frustrated, not curious.</div>
+
+<!-- ─────────────── B ─────────────── -->
+<p class="lab-h">Direction B — “The Quiet Room”</p>
+<p class="lab-note"><b>Thesis:</b> deliver the emotional promise — the door locks and the noise stops. <b>Device:</b> the threshold — one lit horizontal line dividing “outside the block” (dim, desaturated, receding) from “inside” (calm, lit). Enormous negative space; very few elements per screen.</p>
+<div class="frame B">
+  <div class="B-outside">
+    <div class="B-label">outside the block</div>
+    <div class="B-noise">
+      <span class="B-chip">youtube.com</span><span class="B-chip">reddit.com</span>
+      <span class="B-chip">×14 unread</span><span class="B-chip">instagram</span>
+      <span class="B-chip">“just five minutes”</span><span class="B-chip">news.ycombinator</span>
+    </div>
+    <div class="B-thresh"></div>
+  </div>
+  <div class="B-inside">
+    <h1>Lock in. <em>The rest goes quiet.</em></h1>
+    <p>Something intelligent stands at the door, watching the one thing you said you'd do — and it runs entirely on your machine.</p>
+    <a class="B-cta" href="#">Download for Windows</a>
+    <div class="B-sub">FREE IN BETA · NO ACCOUNT · NOTHING LEAVES</div>
+  </div>
+</div>
+<div class="v"><b>Verdict:</b> <span class="good">Strongest emotionally, and the only direction that is instantly recognisable from across a room.</span> The threshold is one device that can carry the entire site — every section boundary can be a door. It dramatises the enemy (the renegotiation lives <em>above</em> the line) without saying a word. <span class="bad">Risk:</span> proves nothing on its own. Left alone it is a beautiful, generic minimal template — and it would fail persona 3, who needs evidence in the first screen, not atmosphere.</div>
+
+<!-- ─────────────── C ─────────────── -->
+<p class="lab-h">Direction C — “The Evidence File”</p>
+<p class="lab-note"><b>Thesis:</b> this is a trust product, so the site is a dossier. <b>Device:</b> the citation — every factual claim carries a marker resolving to a real, checkable source. Editorial, print-like, footnoted.</p>
+<div class="frame C">
+  <div class="C-doc">
+    <div class="C-meta"><span>LockinRa v1.6.0</span><span>Windows · Linux beta</span><span>Updated 1 Aug 2026</span></div>
+    <h1>Everything on this page can be checked before you install anything.</h1>
+    <p class="C-lede">LockinRa watches the active window, classifies it against your current task, and interrupts you when they diverge. The classifier is a three-stage cascade<sup>1</sup> and the model runs locally through Ollama<sup>2</sup>. <b>Activity URLs and window titles are encrypted with an OS-keychain-derived key; task titles are not</b><sup>3</sup>. Eight releases have shipped since 19 June<sup>4</sup>.</p>
+    <div class="C-refs">
+      <div class="C-ref"><span>1</span><span><b>packages/ai</b> — hard rules → semantic match → local LLM only when unresolved</span></div>
+      <div class="C-ref"><span>2</span><span><b>21-model catalog</b> — Llama, Qwen, Gemma, Phi, Mistral, GLM, DeepSeek, or bring your own</span></div>
+      <div class="C-ref"><span>3</span><span><b>Electron safeStorage</b> (DPAPI/Keychain) on activity rows; <b>tasks are plain SQLite</b> — stated plainly, on purpose</span></div>
+      <div class="C-ref"><span>4</span><span><b>GitHub Releases</b> — v1.0.0 19 Jun → v1.6.0 18 Jul 2026</span></div>
+    </div>
+    <a class="C-cta" href="#">Download for Windows — 254 MB</a>
+  </div>
+</div>
+<div class="v"><b>Verdict:</b> <span class="good">Strongest on credibility, and the only direction that turns the audit's worst finding into an asset</span> — volunteering “task titles are not encrypted” is the single most persuasive sentence available to us for persona 3. <span class="bad">Risk:</span> dry and academic. It converts the skeptic and bores everyone else; a student arriving at 11pm before a deadline will not read a footnoted dossier.</div>
+
+<!-- ─────────────── RECOMMENDATION ─────────────── -->
+<p class="lab-h">Recommendation</p>
+<div class="v" style="border-left-color:hsl(var(--primary));max-width:82ch">
+<b>Ship B as the spatial and emotional frame; graft C's citation discipline in as the trust mechanism; use A's mono annotation strictly for measured values.</b><br><br>
+Each direction is strongest exactly where the others are weakest, and the strategy tells us which weakness is fatal. <b>B alone proves nothing</b> — fatal for persona 3. <b>C alone moves nobody</b> — fatal for personas 1 and 2. <b>A alone is a dashboard</b> — memorable to no one, and “brand distinctiveness” is a scored dimension.<br><br>
+The synthesis is not a compromise, because the three operate at <em>different layers</em>: B owns <b>space and rhythm</b> (the threshold at every section boundary, the inside/outside duotone), C owns <b>the treatment of claims</b> (nothing asserted without a checkable source), A owns <b>the annotation of numbers</b> (mono reserved exclusively for measured values, never for headings).<br><br>
+One device carries the site, per the Nothing principle: <b>the threshold</b> — the lit line between the noise and the work. It is the enemy (“the renegotiation”) and the promise (“the rest goes quiet”) rendered as a single, repeatable graphic idea that no competitor owns.
+</div>
+
+</div>
+</body>
+</html>

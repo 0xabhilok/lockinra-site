@@ -1,0 +1,620 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * LockinRa — lockinra.xyz
+ *
+ * Architecture: design/08-architecture.md
+ * Tokens:       design/03-brand.md   (contrast corrections: 06-accessibility.md §3)
+ * Motion:       design/04-motion.md
+ *
+ * THE ONE RULE: components consume tokens. A raw colour, size, or spacing
+ * value outside @layer tokens is a defect. The previous site declared 51
+ * custom properties and then bypassed them with 137 raw hsl() literals; the
+ * layer boundary below is what makes that impossible rather than discouraged.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, base, layout, components, utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * TOKENS — the only layer permitted to contain a literal value.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer tokens {
+  :root {
+    color-scheme: dark;
+
+    /* ── Surfaces. Depth by lightness, per ADR 0013 §6. ────────────────── */
+    --bg:               150 3% 6%;
+    --bg-subtle:        150 3% 9%;
+    --surface:          150 3% 11%;
+    --surface-elevated: 150 3% 14%;
+    --surface-overlay:  150 3% 17%;
+
+    /* ── Content. Every value clears 4.5:1 on every surface above. ─────── */
+    --text:             150 8% 93%;
+    --text-muted:       150 6% 68%;
+    --text-subtle:      150 5% 57%;   /* raised from ADR 0013's 50% — 03-brand §3.2 */
+
+    /* ── Lines. Decorative: no contrast requirement (SC 1.4.11 is about
+     * identifying CONTROLS, not about dividers). ──────────────────────── */
+    --border:           150 8% 20%;
+    --border-strong:    150 10% 30%;
+    --border-subtle:    150 7% 16%;
+    /* Interactive: the visible boundary of a control. Solved to ≥3:1 on the
+     * WORST surface, so any legal use is compliant. 06-accessibility §3 Fix 3. */
+    --border-control:   150 10% 44%;
+
+    /* ── Brand ─────────────────────────────────────────────────────────── */
+    --primary:          150 38% 52%;
+    --primary-hover:    150 42% 58%;
+    --primary-fg:       150 40% 8%;
+    --primary-subtle:   150 20% 17%;
+
+    /* ── Status ────────────────────────────────────────────────────────── */
+    --danger:           0 65% 67%;    /* raised from 60% — was 4.45 on --surface */
+    --warning:          38 70% 58%;
+
+    /* ── Interaction ───────────────────────────────────────────────────── */
+    --focus-ring:       150 55% 55%;
+
+    /* ── Type. rem only — px ignores the user's browser font-size. ─────── */
+    --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont,
+            "SF Pro Text", system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", "SF Mono", Menlo, Consolas, monospace;
+
+    --fs-display: clamp(2.6rem, 6vw, 4.5rem);
+    --fs-h1:      clamp(2rem, 4vw, 3rem);
+    --fs-h2:      clamp(1.5rem, 2.4vw, 2rem);
+    --fs-h3:      1.125rem;
+    --fs-lede:    clamp(1.0625rem, 1.5vw, 1.25rem);
+    --fs-body:    1rem;
+    --fs-sm:      0.875rem;
+    --fs-xs:      0.8125rem;
+    --fs-label:   0.6875rem;
+
+    /* ── Space. One geometric scale, replacing 68 padding values. ──────── */
+    --s-1: .25rem; --s-2: .5rem;  --s-3: .75rem; --s-4: 1rem;
+    --s-6: 1.5rem; --s-8: 2rem;   --s-12: 3rem;  --s-16: 4rem;
+    --s-24: 6rem;  --s-32: 8rem;
+
+    --beat-y: clamp(4rem, 9vw, 8rem);
+
+    /* ── Layout ────────────────────────────────────────────────────────── */
+    --w-prose:   68ch;
+    --w-narrow:  42rem;
+    --w-content: 72rem;
+    --w-wide:    80rem;
+    --gutter:    clamp(1.25rem, 4vw, 2.5rem);
+
+    /* ── Radii, from ADR 0013 §5 ───────────────────────────────────────── */
+    --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-full: 999px;
+
+    /* ── Depth. Flat-with-hairlines + exactly one light source. ────────── */
+    --elev-0: none;
+    --elev-1: inset 0 1px 0 hsl(0 0% 100% / .04);
+    --elev-2: 0 8px 24px hsl(150 30% 3% / .5), inset 0 1px 0 hsl(0 0% 100% / .05);
+    --elev-3: 0 24px 56px hsl(150 30% 3% / .6), inset 0 1px 0 hsl(0 0% 100% / .06);
+    --threshold: 0 0 24px hsl(var(--primary) / .45);   /* THE one glow */
+
+    /* Two-layer ring. The 2px inner gap is LOAD-BEARING: without it the ring
+     * sits directly on --primary at 1.25:1 and vanishes on the one control
+     * that matters most. Proved in 06-accessibility.md §4. */
+    --focus: 0 0 0 2px hsl(var(--bg)), 0 0 0 4px hsl(var(--focus-ring));
+
+    /* ── Motion. Four curves inherited verbatim from the app's
+     * packages/ui/theme/motion.ts; --ease-ambient is the one addition. ─── */
+    --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-exit:     cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-move:     cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-commit:   cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-ambient:  cubic-bezier(0.37, 0, 0.63, 1);
+
+    --d-micro:  120ms;
+    --d-fast:   200ms;
+    --d-base:   320ms;
+    --d-slow:   520ms;
+    --d-scene:  800ms;
+    --d-breath: 4500ms;
+
+    --stagger-step: 60ms;
+    --parallax-depth: 1;   /* neutralised to 0 under reduced motion */
+  }
+
+  /* ── Light mode. A first-class peer, not an inversion: the threshold
+   * becomes a shadow gap rather than a glow. 03-brand §3.3. ───────────── */
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+
+      --bg: 150 12% 98%; --bg-subtle: 150 10% 96%;
+      --surface: 0 0% 100%; --surface-elevated: 0 0% 100%; --surface-overlay: 150 5% 99%;
+
+      --text: 150 14% 14%; --text-muted: 150 9% 38%; --text-subtle: 150 8% 43%;
+
+      --border: 150 8% 88%; --border-strong: 150 10% 75%; --border-subtle: 150 6% 94%;
+      /* Light mode's surface steps compute to 1.00:1 — --surface and
+       * --surface-elevated are BOTH #ffffff. A control's only boundary here
+       * is its border, which is why this token is not optional. */
+      --border-control: 150 10% 53%;
+
+      --primary: 150 32% 34%; --primary-hover: 150 36% 30%;
+      --primary-fg: 0 0% 100%; --primary-subtle: 150 30% 92%;
+
+      --danger: 0 65% 47%;
+      --warning: 38 80% 33%;   /* darkened from 42% — was 3.12:1 on --bg */
+
+      --focus-ring: 150 45% 34%;
+
+      --elev-1: inset 0 1px 0 hsl(0 0% 100% / .8);
+      --elev-2: 0 8px 24px hsl(150 20% 40% / .12), 0 1px 2px hsl(150 20% 40% / .08);
+      --elev-3: 0 24px 56px hsl(150 20% 40% / .16), 0 1px 2px hsl(150 20% 40% / .08);
+      --threshold: 0 6px 18px -6px hsl(var(--primary) / .35);
+    }
+  }
+
+  /* ── Reduced motion, handled AT THE TOKEN LEVEL so a component written
+   * next year inherits correct behaviour without its author knowing the
+   * rule exists. Full matrix: 04-motion.md §7.1. ─────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    :root { --parallax-depth: 0; }
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * RESET
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  * { margin: 0; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    scroll-behavior: smooth;
+  }
+  /* Honour the OS preference for the browser's own smooth scrolling too. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    min-block-size: 100dvb;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  img, svg, video, canvas { display: block; max-inline-size: 100%; block-size: auto; }
+
+  input, button, textarea, select { font: inherit; color: inherit; }
+
+  p, h1, h2, h3, h4 { overflow-wrap: break-word; }
+
+  /* Never suppress the focus ring. Anything that needs a different indicator
+   * replaces it in the same rule — 08-architecture §3.2. */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus);
+    border-radius: var(--r-sm);
+  }
+
+  ::selection { background: hsl(var(--primary-subtle)); color: hsl(var(--text)); }
+
+  /* Designed feedback replaces the default blue flash — 05-interaction §4.2. */
+  a, button, summary { -webkit-tap-highlight-color: transparent; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * BASE — element defaults. No class selectors live here.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  body {
+    background: hsl(var(--bg));
+    color: hsl(var(--text));
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 { font-weight: 600; line-height: 1.15; }
+  h1 { font-size: var(--fs-h1);  letter-spacing: -0.03em; line-height: 1.08; }
+  h2 { font-size: var(--fs-h2);  letter-spacing: -0.02em; }
+  h3 { font-size: var(--fs-h3);  letter-spacing: -0.01em; line-height: 1.4; }
+
+  /* Underlined at rest, always. Colour-only link differentiation fails
+   * WCAG 1.4.1 and is the most common contrast-adjacent failure on
+   * marketing sites — 05-interaction §2.2 ③. */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--border-strong));
+    text-underline-offset: 0.2em;
+    text-decoration-skip-ink: auto;
+    transition: text-decoration-color var(--d-micro) var(--ease-entrance);
+  }
+  @media (hover: hover) {
+    a:hover { text-decoration-color: hsl(var(--primary)); }
+  }
+  a:active { color: hsl(var(--primary)); }
+
+  strong { font-weight: 600; }
+
+  code, kbd, samp { font-family: var(--mono); font-size: 0.9em; }
+
+  table { border-collapse: collapse; inline-size: 100%; }
+  caption { text-align: start; }
+  th { font-weight: 600; text-align: start; }
+
+  ul, ol { padding-inline-start: 0; list-style: none; }
+
+  summary { cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * LAYOUT — primitives only. No colour ever appears in this layer.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer layout {
+  /* Vertical rhythm as a single owned property, so no element sets its own
+   * margin-bottom. The audit found 15 distinct margin-bottom values doing
+   * this job badly. */
+  .stack { display: flex; flex-direction: column; }
+  .stack > * + * { margin-block-start: var(--stack-gap, var(--s-4)); }
+
+  .cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--cluster-gap, var(--s-3));
+  }
+
+  /* auto-fit, never a fixed column count — this is what makes 400% zoom
+   * reflow work without a single extra media query. */
+  .grid {
+    display: grid;
+    gap: var(--grid-gap, var(--s-6));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 16rem), 100%), 1fr));
+  }
+
+  .wrap {
+    inline-size: min(100% - var(--gutter) * 2, var(--wrap, var(--w-content)));
+    margin-inline: auto;
+  }
+
+  .measure { max-inline-size: var(--w-prose); }
+
+  .bleed { inline-size: 100%; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * UTILITIES — a CLOSED list of six. Anything else belongs to a component;
+ * a utility layer that accepts additions becomes a framework, and the
+ * audit's entropy counts are what that looks like at the end.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    inline-size: 1px; block-size: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-block-start: var(--s-2);
+    inset-inline-start: var(--s-2);
+    z-index: 100;
+    padding: var(--s-3) var(--s-4);
+    background: hsl(var(--surface-overlay));
+    color: hsl(var(--text));
+    border-radius: var(--r-sm);
+    text-decoration: none;
+    transform: translateY(-200%);
+  }
+  .skip-link:focus-visible { transform: translateY(0); }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: hsl(var(--text-subtle));
+  }
+
+  .no-scrollbar { scrollbar-width: thin; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * COMPONENTS — every selector sits under a named block banner. A selector
+ * belonging to no block is a defect (08-architecture.md §4).
+ * ─────────────────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Block: threshold ────────────────────────────────────────────────────
+   * THE one device, and the only glow on the site. It is simultaneously the
+   * enemy (the renegotiation lives above the line), the promise (below it),
+   * and the product (a guardian at a door). Nothing else emits light.
+   *
+   * The glow is a box-shadow, and box-shadow is banned from animation — so
+   * the breath animates this layer's OPACITY and SCALE, never the shadow.
+   * Same effect, zero repaints (04-motion.md §6.1). */
+  .threshold {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 1px;
+    background: linear-gradient(90deg,
+      transparent, hsl(var(--primary) / .5) 18%, hsl(var(--primary) / .5) 82%, transparent);
+    /* Real perspective: the parallax differential falls out of the projection
+     * rather than a hand-picked percentage, so it is correct at every zoom. */
+    transform: translateZ(calc(-1px * var(--parallax-depth)));
+  }
+
+  .threshold__glow {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 20%;
+    block-size: 1px;
+    box-shadow: var(--threshold);
+    transform-origin: center;
+  }
+
+  .js-reveal .threshold { clip-path: inset(0 100% 0 0); }
+  .js-reveal .beat.is-revealed .threshold {
+    animation: threshold-sweep var(--d-slow) var(--ease-move) both;
+  }
+  .js-reveal .beat.is-revealed .threshold__glow {
+    animation: threshold-breathe var(--d-breath) var(--ease-ambient) var(--d-slow) infinite;
+  }
+  /* Instant beats skip the sweep but keep the breath — the line is simply lit. */
+  .js-reveal .beat.is-instant .threshold { animation: none; clip-path: inset(0 0 0 0); }
+  /* Paused when the beat leaves the viewport and on visibilitychange, so an
+   * infinite loop never composites for a viewer who isn't there. Idle cost
+   * zero — on a page that answers "will it eat my battery" (04-motion §3.2). */
+  .beat:not(.is-onscreen) .threshold__glow,
+  .is-hidden-tab .threshold__glow { animation-play-state: paused; }
+
+  @keyframes threshold-sweep { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes threshold-breathe {
+    0%, 100% { opacity: .82; transform: scaleY(1); }
+    50%      { opacity: 1;   transform: scaleY(1.18); }
+  }
+
+  /* ── Block: chrome (header) ──────────────────────────────────────────────
+   * NOT sticky. That is deliberate: a sticky header is the usual cause of
+   * WCAG 2.2 SC 2.4.11 "Focus Not Obscured" failures (06-a11y §6). */
+  .chrome { padding-block: var(--s-4); }
+
+  .chrome__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
+
+  .chrome__mark {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    font-weight: 600; letter-spacing: -0.01em;
+    text-decoration: none;
+    color: hsl(var(--text));
+    padding: var(--s-2);            /* keeps the 44px target without a bigger glyph */
+    margin-inline-start: calc(var(--s-2) * -1);
+  }
+  .chrome__mark svg { color: hsl(var(--primary)); }
+
+  /* Secondary until Beat 9 — one primary CTA per viewport (05-interaction §3.2). */
+  .chrome__cta {
+    display: inline-flex; align-items: center;
+    min-block-size: 44px; padding-inline: var(--s-4);
+    border: 1px solid hsl(var(--border-control));
+    border-radius: var(--r-sm);
+    font-size: var(--fs-sm); font-weight: 500;
+    text-decoration: none;
+    transition: border-color var(--d-micro) var(--ease-entrance),
+                color var(--d-micro) var(--ease-entrance);
+  }
+  @media (hover: hover) {
+    .chrome__cta:hover { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
+  }
+
+  /* ── Block: chrome-footer ────────────────────────────────────────────── */
+  .chrome-footer {
+    margin-block-start: var(--s-24);
+    padding-block: var(--s-12) var(--s-16);
+    border-block-start: 1px solid hsl(var(--border-subtle));
+    color: hsl(var(--text-muted));
+    font-size: var(--fs-sm);
+    --stack-gap: var(--s-4);
+  }
+  .chrome-footer__tagline { color: hsl(var(--text)); font-weight: 600; }
+  .chrome-footer__nav { --cluster-gap: var(--s-4); }
+  .chrome-footer__disclosure,
+  .chrome-footer__legal { color: hsl(var(--text-subtle)); font-size: var(--fs-xs); }
+
+  /* ── Block: beat ─────────────────────────────────────────────────────────
+   * One idea per beat. Volume alternates: nothing is loud unless something
+   * adjacent is quiet (02-strategy.md §2). */
+  .beat {
+    position: relative;
+    padding-block: var(--beat-y);
+    --stack-gap: var(--s-6);
+  }
+
+  /* Reveal-in-the-wake: content becomes visible BEHIND the threshold sweep,
+   * not by rising 16px. A fade-and-rise would be identical on any competitor's
+   * site and would introduce a second motion idea competing with the one
+   * device (04-motion.md §3.4). Visible by default; .js opts into hiding. */
+  /* Scoped to .js-reveal, which reveal.js sets AT MODULE SCOPE — so the class
+   * that hides only exists if the code that reveals actually loaded. Scoping
+   * this to `.js` (set unconditionally in <head>) made a failed module leave
+   * the page permanently invisible: failing closed. */
+  .js-reveal .beat:not(.is-revealed) .beat__content { opacity: 0; }
+  .js-reveal .beat.is-revealed .beat__content {
+    animation: wake var(--d-slow) var(--ease-entrance) 180ms both;
+  }
+  /* Above the fold at load: present, not arriving. Animating the hero in
+   * would delay LCP by 700ms for no communicative gain. */
+  .js-reveal .beat.is-instant .beat__content { animation: none; opacity: 1; }
+  @keyframes wake {
+    from { opacity: 0; clip-path: inset(0 0 28% 0); }
+    to   { opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+
+  .beat__display {
+    font-size: var(--fs-display);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    max-inline-size: 18ch;
+  }
+  .beat__lede { font-size: var(--fs-lede); color: hsl(var(--text-muted)); max-inline-size: 52ch; }
+  .beat__foot { font-size: var(--fs-sm); color: hsl(var(--text-subtle)); }
+
+  .beat--hook { padding-block-start: var(--s-8); }
+
+  /* ── Block: guardian ─────────────────────────────────────────────────────
+   * A reproduction of the real UI built from the real tokens — never a
+   * screenshot, never a fake camera frame, never a feature that does not
+   * ship (03-brand.md §3.10). */
+  .guardian {
+    container-type: inline-size;
+    max-inline-size: var(--w-narrow);
+    padding: var(--s-6);
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--r-lg);
+    box-shadow: var(--elev-2);
+    display: flex; flex-direction: column; gap: var(--s-4);
+  }
+
+  .guardian__task {
+    display: flex; flex-direction: column; gap: var(--s-1);
+    padding-block-end: var(--s-4);
+    border-block-end: 1px solid hsl(var(--border-subtle));
+  }
+  .guardian__task strong { font-size: var(--fs-h3); }
+
+  .guardian__sources { display: flex; flex-direction: column; gap: var(--s-2); }
+  .guardian__pills { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+  .guardian__note { color: hsl(var(--text-subtle)); }
+
+  /* ── Block: pill (the source switch) ─────────────────────────────────────
+   * A radiogroup, not links: nothing navigates. All three stay visible
+   * because COMPARING them is the interaction (05-interaction §2.2 ⑤). */
+  .pill {
+    min-block-size: 44px;
+    padding-inline: var(--s-4);
+    background: hsl(var(--surface-elevated));
+    /* --border-control, not --border-strong: in light mode --surface and
+     * --surface-elevated are both #ffffff, so this border is the control's
+     * ONLY boundary (06-accessibility.md §3 Fix 3). */
+    border: 1px solid hsl(var(--border-control));
+    border-radius: var(--r-full);
+    color: hsl(var(--text-muted));
+    font-size: var(--fs-sm);
+    font-family: var(--mono);
+    cursor: pointer;
+    transition: border-color var(--d-micro) var(--ease-entrance),
+                color var(--d-micro) var(--ease-entrance),
+                background-color var(--d-micro) var(--ease-entrance);
+  }
+  @media (hover: hover) {
+    .pill:hover { border-color: hsl(var(--primary)); color: hsl(var(--text)); }
+  }
+  /* A press ACKNOWLEDGES; it decelerates. Only the selection COMMITS, and
+   * only the commit is allowed to overshoot (04-motion.md §8, finding 3). */
+  .pill:active { transform: scale(0.96); transition-timing-function: var(--ease-entrance); }
+  .pill[aria-checked="true"] {
+    background: hsl(var(--primary-subtle));
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+    transition-timing-function: var(--ease-commit);
+  }
+
+  /* ── Block: cascade ──────────────────────────────────────────────────── */
+  .cascade { display: flex; flex-direction: column; gap: var(--s-1); }
+
+  .cascade__row {
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4);
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--r-sm);
+    font-size: var(--fs-sm);
+    color: hsl(var(--text-muted));
+    border: 1px solid transparent;
+  }
+  .cascade__name { font-weight: 500; }
+  .cascade__state { font-family: var(--mono); font-size: var(--fs-xs); color: hsl(var(--text-subtle)); text-align: end; }
+
+  .cascade__row--quiet { opacity: .72; }
+
+  .cascade__row[data-status="checking"] { color: hsl(var(--text)); border-color: hsl(var(--border)); }
+  .cascade__row[data-status="passed"]   { color: hsl(var(--text-muted)); }
+  .cascade__row[data-status="decided"] {
+    color: hsl(var(--text));
+    background: hsl(var(--surface-elevated));
+    border-color: hsl(var(--primary));
+  }
+  /* The one lit row. The threshold, at component scale. */
+  .cascade__row[data-status="decided"] .cascade__state { color: hsl(var(--primary)); }
+
+  /* ── Block: verdict ──────────────────────────────────────────────────────
+   * A WORD, never a colour alone — survives forced-colors and colour
+   * blindness (06-accessibility.md §7). */
+  .verdict {
+    display: inline-flex; align-items: center;
+    padding: var(--s-1) var(--s-3);
+    border-radius: var(--r-full);
+    font-size: var(--fs-xs); font-weight: 600;
+    border: 1px solid currentColor;
+  }
+  .verdict--ok  { color: hsl(var(--primary)); }
+  .verdict--bad { color: hsl(var(--warning)); }
+
+  .js .guardian__result[hidden] { display: none; }
+  .guardian__result { display: flex; flex-direction: column; gap: var(--s-3); }
+  .js .guardian__result .verdict { animation: verdict-land var(--d-base) var(--ease-commit) both; }
+  @keyframes verdict-land { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+
+  /* ── Block: nudge ────────────────────────────────────────────────────────
+   * Enters from the coach edge, because it is SPOKEN BY that element
+   * (04-motion.md §2.4). Enter 200ms, exit 120ms — 0.6x. */
+  .nudge {
+    padding: var(--s-4);
+    background: hsl(var(--surface-elevated));
+    border: 1px solid hsl(var(--border));
+    border-inline-start: 2px solid hsl(var(--primary));
+    border-radius: var(--r-md);
+    box-shadow: var(--elev-2);
+  }
+  .nudge__line { font-size: var(--fs-body); }
+  .js .nudge { animation: nudge-in var(--d-fast) var(--ease-entrance) both; }
+  @keyframes nudge-in {
+    from { opacity: 0; transform: translateY(12px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* The static three-verdict list is the NO-JS truth. JS removes it. */
+  .guardian__static { display: flex; flex-direction: column; gap: var(--s-2); font-size: var(--fs-sm); color: hsl(var(--text-muted)); }
+  .guardian__static p { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+
+  @container (max-width: 26rem) {
+    .cascade__row { flex-direction: column; align-items: flex-start; gap: var(--s-1); }
+    .cascade__state { text-align: start; }
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * REDUCED MOTION — the system-level collapse. Duration goes to zero;
+ * INFORMATION never does. The cascade still tells you it checked four
+ * stages, instantly (04-motion.md §7.1).
+ *
+ * The one documented !important on the site: this must out-cascade every
+ * animation declaration, including ones written after it.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Decorative loops STOP rather than snapping to a final frame. */
+  .threshold__glow { animation: none !important; }
+  .threshold { transform: none !important; clip-path: none !important; }
+}

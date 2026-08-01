@@ -21,6 +21,11 @@
      opts into hiding it, so a blocked or failed script leaves a complete page.
      This is the only inline script on the site. -->
 <script>document.documentElement.classList.add('js')</script>
+<!-- Cloudflare Web Analytics — cookieless, deferred, and the ONLY third party
+     on this site. Kept deliberately (four origins became one) and disclosed in
+     the footer and in Beat 4, because a page arguing that nothing leaves your
+     machine cannot quietly ship an undisclosed request. -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script>
 <!-- #chrome:head end -->
 
 <title>LockinRa — the local-first focus guardian</title>

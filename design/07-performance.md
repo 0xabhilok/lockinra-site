@@ -179,7 +179,8 @@ Byte counts are **measured** with `gzip -9 -c <file> | wc -c` — the same comma
 | Build | LCP | CLS | INP | JS gz | CSS gz | HTML gz | Critical path | Scroll p95 |
 |---|---|---|---|---|---|---|---|---|
 | Baseline `858c2a4` | *splash-gated — §2.1* | — | — | 14,719 + ~45 KB CDN | *inline* | 32,582 | **~92 KB** | — |
-| **All 9 beats + 404** | — | — | — | **6,262** | **9,722** | **8,563** | **24,547 B** | — |
+| All 9 beats + 404 | — | — | — | 6,262 | 9,722 | 8,563 | 24,547 B | — |
+| **+ round 1 (Beat 6 surfaces, copy pass)** | — | — | — | **6,262** | **10,751** | **9,258** | **26,271 B** | — |
 | Budget | <1.8s | <0.02 | <150ms | 80,000 | 40,000 | — | — | ≥58 |
 | **Headroom** | — | — | — | **92% unused** | **76% unused** | — | **−73%** | — |
 

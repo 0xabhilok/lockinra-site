@@ -702,7 +702,54 @@
     border-radius: var(--r-md);
     display: flex; flex-direction: column; gap: var(--s-2);
   }
-  .cluster-card p { color: hsl(var(--text-muted)); font-size: var(--fs-sm); }
+  /* Direct child only. `.cluster-card p` (0,1,1) would out-specify the
+   * `.surface__*` classes (0,1,0) and silently flatten the reproduction's
+   * own hierarchy — caught by measuring, not by reading. */
+  .cluster-card > p { color: hsl(var(--text-muted)); font-size: var(--fs-sm); }
+
+  /* ── Block: surface — a product reproduction ────────────────────────────
+   * Built from the same tokens the app ships, so these are specimens of the
+   * product's craft rather than pictures of it. Identical framing across all
+   * four (same radius, same inset, same inner padding) because inconsistency
+   * here is where perceived quality leaks. aria-hidden: the surrounding copy
+   * already carries the meaning, and a screen reader does not need a
+   * decorative waveform read to it. */
+  .surface {
+    margin-block-start: auto;
+    padding: var(--s-3);
+    background: hsl(var(--bg-subtle));
+    border: 1px solid hsl(var(--border-subtle));
+    border-radius: var(--r-md);
+    display: flex; flex-direction: column; gap: var(--s-2);
+  }
+  .surface__cap { font-family: var(--mono); font-size: var(--fs-label); letter-spacing: .1em;
+                  text-transform: uppercase; color: hsl(var(--text-subtle)); }
+  .surface__quote { font-size: var(--fs-sm); color: hsl(var(--text)); }
+
+  /* task rows */
+  .srow { display: flex; align-items: center; gap: var(--s-2); font-size: var(--fs-xs); }
+  .srow__box { inline-size: 13px; block-size: 13px; border: 1.5px solid hsl(var(--border-control));
+               border-radius: 4px; flex: none; }
+  .srow__box--done { background: hsl(var(--primary)); border-color: hsl(var(--primary)); }
+  .srow__t { color: hsl(var(--text-muted)); }
+  .srow__t--done { text-decoration: line-through; color: hsl(var(--text-subtle)); }
+  .chip { margin-inline-start: auto; padding: 0 .4em; border-radius: var(--r-sm);
+          font-family: var(--mono); font-size: var(--fs-label); }
+  .chip--a { color: hsl(var(--primary)); border: 1px solid hsl(var(--primary)); }
+
+  /* capture waveform — static bars, not an animation. Nothing here is
+   * pretending to be live. */
+  .wave { display: flex; align-items: flex-end; gap: 3px; block-size: 34px; }
+  .wave i { flex: 1; block-size: var(--h); background: hsl(var(--primary) / .55); border-radius: 2px; }
+
+  /* screen-time bars */
+  .bars { display: flex; flex-direction: column; gap: var(--s-1); }
+  .bar { block-size: 7px; inline-size: var(--w); border-radius: var(--r-full); }
+  .bar--ok  { background: hsl(var(--primary)); }
+  .bar--mid { background: hsl(var(--primary) / .45); }
+  .bar--bad { background: hsl(var(--warning) / .7); }
+
+  .cluster-card { justify-content: flex-start; }
 
   /* ── Block: cmp (Beat 7) ─────────────────────────────────────────────── */
   .table-scroll { overflow-x: auto; border-radius: var(--r-md); }

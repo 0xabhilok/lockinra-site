@@ -145,7 +145,7 @@
       <h1 id="hook-h" class="beat__display">One of these is the work. <br>It can tell which.</h1>
       <p class="beat__lede measure">
         You said you'd build the onboarding flow. Then you opened a tab. Pick one and
-        watch it decide — the same four stages that run on your machine, in the same order.
+        watch it decide. It runs the same four stages your machine runs, in the same order.
       </p>
 
       <div class="guardian" data-guardian data-state="idle">
@@ -223,7 +223,7 @@
       <p class="beat__lede measure">
         Focus isn't a willpower problem. It's a negotiation you lose to yourself,
         quietly, in the fifteen seconds before you open the tab. Nothing that runs on
-        willpower survives that conversation — which is why a blocker you can switch
+        willpower survives that conversation, which is why a blocker you can switch
         off gets switched off.
       </p>
     </div>
@@ -304,13 +304,13 @@
       <ul class="flows">
         <li class="flow">
           <p class="flow__label mono">Stays on your disk</p>
-          <p>Tasks, notes, habits, activity, embeddings — a SQLite file on your own machine.</p>
+          <p>Tasks, notes, habits, activity, embeddings: a SQLite file on your own machine.</p>
         </li>
         <li class="flow">
           <p class="flow__label mono">Encrypted</p>
           <p>
             Activity URLs and window titles, semantic memory, integration tokens and
-            vaulted notes — with a key derived from your OS keychain (DPAPI on Windows).
+            vaulted notes, encrypted with a key derived from your OS keychain (DPAPI on Windows).
           </p>
         </li>
         <li class="flow flow--out">
@@ -330,7 +330,7 @@
         <h3>What isn't encrypted: your task titles and task notes.</h3>
         <p>
           They're stored as plain text in that SQLite file. Anyone with your unlocked
-          machine and a SQLite viewer can read them — the same as your notes app, your
+          machine and a SQLite viewer can read them, the same as your notes app, your
           calendar, and most of your disk. We could have said “encrypted at rest” and
           let you assume it covered everything. <strong>This page said that until
           August 2026. It was wrong, and it's fixed.</strong>
@@ -339,7 +339,7 @@
 
       <p class="beat__foot measure">
         This page loads one script: cookieless analytics from Cloudflare. Four origins
-        became one. Open devtools — that's the whole list.
+        became one. Open devtools; that's the whole list.
       </p>
     </div>
   </section>
@@ -359,7 +359,7 @@
       <ol class="ladder">
         <li class="ladder__row" style="--i:0"><span class="ladder__v mono">v1.6.0</span><span class="ladder__d mono">18 Jul 2026</span><span class="ladder__w">Screen Time overhaul, daily limits</span></li>
         <li class="ladder__row" style="--i:1"><span class="ladder__v mono">v1.5.1</span><span class="ladder__d mono">17 Jul 2026</span><span class="ladder__w">Extension-connection bug fixed</span></li>
-        <li class="ladder__row" style="--i:2"><span class="ladder__v mono">v1.5.0</span><span class="ladder__d mono">17 Jul 2026</span><span class="ladder__w">Layered memory — the coach remembers</span></li>
+        <li class="ladder__row" style="--i:2"><span class="ladder__v mono">v1.5.0</span><span class="ladder__d mono">17 Jul 2026</span><span class="ladder__w">Layered memory: the coach remembers</span></li>
         <li class="ladder__row" style="--i:3"><span class="ladder__v mono">v1.4.0</span><span class="ladder__d mono">11 Jul 2026</span><span class="ladder__w">On-device procedural soundscapes</span></li>
         <li class="ladder__row" style="--i:4"><span class="ladder__v mono">v1.3.0</span><span class="ladder__d mono">3 Jul 2026</span><span class="ladder__w">Guided welcome tour</span></li>
         <li class="ladder__row" style="--i:5"><span class="ladder__v mono">v1.2.0</span><span class="ladder__d mono">27 Jun 2026</span><span class="ladder__w">Notes redesign, one-click sign-in</span></li>
@@ -369,7 +369,7 @@
 
       <p>
         Published on the
-        <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a> —
+        <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a>,
         product <code>9N6KKXPCV2JW</code>. You can verify that without installing anything.
       </p>
 
@@ -390,25 +390,68 @@
       <p class="mono">Around the guardian</p>
       <h2 id="room-h">It guards a workspace, not a timer.</h2>
 
+      <!-- Each cluster carries a real product surface, reproduced in HTML from
+           the same tokens the app ships. Never a screenshot, never a fake
+           window chrome, never a feature that doesn't exist — and cropped
+           tight to the one interaction that matters, rather than a whole
+           window shrunk to fit (03-brand.md §3.10). -->
       <ul class="grid clusters">
         <li class="cluster-card">
           <h3>Do the work</h3>
           <p>Tasks, projects, an outliner with backlinks and block references.</p>
+          <div class="surface" aria-hidden="true">
+            <div class="srow">
+              <span class="srow__box srow__box--done"></span>
+              <span class="srow__t srow__t--done">Write the migration notes</span>
+            </div>
+            <div class="srow">
+              <span class="srow__box"></span>
+              <span class="srow__t">Build the onboarding flow</span>
+              <span class="chip chip--a">A</span>
+            </div>
+            <div class="srow">
+              <span class="srow__box"></span>
+              <span class="srow__t">Review the cascade tests</span>
+            </div>
+          </div>
         </li>
+
         <li class="cluster-card">
           <h3>Capture it</h3>
           <p>Voice to text, quick capture, and notes that feed the model's memory.</p>
+          <div class="surface" aria-hidden="true">
+            <div class="wave">
+              <i style="--h:30%"></i><i style="--h:62%"></i><i style="--h:88%"></i><i style="--h:54%"></i>
+              <i style="--h:96%"></i><i style="--h:40%"></i><i style="--h:72%"></i><i style="--h:26%"></i>
+              <i style="--h:58%"></i><i style="--h:84%"></i><i style="--h:36%"></i><i style="--h:66%"></i>
+            </div>
+            <p class="surface__cap">“remind me to review the cascade tests tomorrow”</p>
+          </div>
         </li>
+
         <li class="cluster-card">
           <h3>See it honestly</h3>
           <p>Screen time by app and site, habits, streaks, and a daily recap.</p>
+          <div class="surface" aria-hidden="true">
+            <div class="bars">
+              <span class="bar bar--ok" style="--w:74%"></span>
+              <span class="bar bar--mid" style="--w:41%"></span>
+              <span class="bar bar--bad" style="--w:23%"></span>
+            </div>
+            <p class="surface__cap">4h 12m focused · 1h 03m elsewhere</p>
+          </div>
         </li>
+
         <li class="cluster-card">
           <h3>Be argued with</h3>
           <p>
-            Three coach voices — supportive, dark humour, drill sergeant. Three ways of
+            Three coach voices: supportive, dark humour, drill sergeant. Three ways of
             refusing the same 2pm deal.
           </p>
+          <div class="surface" aria-hidden="true">
+            <p class="surface__quote">“You said this one mattered. It's still open.”</p>
+            <p class="surface__cap">coach · supportive</p>
+          </div>
         </li>
       </ul>
 
@@ -475,7 +518,7 @@
       <p class="beat__foot measure">
         <span class="mono">Pricing verified August 2026 from each vendor's own page.</span><br>
         Cold Turkey is the only other one-time purchase in the category. Todoist and
-        Motion are left out on purpose — they're task lists, and neither is trying to
+        Motion are left out on purpose: they're task lists, and neither is trying to
         do this job.
       </p>
     </div>
@@ -491,7 +534,7 @@
       <h2 id="cost-h">Free while it's in beta. No account, no card.</h2>
 
       <ul class="facts">
-        <li><strong>Runs on 8GB.</strong> 16GB is more comfortable. No GPU required — the small models are CPU-only, and that is a supported path, not a fallback.</li>
+        <li><strong>Runs on 8GB.</strong> 16GB is more comfortable. No GPU required. The small models are CPU-only, and that is a supported path, not a fallback.</li>
         <li><strong>~254 MB installed</strong> on Windows.</li>
         <li><strong>Five minutes</strong> to your first session. No terminal.</li>
         <li><strong>If it's ever paid, it's one-time.</strong> Not a subscription.</li>
@@ -501,7 +544,7 @@
       <div class="faq">
         <details>
           <summary>Does it work offline?</summary>
-          <p>Yes. Pull the cable and keep going — classification and coaching run on your machine. Nothing about the core product needs a network.</p>
+          <p>Yes. Pull the cable and keep going; classification and coaching run on your machine. Nothing about the core product needs a network.</p>
         </details>
         <details>
           <summary>Do I need an account?</summary>
@@ -513,7 +556,7 @@
         </details>
         <details>
           <summary>Can I just switch it off when it nags me?</summary>
-          <p>You can quit it. But blocks are extend-only while a session runs, and a watchdog puts back what you remove — because the whole product assumes the 2pm you will try to undo the 9am you.</p>
+          <p>You can quit it. But blocks are extend-only while a session runs, and a watchdog puts back what you remove, because the whole product assumes the 2pm you will try to undo the 9am you.</p>
         </details>
         <details>
           <summary>Is there a Mac build?</summary>
@@ -546,7 +589,7 @@
         <a class="download__alt" href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Get it on the Microsoft Store</a>
       </div>
 
-      <p class="beat__foot">No account. No card. Uninstall is a normal uninstall.</p>
+      <p class="beat__foot">Uninstall is a normal uninstall. Nothing stays behind.</p>
     </div>
   </section>
 

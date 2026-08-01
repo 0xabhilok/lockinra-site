@@ -25,7 +25,27 @@ const io = 'IntersectionObserver' in window
 // Only now may the stylesheet hide anything.
 document.documentElement.classList.add('js-reveal');
 
+// ── The failsafe ──────────────────────────────────────────────────────────
+// An observer can exist and still never fire: a tab that loads while
+// backgrounded does not run intersection callbacks in some engines, and a
+// page that was hidden at load would stay blank below the fold FOREVER.
+// Verified in-browser during Phase 10 — seven beats sat at opacity 0 after a
+// full-page scroll.
+//
+// So: if no callback has arrived shortly after load, the reveal system is
+// treated as broken and switched off entirely by dropping `.js-reveal`. Every
+// hiding rule is scoped to that class, so the page reverts to plain, visible
+// HTML. The cost is losing the scroll choreography for that session. The
+// alternative is an invisible page, and content always wins.
+let fired = false;
+const FAILSAFE_MS = 1200;
+
+setTimeout(() => {
+  if (!fired) document.documentElement.classList.remove('js-reveal');
+}, FAILSAFE_MS);
+
 function onIntersect(entries) {
+  fired = true;
   for (const { target, isIntersecting } of entries) {
     // Continuous: gates the ambient breath's animation-play-state.
     target.classList.toggle('is-onscreen', isIntersecting);

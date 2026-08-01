@@ -174,17 +174,39 @@ let t = performance.now(); const d = [];
 
 ## 7 · Results — filled in during Phase 10
 
-*Empty by design. These rows are measurements, and none have been taken. Nothing here is projected.*
+Byte counts are **measured** with `gzip -9 -c <file> | wc -c` — the same command that produced §2, so before and after are measured identically. Core Web Vitals rows stay empty until they are actually measured under the §6 conditions; an empty cell is a missing measurement, never an assumed pass.
 
-| Build | LCP | CLS | INP | JS gz | CSS gz | Requests | ATF weight | Scroll p95 |
+| Build | LCP | CLS | INP | JS gz | CSS gz | HTML gz | Critical path | Scroll p95 |
 |---|---|---|---|---|---|---|---|---|
-| Baseline `858c2a4` | *splash-gated — see §2.1* | — | — | ~60 KB (incl. CDN) | *inline* | ~10 + 4 origins | — | — |
-| Tokens + chrome | — | — | — | — | — | — | — | — |
-| + Beat 1 (signature) | — | — | — | — | — | — | — | — |
-| + Beats 2–5 | — | — | — | — | — | — | — | — |
-| + Beats 6–9 | — | — | — | — | — | — | — | — |
-| Secondary pages | — | — | — | — | — | — | — | — |
-| **Final** | — | — | — | — | — | — | — | — |
+| Baseline `858c2a4` | *splash-gated — §2.1* | — | — | 14,719 + ~45 KB CDN | *inline* | 32,582 | **~92 KB** | — |
+| **All 9 beats + 404** | — | — | — | **6,262** | **9,722** | **8,563** | **24,547 B** | — |
+| Budget | <1.8s | <0.02 | <150ms | 80,000 | 40,000 | — | — | ≥58 |
+| **Headroom** | — | — | — | **92% unused** | **76% unused** | — | **−73%** | — |
+
+Per-file, measured 2026-08-01:
+
+| File | Raw | Gzip |
+|---|---:|---:|
+| `index.html` (9 beats) | 29,952 | **8,563** |
+| `404.html` | 3,683 | 1,673 |
+| `assets/site.css` | 39,836 | **9,722** |
+| `assets/js/guardian.js` | 6,713 | 2,703 |
+| `assets/js/reveal.js` | 3,642 | 1,699 |
+| `assets/js/platform.js` | 1,177 | 652 |
+| `assets/js/main.js` | 1,152 | 611 |
+| `assets/js/motion.js` | 1,099 | 597 |
+| **JS total** | 13,783 | **6,262** |
+
+**The critical path went from ~92 KB to 24.5 KB — a 73% reduction — while the page gained an interactive signature moment it did not have before.** Most of that is deleting React, ReactDOM and the `dc-runtime`; the rest is that 648 inline `style=` attributes compress far worse than one stylesheet.
+
+Both projections in §3 were close and both were slightly optimistic: CSS came in at 9.7 KB against a 7 KB projection (the components layer carries more comment density than assumed — a deliberate trade, and it is 24% of budget), and JS at 6.3 KB against 4 KB (the guardian state machine and the reveal failsafe). Neither is near its budget, which is what the headroom was for.
+
+### 7.1 Still to measure
+
+LCP, CLS, INP and sustained scroll FPS require the §6 conditions (mid-tier mobile emulation, 4G throttle, 4× CPU slowdown) and a **compositing browser pane**. The pane is not currently displayed in this session, so those runs are pending rather than done. Two predictions are recorded now so they can be checked rather than rationalised later:
+
+- **CLS should be 0.000.** Every source is removed structurally, not mitigated (§4.1) — no webfonts, no un-dimensioned images, no late-injected content, and the platform probe collapses rather than inserts.
+- **The LCP element should be Beat 1's `<h1>`**, rendered from HTML in a system font with no blocking script. There is nothing on the critical path that could beat it.
 
 ---
 

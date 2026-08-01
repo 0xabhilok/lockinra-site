@@ -598,6 +598,214 @@
     .cascade__row { flex-direction: column; align-items: flex-start; gap: var(--s-1); }
     .cascade__state { text-align: start; }
   }
+
+  /* ── Block: reveal-words (Beat 2) ────────────────────────────────────────
+   * The site's ONE split text. Word granularity, not character: character
+   * level is 4x the nodes for a legibility cost, and at this size it reads
+   * as a slot machine. 8 words > 5, so the step compresses to 240/8 = 30ms
+   * rather than the total growing (04-motion.md §2.3). */
+  .reveal-words { font-size: var(--fs-h1); letter-spacing: -0.03em; line-height: 1.08; max-inline-size: 20ch; }
+  .reveal-words .w { display: inline-block; }
+
+  /* Beat 2 opts out of the container wake so the words are the reveal —
+   * two reveals stacked would multiply their opacities into mud. */
+  .js-reveal .beat--words.is-revealed .beat__content { animation: none; opacity: 1; }
+  .js-reveal .beat--words:not(.is-revealed) .beat__content { opacity: 1; }
+  .js-reveal .beat--words:not(.is-revealed) .w,
+  .js-reveal .beat--words:not(.is-revealed) .beat__lede { opacity: 0; }
+  .js-reveal .beat--words.is-revealed .w {
+    animation: word-in var(--d-base) var(--ease-entrance) calc(var(--i) * 30ms) both;
+  }
+  .js-reveal .beat--words.is-revealed .beat__lede {
+    animation: word-in var(--d-base) var(--ease-entrance) 320ms both;
+  }
+  @keyframes word-in { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ── Block: stage (Beat 3) ───────────────────────────────────────────── */
+  .stages { display: flex; flex-direction: column; gap: var(--s-3); counter-reset: stage; }
+  .stage {
+    padding: var(--s-4);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--r-md);
+    background: hsl(var(--bg-subtle));
+    display: flex; flex-direction: column; gap: var(--s-1);
+  }
+  .stage p:last-child { color: hsl(var(--text-muted)); max-inline-size: 62ch; }
+  .stage__n { color: hsl(var(--text-subtle)); }
+  /* The one lit row: the threshold, at component scale. */
+  .stage--last { border-color: hsl(var(--primary)); background: hsl(var(--surface)); }
+  .stage--last .stage__n { color: hsl(var(--primary)); }
+  .stage--quiet { opacity: .72; border-style: dashed; }
+
+  /* ── Block: flow (Beat 4) ────────────────────────────────────────────── */
+  .flows { display: flex; flex-direction: column; gap: var(--s-3); }
+  .flow {
+    padding: var(--s-4);
+    border-inline-start: 2px solid hsl(var(--border-strong));
+    display: flex; flex-direction: column; gap: var(--s-1);
+  }
+  .flow p:last-child { color: hsl(var(--text-muted)); max-inline-size: 62ch; }
+  .flow__label { color: hsl(var(--text-subtle)); }
+  /* Dashed AND coloured — never colour alone, so it survives forced-colors
+   * and colour blindness (06-accessibility.md §7). */
+  .flow--out { border-inline-start-style: dashed; border-inline-start-color: hsl(var(--warning)); }
+  .flow--out .flow__label { color: hsl(var(--warning)); }
+
+  /* ── Block: disclosure (Beat 4) ─────────────────────────────────────────
+   * The most important paragraph on the site. It gets the one elevated
+   * surface in this beat and nothing else competes with it. */
+  .disclosure {
+    padding: var(--s-6);
+    background: hsl(var(--surface));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--r-lg);
+    box-shadow: var(--elev-2);
+    display: flex; flex-direction: column; gap: var(--s-3);
+    max-inline-size: var(--w-prose);
+  }
+  .disclosure p { color: hsl(var(--text-muted)); }
+  .disclosure strong { color: hsl(var(--text)); }
+
+  /* ── Block: ladder (Beat 5) ──────────────────────────────────────────────
+   * Order carries meaning (dates are a sequence), so this list staggers.
+   * The ladder recedes with age, which is also the information. */
+  .ladder { display: flex; flex-direction: column; }
+  .ladder__row {
+    display: grid;
+    grid-template-columns: 5.5rem 7.5rem 1fr;
+    gap: var(--s-3);
+    align-items: baseline;
+    padding-block: var(--s-3);
+    border-block-end: 1px solid hsl(var(--border-subtle));
+    font-size: var(--fs-sm);
+  }
+  .ladder__v { color: hsl(var(--primary)); }
+  .ladder__d { color: hsl(var(--text-subtle)); }
+  .ladder__w { color: hsl(var(--text-muted)); }
+  .ladder__row:first-child { font-size: var(--fs-body); }
+  .ladder__row:first-child .ladder__w { color: hsl(var(--text)); }
+  .js-reveal .beat.is-revealed .ladder__row {
+    animation: word-in var(--d-base) var(--ease-entrance) calc(180ms + var(--i) * 30ms) both;
+  }
+  @media (max-width: 34rem) {
+    .ladder__row { grid-template-columns: 1fr 1fr; }
+    .ladder__w { grid-column: 1 / -1; }
+  }
+
+  /* ── Block: cluster-card (Beat 6) ────────────────────────────────────────
+   * Deliberately FLAT — four peers, no emphasis. A "loudest" cluster would
+   * imply a ranking that does not exist. */
+  .clusters { --grid-min: 15rem; }
+  .cluster-card {
+    padding: var(--s-4);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--r-md);
+    display: flex; flex-direction: column; gap: var(--s-2);
+  }
+  .cluster-card p { color: hsl(var(--text-muted)); font-size: var(--fs-sm); }
+
+  /* ── Block: cmp (Beat 7) ─────────────────────────────────────────────── */
+  .table-scroll { overflow-x: auto; border-radius: var(--r-md); }
+  .cmp { font-size: var(--fs-sm); min-inline-size: 44rem; }
+  .cmp th, .cmp td {
+    padding: var(--s-3);
+    border-block-end: 1px solid hsl(var(--border-subtle));
+    text-align: start;
+    white-space: nowrap;
+  }
+  .cmp thead th { color: hsl(var(--text-subtle)); font-size: var(--fs-xs); }
+  .cmp tbody th {
+    font-weight: 400; color: hsl(var(--text-muted));
+    position: sticky; inset-inline-start: 0;
+    background: hsl(var(--bg));
+  }
+  .cmp td { color: hsl(var(--text-muted)); }
+  .cmp__us { background: hsl(var(--surface-elevated)); color: hsl(var(--text)); font-weight: 500; }
+  .cmp thead .cmp__us { color: hsl(var(--primary)); box-shadow: inset 0 2px 0 hsl(var(--primary)); }
+
+  /* ── Block: facts (Beat 8) ───────────────────────────────────────────── */
+  .facts { display: flex; flex-direction: column; gap: var(--s-3); max-inline-size: var(--w-prose); }
+  .facts li { color: hsl(var(--text-muted)); padding-inline-start: var(--s-4); border-inline-start: 1px solid hsl(var(--border)); }
+  .facts strong { color: hsl(var(--text)); }
+
+  /* ── Block: faq (Beat 8) ─────────────────────────────────────────────────
+   * Native <details>: keyboard-accessible, screen-reader-correct, findable by
+   * find-in-page, and works with zero JS. A custom accordion would be
+   * strictly worse in all four. */
+  .faq__h { margin-block-start: var(--s-8); }
+  .faq { display: flex; flex-direction: column; max-inline-size: var(--w-prose); }
+  .faq details { border-block-end: 1px solid hsl(var(--border-subtle)); }
+  .faq summary {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+    padding-block: var(--s-4);
+    min-block-size: 44px;
+    font-size: var(--fs-h3); font-weight: 600;
+    color: hsl(var(--text-muted));
+    list-style: none;
+    transition: color var(--d-micro) var(--ease-entrance);
+  }
+  .faq summary::after {
+    content: "";
+    inline-size: .5rem; block-size: .5rem;
+    border-inline-end: 1.5px solid currentColor;
+    border-block-end: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--d-fast) var(--ease-entrance);
+    flex: none;
+  }
+  @media (hover: hover) { .faq summary:hover { color: hsl(var(--text)); } }
+  .faq details[open] summary { color: hsl(var(--text)); }
+  .faq details[open] summary::after { transform: rotate(-135deg); }
+  .faq details p { padding-block-end: var(--s-4); color: hsl(var(--text-muted)); }
+
+  /* ── Block: download / btn (Beat 9) ──────────────────────────────────── */
+  .download { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
+  .download__alt { font-size: var(--fs-sm); color: hsl(var(--text-muted)); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-block-size: 52px;
+    padding-inline: var(--s-6);
+    border-radius: var(--r-sm);
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-fg));
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background-color var(--d-micro) var(--ease-entrance);
+  }
+  /* No lift, no scale on hover: the voice is "calm, on your side, slightly
+   * immovable". The primary CTA is the last thing that should feel eager. */
+  @media (hover: hover) { .btn:hover { background: hsl(var(--primary-hover)); } }
+  .btn:active { transform: scale(.98); }
+
+  .btn--secondary {
+    background: hsl(var(--surface-elevated));
+    color: hsl(var(--text));
+    border-color: hsl(var(--border-control));
+  }
+  @media (hover: hover) {
+    .btn--secondary:hover { background: hsl(var(--surface-elevated)); border-color: hsl(var(--primary)); }
+  }
+
+  /* Platform detected: the alternates step DOWN to a text link. A collapse,
+   * never a removal — there is no state in which a visitor sees zero
+   * download links (05-interaction.md §4.1). */
+  .download[data-promoted="windows"] [data-platform="linux"],
+  .download[data-promoted="linux"] [data-platform="windows"] {
+    min-block-size: 0; padding-inline: 0;
+    background: none; border: 0;
+    color: hsl(var(--text-muted));
+    font-size: var(--fs-sm); font-weight: 400;
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--border-strong));
+    text-underline-offset: 0.2em;
+  }
+
+  /* ── Beat modifiers ──────────────────────────────────────────────────── */
+  .beat--quiet { --stack-gap: var(--s-8); }
+  .beat--decide { text-align: start; }
+  .beat--decide .beat__content { --stack-gap: var(--s-6); }
 }
 
 /* ───────────────────────────────────────────────────────────────────────────

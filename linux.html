@@ -28,14 +28,14 @@
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script>
 <!-- #chrome:head end -->
 
-<title>LockinRa for Linux (v1.3.0 · beta)</title>
-<meta name="description" content="A portable AppImage. It works, and it is three versions behind Windows — here is exactly what that costs you.">
+<title>LockinRa for Linux (v1.3.0 · beta, v1.7.0 next)</title>
+<meta name="description" content="A portable AppImage. It works, and it is three versions behind Windows — here is exactly what that costs you, and what v1.7.0 fixes.">
 <link rel="canonical" href="https://lockinra.xyz/linux.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockinra.xyz/linux.html">
 <meta property="og:site_name" content="LockinRa">
-<meta property="og:title" content="LockinRa for Linux (v1.3.0 · beta)">
-<meta property="og:description" content="A portable AppImage. It works, and it is three versions behind Windows — here is exactly what that costs you.">
+<meta property="og:title" content="LockinRa for Linux (v1.3.0 · beta, v1.7.0 next)">
+<meta property="og:description" content="A portable AppImage. It works, and it is three versions behind Windows — here is exactly what that costs you, and what v1.7.0 fixes.">
 <meta property="og:image" content="https://lockinra.xyz/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lockinra.xyz/assets/og.png">
@@ -67,9 +67,11 @@
       <p class="mono">Linux · beta</p>
       <h1 id="lx-h">One portable file, three versions behind.</h1>
       <p class="beat__lede">
-        The newest Linux build is <strong>v1.3.0</strong>, from 3 July 2026. Windows is
-        on v1.6.0. We would rather say that on the download page than point you at a
-        release that doesn't exist.
+        The newest published Linux build is <strong>v1.3.0</strong>, from 3 July 2026.
+        Windows is on v1.6.0. We would rather say that on the download page than point
+        you at a release that doesn't exist. <strong>v1.7.0</strong> closes the gap and
+        adds <code>.deb</code> and <code>.rpm</code> —
+        <a href="#lx-next">what changes</a>.
       </p>
 
       <p>
@@ -124,11 +126,57 @@
             <li>
               <strong>Desktop-app distraction detection</strong> works on X11 but is
               unreliable on <strong>Wayland</strong>, which is the default on many
-              distros. The browser-extension path still covers web distractions.
+              distros. This is not a bug we can fix: Wayland has no protocol for
+              reading another window's title, by design. The browser-extension path
+              still covers web distractions, and everything not derived from the
+              foreground window is unaffected.
             </li>
-            <li>The OS media-session mini-player and the installed-apps launcher list are Windows-only.</li>
+            <li>
+              The OS media-session mini-player and the installed-apps launcher list
+              are Windows-only <strong>in v1.3.0</strong>. Both are implemented for
+              Linux in v1.7.0 — see below.
+            </li>
             <li>No built-in auto-update yet — re-download to upgrade.</li>
           </ul>
+        </li>
+      </ul>
+
+      <h2 id="lx-next">What v1.7.0 changes</h2>
+      <p>
+        The Linux gap was never really about packaging. It was that the parts of the app
+        which talk to the operating system had one implementation, and it was the Windows
+        one. That is what v1.7.0 fixes.
+      </p>
+      <ul>
+        <li>
+          <strong>.deb and .rpm</strong> alongside the AppImage, with a proper
+          freedesktop entry — so the app shows up in your launcher instead of being a
+          file you remember where you put.
+        </li>
+        <li>
+          <strong>Run at login actually works.</strong> Electron's login-item API is a
+          documented no-op on Linux; LockinRa now writes an XDG autostart entry itself.
+          Under an AppImage it records the image's real path rather than the temporary
+          mount it is running from, which is why this looked like it worked and then
+          silently stopped after a reboot.
+        </li>
+        <li>
+          <strong>The app picker reads your <code>.desktop</code> entries</strong> —
+          system, user, Flatpak and Snap — instead of returning nothing.
+        </li>
+        <li>
+          <strong>Now playing</strong> reads any MPRIS player through
+          <code>playerctl</code>. If <code>playerctl</code> is not installed the panel
+          says nothing is playing, which is the truth rather than an error.
+        </li>
+        <li>
+          <strong>Close-to-tray refuses to hide</strong> when your session has no
+          status-icon host — a stock GNOME desktop has none, and hiding there used to
+          mean losing the window with no way back.
+        </li>
+        <li>
+          <strong>Local AI</strong> finds Ollama at any of the paths the install script,
+          your distro package or Snap put it at.
         </li>
       </ul>
 
@@ -140,8 +188,9 @@
       </ul>
 
       <p>
-        Windows is the primary platform and is
-        <a href="/#download">on v1.6.0</a>. There is no macOS build.
+        Windows has a current build and is <a href="/#download">on v1.6.0</a>.
+        macOS has no published build yet either —
+        <a href="/mac.html">it arrives in the same release</a>.
       </p>
     </div>
   </article>
@@ -154,6 +203,7 @@
     <nav class="cluster chrome-footer__nav" aria-label="Footer">
       <a href="/privacy.html">Privacy</a>
       <a href="/support.html">Support</a>
+      <a href="/mac.html">macOS</a>
       <a href="/linux.html">Linux</a>
       <a href="https://github.com/0xabhilok/lockinra-site/releases">Releases on GitHub</a>
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- #chrome:head start -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google Search Console ownership. Carried over from the pre-rebuild site —
+     removing it silently un-verifies the property. -->
+<meta name="google-site-verification" content="ynwm1QZAcKhX5B0qMXfZrve8gwUPjJP5s4UAPTmSyo4">
+<meta name="author" content="LockinRa">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="alternate icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0f100f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f8faf9" media="(prefers-color-scheme: light)">
+<!-- Sets the JS scope before first paint. Content is visible by DEFAULT and JS
+     opts into hiding it, so a blocked or failed script leaves a complete page.
+     This is the only inline script on the site. -->
+<script>document.documentElement.classList.add('js')</script>
+<!-- Cloudflare Web Analytics — cookieless, deferred, and the ONLY third party
+     on this site. Kept deliberately (four origins became one) and disclosed in
+     the footer and in Beat 4, because a page arguing that nothing leaves your
+     machine cannot quietly ship an undisclosed request. -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script>
+<!-- #chrome:head end -->
+
+<title>LockinRa for macOS (arriving in v1.7.0)</title>
+<meta name="description" content="The Mac build is written and CI produces it for Intel and Apple silicon. It has not been published yet — here is exactly what exists and what doesn't.">
+<link rel="canonical" href="https://lockinra.xyz/mac.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockinra.xyz/mac.html">
+<meta property="og:site_name" content="LockinRa">
+<meta property="og:title" content="LockinRa for macOS (arriving in v1.7.0)">
+<meta property="og:description" content="The Mac build is written and CI produces it for Intel and Apple silicon. It has not been published yet — here is exactly what exists and what doesn't.">
+<meta property="og:image" content="https://lockinra.xyz/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lockinra.xyz/assets/og.png">
+</head>
+<body>
+
+<!-- #chrome:header start -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="chrome">
+  <div class="wrap chrome__inner">
+    <a class="chrome__mark" href="/" aria-label="LockinRa — home">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 5 V17 H17"/>
+      </svg>
+      <span>LockinRa</span>
+    </a>
+    <nav aria-label="Primary">
+      <a class="chrome__cta" href="/#download">Download</a>
+    </nav>
+  </div>
+</header>
+<!-- #chrome:header end -->
+
+<main id="main" tabindex="-1">
+  <article class="beat" aria-labelledby="mac-h">
+    <div class="threshold" aria-hidden="true"><span class="threshold__glow"></span></div>
+    <div class="wrap beat__content doc">
+      <p class="mono">macOS · arriving in v1.7.0</p>
+      <h1 id="mac-h">Written, built, not yet published.</h1>
+      <p class="beat__lede">
+        There is no Mac download on this site today, and this page is not going to
+        invent one. What exists is the work: macOS support is written and merged, and
+        the release pipeline builds a signed <code>.dmg</code> and <code>.zip</code>
+        for Intel and Apple silicon on every tagged release. The first one is
+        <strong>v1.7.0</strong>. When it is published, this page becomes a download.
+      </p>
+
+      <h2>What "supported" had to mean first</h2>
+      <p>
+        Porting an Electron app to macOS is mostly free, which is exactly why bad Mac
+        ports are common: the app runs, so it looks finished. The parts that are not
+        free are the ones that touch the operating system directly, and each of these
+        was a real defect rather than a missing nicety.
+      </p>
+
+      <ul class="grid clusters">
+        <li class="cluster-card">
+          <h3>Fixed for the Mac build</h3>
+          <ul>
+            <li>
+              <strong>⌘C, ⌘V, ⌘X, ⌘Z, ⌘A and ⌘Q.</strong> macOS reads keyboard
+              equivalents from the menu bar. LockinRa had removed its application
+              menu — correct on Windows, and on a Mac it means you cannot copy or
+              paste anywhere in the app, including its own text fields.
+            </li>
+            <li>
+              <strong>Launching your apps.</strong> A <code>.app</code> is a folder,
+              not an executable. Workspaces now hand it to LaunchServices, which is
+              also what gives the app its Dock entry and its environment.
+            </li>
+            <li>
+              <strong>Finding your apps.</strong> The workspace picker reads your
+              Applications folders instead of returning an empty list.
+            </li>
+            <li>
+              <strong>Run at login</strong> starts LockinRa hidden, in the menu bar,
+              rather than throwing a dashboard at you on every boot.
+            </li>
+            <li>
+              <strong>Now playing</strong> in the focus mini-player reads Music and
+              Spotify, and never launches a player just to ask it a question.
+            </li>
+            <li>
+              <strong>Local AI</strong> finds Ollama wherever you installed it —
+              the app bundle, Homebrew on either architecture, or a manual install.
+            </li>
+          </ul>
+        </li>
+        <li class="cluster-card cluster-card--warn">
+          <h3>Known limits</h3>
+          <ul>
+            <li>
+              <strong>Window titles need Screen Recording permission.</strong> macOS
+              treats the title of another app's window as screen content. Without the
+              permission LockinRa still sees <em>which</em> app you are in, so app-level
+              focus detection works and title-aware detection does not. It is asked for
+              once, and refusing it degrades the feature rather than breaking the app.
+            </li>
+            <li>
+              <strong>The menu-bar icon is a colour tile, not a monochrome glyph.</strong>
+              A template icon keeps only the silhouette, and the LockinRa mark is a
+              filled square — it would render as a black block.
+            </li>
+            <li>
+              <strong>No auto-update on the first release.</strong> The
+              <code>.zip</code> that makes updates possible is built and published from
+              v1.7.0 onward, so updating <em>into</em> v1.7.0 is a manual download.
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>Signing and notarization</h2>
+      <p>
+        The build is configured for a Developer ID identity and Apple's notary service,
+        with the hardened runtime on. That last part is not a formality: the hardened
+        runtime blocks the just-in-time compilation that both the browser engine and the
+        on-device speech runtime depend on, so the app declares exactly the exceptions it
+        needs — JIT, the microphone, and permission to ask Music and Spotify what is
+        playing. Nothing broader.
+      </p>
+      <p>
+        Whether the published <code>.dmg</code> is signed depends on the credentials
+        present when it is built. An unsigned build is a development build and will not
+        be offered here as a download — Gatekeeper would be right to stop you.
+      </p>
+
+      <h2>System requirements</h2>
+      <ul>
+        <li>macOS 11 Big Sur or newer, on Apple silicon or Intel.</li>
+        <li>8 GB of RAM. 16 GB is more comfortable. No GPU required.</li>
+        <li>Roughly 254 MB installed. The local models are most of it.</li>
+      </ul>
+
+      <p>
+        Windows has a current build and is <a href="/#download">on v1.6.0</a>.
+        Linux has a working AppImage and is <a href="/linux.html">three versions
+        behind</a> until v1.7.0.
+      </p>
+    </div>
+  </article>
+</main>
+
+<!-- #chrome:footer start -->
+<footer class="chrome-footer">
+  <div class="wrap stack">
+    <p class="chrome-footer__tagline">The local-first focus guardian.</p>
+    <nav class="cluster chrome-footer__nav" aria-label="Footer">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/support.html">Support</a>
+      <a href="/mac.html">macOS</a>
+      <a href="/linux.html">Linux</a>
+      <a href="https://github.com/0xabhilok/lockinra-site/releases">Releases on GitHub</a>
+      <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a>
+    </nav>
+    <p class="chrome-footer__disclosure measure">
+      This page loads one cookieless analytics script from Cloudflare. Nothing else.
+      Open devtools and check.
+    </p>
+    <p class="chrome-footer__legal">© 2026 LockinRa. Free while in beta.</p>
+  </div>
+</footer>
+<!-- #chrome:footer end -->
+
+</body>
+</html>

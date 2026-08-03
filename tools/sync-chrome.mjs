@@ -20,7 +20,7 @@ import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const CANONICAL = 'index.html';
-const PAGES = ['404.html', 'linux.html', 'privacy.html', 'support.html'];
+const PAGES = ['404.html', 'linux.html', 'mac.html', 'privacy.html', 'support.html'];
 const BLOCKS = ['head', 'header', 'footer'];
 
 const mode = process.argv.includes('--write') ? 'write' : 'check';

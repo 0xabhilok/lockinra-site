@@ -7,9 +7,16 @@ import { observe } from './reveal.js';
 import { mount } from './guardian.js';
 import { promote } from './platform.js';
 import { watch } from './motion.js';
+import { scrub } from './cascade.js';
 
 function init() {
   try { watch(); } catch { /* motion policy is an enhancement */ }
+
+  // Before observe(), so the listener is attached in this same synchronous
+  // tick — the observer's first callback lands on the next frame.
+  try {
+    document.querySelectorAll('[data-cascade]').forEach(scrub);
+  } catch { /* the cascade is drawn at full progress by default */ }
 
   try {
     document.querySelectorAll('.beat').forEach(observe);

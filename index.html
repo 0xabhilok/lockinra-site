@@ -63,7 +63,7 @@
       "@type": "SoftwareApplication",
       "name": "LockinRa",
       "applicationCategory": "ProductivityApplication",
-      "operatingSystem": "Windows 10, Windows 11, Linux",
+      "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
       "url": "https://lockinra.xyz/",
       "softwareVersion": "1.6.0",
       "datePublished": "2026-07-18",
@@ -243,13 +243,18 @@
         reach the model at all.
       </p>
 
-      <ol class="stages">
-        <li class="stage">
+      <!-- data-cascade: the rail draws top-to-bottom scrubbed to scroll, and each
+           stage lights as it arrives. --i is the stage's position in that draw.
+           Where `animation-timeline: view()` exists the browser scrubs it off the
+           main thread; where it doesn't, cascade.js drives the same variable. If
+           neither runs, the registered initial value leaves the list fully lit. -->
+      <ol class="stages" data-cascade>
+        <li class="stage" style="--i:0">
           <p class="stage__n mono">Stage 1</p>
           <h3>Hard rules</h3>
           <p>A domain and app list. Instant, deterministic, no model involved.</p>
         </li>
-        <li class="stage">
+        <li class="stage" style="--i:1">
           <p class="stage__n mono">Stage 2</p>
           <h3>Your corrections</h3>
           <p>
@@ -257,12 +262,12 @@
             toward recent ones, and it only counts if the matches agree.
           </p>
         </li>
-        <li class="stage">
+        <li class="stage" style="--i:2">
           <p class="stage__n mono">Stage 3</p>
           <h3>Title keywords</h3>
           <p>A cheap read of the page or window title.</p>
         </li>
-        <li class="stage stage--last">
+        <li class="stage stage--last" style="--i:3">
           <p class="stage__n mono">Stage 4</p>
           <h3>The local model</h3>
           <p>
@@ -301,19 +306,21 @@
         it in about four seconds: pull your network cable and keep working.
       </p>
 
+      <!-- The paths draw from the disk outward, in the wake of this beat's own
+           threshold. The one that leaves draws last and stops at a wall. -->
       <ul class="flows">
-        <li class="flow">
+        <li class="flow" style="--i:0">
           <p class="flow__label mono">Stays on your disk</p>
           <p>Tasks, notes, habits, activity, embeddings: a SQLite file on your own machine.</p>
         </li>
-        <li class="flow">
+        <li class="flow" style="--i:1">
           <p class="flow__label mono">Encrypted</p>
           <p>
             Activity URLs and window titles, semantic memory, integration tokens and
             vaulted notes, encrypted with a key derived from your OS keychain (DPAPI on Windows).
           </p>
         </li>
-        <li class="flow flow--out">
+        <li class="flow flow--out" style="--i:2">
           <p class="flow__label mono">Leaves, only if you connect it</p>
           <p>
             Google, Outlook, GitHub, Slack. Off by default, and off until you sign in
@@ -374,9 +381,15 @@
       </p>
 
       <p class="beat__foot measure">
-        Linux is behind. The newest AppImage is <strong>v1.3.0</strong>, from July. It
-        works; it's three versions old, and we'd rather say so than point you at a
-        download that doesn't exist.
+        Windows is the platform with a current build. The newest Linux AppImage is
+        <strong>v1.3.0</strong>, from July — it works, and it is three versions old.
+        macOS has never had a public build at all. All three change in
+        <strong>v1.7.0</strong>: the Mac and Linux code has landed and CI builds
+        <code>.dmg</code>, <code>.AppImage</code>, <code>.deb</code> and
+        <code>.rpm</code> on every release. Until that release is published, this page
+        will keep pointing you at the files that actually exist — see
+        <a href="/mac.html">where macOS stands</a> and
+        <a href="/linux.html">where Linux stands</a>.
       </p>
     </div>
   </section>
@@ -533,11 +546,13 @@
       <p class="mono">What it costs</p>
       <h2 id="cost-h">Free while it's in beta. No account, no card.</h2>
 
+      <!-- Order carries meaning here: the list leads with the 8GB path
+           deliberately, so it staggers (04-motion.md §2.3). -->
       <ul class="facts">
-        <li><strong>Runs on 8GB.</strong> 16GB is more comfortable. No GPU required. The small models are CPU-only, and that is a supported path, not a fallback.</li>
-        <li><strong>~254 MB installed</strong> on Windows.</li>
-        <li><strong>Five minutes</strong> to your first session. No terminal.</li>
-        <li><strong>If it's ever paid, it's one-time.</strong> Not a subscription.</li>
+        <li style="--i:0"><strong>Runs on 8GB.</strong> 16GB is more comfortable. No GPU required. The small models are CPU-only, and that is a supported path, not a fallback.</li>
+        <li style="--i:1"><strong>~254 MB installed</strong> on Windows. Similar on macOS and Linux — the local models are the weight, and they are the point.</li>
+        <li style="--i:2"><strong>Five minutes</strong> to your first session. No terminal.</li>
+        <li style="--i:3"><strong>If it's ever paid, it's one-time.</strong> Not a subscription.</li>
       </ul>
 
       <h3 class="faq__h">The questions you're about to ask</h3>
@@ -560,7 +575,11 @@
         </details>
         <details>
           <summary>Is there a Mac build?</summary>
-          <p>Not yet. Windows is the primary platform and Linux is in beta at v1.3.0.</p>
+          <p>Not a published one yet, and we won't pretend otherwise. macOS support is written and CI builds signed <code>.dmg</code> and <code>.zip</code> for both Intel and Apple silicon — it ships with v1.7.0. <a href="/mac.html">What that covers, and what it doesn't.</a></p>
+        </details>
+        <details>
+          <summary>What about Linux?</summary>
+          <p>There is a working AppImage today at v1.3.0. v1.7.0 brings it current and adds <code>.deb</code> and <code>.rpm</code>, a proper launcher entry, and run-at-login. <a href="/linux.html">The honest state of it.</a></p>
         </details>
       </div>
     </div>
@@ -576,7 +595,13 @@
 
       <!-- No-JS default: ALL platforms, Windows first, each with its real
            version and size. JS collapses the alternates rather than inserting
-           a promoted link, so it removes height and cannot shift layout. -->
+           a promoted link, so it removes height and cannot shift layout.
+
+           macOS deliberately links to its page, not to a file: the build is
+           written and CI produces it, but no macOS release has been PUBLISHED
+           yet. A button here that 404s would be the exact failure Beat 5
+           criticises. When v1.7.0 ships, this becomes a download href like the
+           other two. -->
       <div class="download" data-download>
         <a class="btn" data-platform="windows"
            href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe">
@@ -585,6 +610,9 @@
         <a class="btn btn--secondary" data-platform="linux"
            href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-linux-x86_64.AppImage">
           Linux AppImage (v1.3.0) — 276 MB
+        </a>
+        <a class="btn btn--secondary" data-platform="mac" href="/mac.html">
+          macOS — where it stands
         </a>
         <a class="download__alt" href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Get it on the Microsoft Store</a>
       </div>
@@ -602,6 +630,7 @@
     <nav class="cluster chrome-footer__nav" aria-label="Footer">
       <a href="/privacy.html">Privacy</a>
       <a href="/support.html">Support</a>
+      <a href="/mac.html">macOS</a>
       <a href="/linux.html">Linux</a>
       <a href="https://github.com/0xabhilok/lockinra-site/releases">Releases on GitHub</a>
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW">Microsoft Store</a>

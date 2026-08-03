@@ -14,6 +14,27 @@
 @layer tokens, reset, base, layout, components, utilities;
 
 /* ───────────────────────────────────────────────────────────────────────────
+ * The one registered custom property. It carries Beat 3's scroll position,
+ * and it is registered rather than plain for two reasons: only a registered
+ * property can be INTERPOLATED by a keyframe (which is what lets the native
+ * scroll timeline scrub it off the main thread), and only a registered
+ * property can declare an initial value.
+ *
+ * initial-value: 1 means FULLY DRAWN. That is the fail-open default demanded
+ * by 04-motion.md §7.3 — no JS, no scroll-timeline support, a dead module, a
+ * thrown error: every one of them lands on a fully lit, fully legible list.
+ * The animation only ever takes it away and gives it back.
+ *
+ * Lives outside @layer because @property is not subject to the cascade and
+ * declaring it inside `tokens` would imply it is.
+ * ─────────────────────────────────────────────────────────────────────────── */
+@property --cascade-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
  * TOKENS — the only layer permitted to contain a literal value.
  * ─────────────────────────────────────────────────────────────────────────── */
 @layer tokens {
@@ -114,6 +135,16 @@
     --d-breath: 4500ms;
 
     --stagger-step: 60ms;
+    /* Hard ceiling on TOTAL added delay. Past 5 items the step compresses
+     * (step = min(60ms, 240ms / n)) rather than the total growing, so a long
+     * list reads as one soft wave and never as a queue (04-motion.md §2.3).
+     * Every staggered list below derives its step from these two; none picks
+     * a number by hand. */
+    --stagger-max:  240ms;
+    /* How far the content trails the threshold sweep. It is one constant, not
+     * a number retyped per component — anything that arrives "in the wake"
+     * arrives at the same lag or the wake is not a single event. */
+    --d-wake-lag: 180ms;
     --parallax-depth: 1;   /* neutralised to 0 under reduced motion */
   }
 
@@ -347,9 +378,6 @@
     block-size: 1px;
     background: linear-gradient(90deg,
       transparent, hsl(var(--primary) / .5) 18%, hsl(var(--primary) / .5) 82%, transparent);
-    /* Real perspective: the parallax differential falls out of the projection
-     * rather than a hand-picked percentage, so it is correct at every zoom. */
-    transform: translateZ(calc(-1px * var(--parallax-depth)));
   }
 
   .threshold__glow {
@@ -375,6 +403,64 @@
    * zero — on a page that answers "will it eat my battery" (04-motion §3.2). */
   .beat:not(.is-onscreen) .threshold__glow,
   .is-hidden-tab .threshold__glow { animation-play-state: paused; }
+
+  /* ── Parallax, corrected ──────────────────────────────────────────────────
+   * 04-motion.md §4 row 4 specified the differential as REAL perspective: the
+   * layer at translateZ(-1px) inside a `perspective: 4px` container. That
+   * shipped as a translateZ with NO perspective declared anywhere, which is a
+   * no-op — the transform did nothing and the differential the comment
+   * promised never existed.
+   *
+   * It is not fixed by adding `perspective` here either. CSS 3D parallax
+   * requires the perspective on the SCROLL ROOT, so honouring the spec
+   * literally would mean restructuring html/body — overflow, stacking, and
+   * every position:fixed on the page — around a decorative 1px line.
+   *
+   * The differential is taken from the scroll timeline instead. Same intent,
+   * composited, off the main thread, correct at every zoom, no layout
+   * surgery, and still governed by --parallax-depth, which reduced motion
+   * sets to 0 (so both keyframes collapse to translateY(0) and the layer is
+   * provably static rather than merely slow). ~12px over a full cover range
+   * is far under §4's 8% ceiling — the brief's "below conscious notice".
+   *
+   * Declared AFTER .is-instant so the hero keeps its sweep-less "present, not
+   * arriving" treatment while still drifting. */
+  @supports (animation-timeline: view()) {
+    /* Ungated, for the same reason the cascade is: the drift hides nothing,
+     * so it needs no fail-open class in front of it, and gating it would lose
+     * the effect entirely in a tab that loaded in the background. */
+    .threshold {
+      animation-name: threshold-drift;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+    /* Where the reveal system is live, the sweep runs alongside the drift —
+     * two animations, two timelines, one on time and one on scroll. */
+    .js-reveal .beat.is-revealed .threshold {
+      animation-name: threshold-sweep, threshold-drift;
+      animation-duration: var(--d-slow), auto;
+      animation-timing-function: var(--ease-move), linear;
+      animation-fill-mode: both, both;
+      animation-timeline: auto, view();
+      animation-range: normal, cover;
+    }
+    .js-reveal .beat.is-instant .threshold {
+      animation-name: threshold-drift;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: cover;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes threshold-drift {
+    from { transform: translateY(calc(-6px * var(--parallax-depth))); }
+    to   { transform: translateY(calc(6px * var(--parallax-depth))); }
+  }
 
   @keyframes threshold-sweep { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   @keyframes threshold-breathe {
@@ -413,6 +499,9 @@
   @media (hover: hover) {
     .chrome__cta:hover { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
   }
+  /* Matches .btn:active. Every control that can be pressed acknowledges the
+   * press within --d-micro; an element with no pressed state is a defect. */
+  .chrome__cta:active { transform: scale(.98); }
 
   /* ── Block: chrome-footer ────────────────────────────────────────────── */
   .chrome-footer {
@@ -447,7 +536,7 @@
    * the page permanently invisible: failing closed. */
   .js-reveal .beat:not(.is-revealed) .beat__content { opacity: 0; }
   .js-reveal .beat.is-revealed .beat__content {
-    animation: wake var(--d-slow) var(--ease-entrance) 180ms both;
+    animation: wake var(--d-slow) var(--ease-entrance) var(--d-wake-lag) both;
   }
   /* Above the fold at load: present, not arriving. Animating the hero in
    * would delay LCP by 700ms for no communicative gain. */
@@ -604,7 +693,14 @@
    * level is 4x the nodes for a legibility cost, and at this size it reads
    * as a slot machine. 8 words > 5, so the step compresses to 240/8 = 30ms
    * rather than the total growing (04-motion.md §2.3). */
-  .reveal-words { font-size: var(--fs-h1); letter-spacing: -0.03em; line-height: 1.08; max-inline-size: 20ch; }
+  .reveal-words {
+    font-size: var(--fs-h1); letter-spacing: -0.03em; line-height: 1.08; max-inline-size: 20ch;
+    /* Eight words, so the step compresses to 240/8 = 30ms rather than the
+     * total growing. Derived, not typed: the sentence can gain a word and the
+     * ceiling still holds. */
+    --n: 8;
+    --stagger: min(var(--stagger-step), calc(var(--stagger-max) / var(--n)));
+  }
   .reveal-words .w { display: inline-block; }
 
   /* Beat 2 opts out of the container wake so the words are the reveal —
@@ -614,42 +710,190 @@
   .js-reveal .beat--words:not(.is-revealed) .w,
   .js-reveal .beat--words:not(.is-revealed) .beat__lede { opacity: 0; }
   .js-reveal .beat--words.is-revealed .w {
-    animation: word-in var(--d-base) var(--ease-entrance) calc(var(--i) * 30ms) both;
+    animation: word-in var(--d-base) var(--ease-entrance) calc(var(--i) * var(--stagger)) both;
   }
+  /* --d-base (320ms) lands the lede just after the final word has started but
+   * before it has settled. The slight overlap is deliberate: a clean gap here
+   * reads as two separate events rather than one sentence arriving. */
   .js-reveal .beat--words.is-revealed .beat__lede {
-    animation: word-in var(--d-base) var(--ease-entrance) 320ms both;
+    animation: word-in var(--d-base) var(--ease-entrance) var(--d-base) both;
   }
   @keyframes word-in { from { opacity: 0; } to { opacity: 1; } }
 
-  /* ── Block: stage (Beat 3) ───────────────────────────────────────────── */
-  .stages { display: flex; flex-direction: column; gap: var(--s-3); counter-reset: stage; }
+  /* ── Block: stage (Beat 3) ───────────────────────────────────────────────
+   * THE FOCAL MOMENT, and the site's one scroll-scrubbed section.
+   *
+   * The claim this beat makes — "the expensive one runs last" — is a claim
+   * about ORDER, and order is precisely what a static list communicates worst
+   * (04-motion.md §4 row 1). So the cascade draws itself: a rail fills
+   * top-to-bottom scrubbed to scroll position, and each stage lights as the
+   * rail reaches it. The visitor does not read that stage 4 comes last; they
+   * watch it arrive last.
+   *
+   * This is not a scroll reveal wearing a costume. It is the same device the
+   * whole site is built on — light travelling along a line — pointed at the
+   * one claim that needs sequence to be legible, and it is only expressible
+   * on a page that already has a threshold.
+   *
+   * ONE variable drives both paths, so there is no second implementation to
+   * drift: the native scroll timeline and cascade.js write the same
+   * --cascade-progress and every rule below reads it. */
+  .stages {
+    position: relative;
+    display: flex; flex-direction: column; gap: var(--s-3);
+    padding-inline-start: var(--s-6);
+  }
+  /* The rail. Its fill IS the scroll position — nothing else encodes it. */
+  .stages::before {
+    content: "";
+    position: absolute;
+    inset-block: var(--s-4);
+    inset-inline-start: 0;
+    inline-size: 1px;
+    background: linear-gradient(180deg, hsl(var(--primary) / .55), hsl(var(--primary) / .18));
+    clip-path: inset(0 0 calc(100% - var(--cascade-progress) * 100%) 0);
+  }
+
   .stage {
+    /* Stage i is lighting while progress crosses [i/4, (i+1)/4]. Four stages
+     * decide; the fallback below opts out entirely. */
+    --lit: clamp(0, calc(var(--cascade-progress) * 4 - var(--i)), 1);
+    position: relative;
     padding: var(--s-4);
     border: 1px solid hsl(var(--border));
     border-radius: var(--r-md);
     background: hsl(var(--bg-subtle));
     display: flex; flex-direction: column; gap: var(--s-1);
   }
+  /* The marker, sitting ON the rail. opacity and transform only: the scrub
+   * runs every frame, so nothing in it may touch layout or paint (§6.1). */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--s-4) + 4px);
+    inset-inline-start: calc(-1 * var(--s-6) - 4px);
+    inline-size: 7px; block-size: 7px;
+    border-radius: var(--r-full);
+    background: hsl(var(--primary));
+    opacity: calc(.16 + .84 * var(--lit));
+    transform: scale(calc(.7 + .3 * var(--lit)));
+  }
+  /* The lit edge, as an opacity-only overlay. Scrubbing border-color would
+   * repaint the box every frame; cross-fading a second border does not. */
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border: 1px solid hsl(var(--primary) / .3);
+    border-radius: var(--r-md);
+    opacity: var(--lit);
+    pointer-events: none;
+  }
   .stage p:last-child { color: hsl(var(--text-muted)); max-inline-size: 62ch; }
   .stage__n { color: hsl(var(--text-subtle)); }
-  /* The one lit row: the threshold, at component scale. */
-  .stage--last { border-color: hsl(var(--primary)); background: hsl(var(--surface)); }
+  /* The expensive one. It was always the emphasised row; now that emphasis is
+   * also the payoff of the draw, because it is the last thing to light. */
+  .stage--last { background: hsl(var(--surface)); }
+  .stage--last::after { border-color: hsl(var(--primary)); }
   .stage--last .stage__n { color: hsl(var(--primary)); }
-  .stage--quiet { opacity: .72; border-style: dashed; }
+  /* The fallback is drawn permanently and NEVER lights. That is the honest
+   * depiction: the stage is real, and what it does is stay silent (§5.2). */
+  .stage--quiet { --lit: 0; opacity: .72; border-style: dashed; }
 
-  /* ── Block: flow (Beat 4) ────────────────────────────────────────────── */
-  .flows { display: flex; flex-direction: column; gap: var(--s-3); }
+  /* CSS-native first (§6.2): the browser scrubs the property off the main
+   * thread, with zero scroll listeners and no JS on the critical path.
+   * cascade.js supplies the identical variable only where this is missing.
+   *
+   * DELIBERATELY NOT scoped to .js-reveal. That class gates the rules which
+   * HIDE things, so that a failed module can never leave content invisible —
+   * but this animation hides nothing. Its fail-open state is guaranteed one
+   * level lower, by @property's initial-value of 1. Scoping it to .js-reveal
+   * would mean a tab that loads in the background (where the observer never
+   * fires and the failsafe drops the class) loses the cascade for the whole
+   * session, and it would throw away the one real advantage of the native
+   * path: it needs no JavaScript at all. Verified in-browser — the bug was
+   * live for exactly as long as it took to look. */
+  @supports (animation-timeline: view()) {
+    .stages {
+      animation: cascade-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+  }
+  @keyframes cascade-draw { from { --cascade-progress: 0; } to { --cascade-progress: 1; } }
+
+  /* ── Block: flow (Beat 4) ────────────────────────────────────────────────
+   * Scroll storytelling at LOW intensity — the same device as Beat 3, turned
+   * down, because this beat argues with a paragraph and the diagram only has
+   * to agree with it (04-motion.md §4 row 1).
+   *
+   * The paths draw from the disk outward. The one that leaves the machine
+   * draws LAST and stops at a wall, so the shape of the claim is visible
+   * before the words are read. */
+  .flows {
+    display: flex; flex-direction: column; gap: var(--s-3);
+    /* Three items, so the step is the full base: min(60ms, 240/3) = 60ms. */
+    --n: 3;
+    --stagger: min(var(--stagger-step), calc(var(--stagger-max) / var(--n)));
+  }
   .flow {
+    position: relative;
     padding: var(--s-4);
     border-inline-start: 2px solid hsl(var(--border-strong));
     display: flex; flex-direction: column; gap: var(--s-1);
+    --draw-stop: 0%;
   }
   .flow p:last-child { color: hsl(var(--text-muted)); max-inline-size: 62ch; }
   .flow__label { color: hsl(var(--text-subtle)); }
+
+  /* The travelling light, as an overlay ON the border rather than instead of
+   * it. The border underneath is the accessible layer and is never animated,
+   * so forced-colors, no-JS, and a failed module all keep the solid/dashed
+   * distinction that actually carries the meaning. */
+  .flow::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: -2px;
+    inline-size: 2px;
+    background: hsl(var(--primary));
+    clip-path: inset(0 0 var(--draw-stop) 0);
+  }
+  .js-reveal .beat:not(.is-revealed) .flow::before { clip-path: inset(0 0 100% 0); }
+  .js-reveal .beat.is-revealed .flow::before {
+    animation: flow-draw var(--d-slow) var(--ease-move)
+               calc(var(--d-fast) + var(--i) * var(--stagger)) both;
+  }
+  @keyframes flow-draw {
+    from { clip-path: inset(0 0 100% 0); }
+    to   { clip-path: inset(0 0 var(--draw-stop) 0); }
+  }
+
   /* Dashed AND coloured — never colour alone, so it survives forced-colors
    * and colour blindness (06-accessibility.md §7). */
   .flow--out { border-inline-start-style: dashed; border-inline-start-color: hsl(var(--warning)); }
   .flow--out .flow__label { color: hsl(var(--warning)); }
+  /* The overlay stays dashed too. A solid overlay on a dashed border would
+   * repaint the one distinction this row exists to make. */
+  .flow--out::before {
+    background: repeating-linear-gradient(180deg,
+      hsl(var(--warning)) 0 6px, transparent 6px 12px);
+  }
+  .flow--out { --draw-stop: 38%; }
+  /* The wall. A real tick where the path stops, not an implication of one. */
+  .flow--out::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 62%;
+    inset-inline-start: -2px;
+    inline-size: var(--s-4); block-size: 2px;
+    background: hsl(var(--warning));
+  }
+  .js-reveal .beat:not(.is-revealed) .flow--out::after { opacity: 0; }
+  .js-reveal .beat.is-revealed .flow--out::after {
+    animation: word-in var(--d-fast) var(--ease-entrance)
+               calc(var(--d-fast) + var(--i) * var(--stagger) + var(--d-slow)) both;
+  }
 
   /* ── Block: disclosure (Beat 4) ─────────────────────────────────────────
    * The most important paragraph on the site. It gets the one elevated
@@ -669,7 +913,13 @@
   /* ── Block: ladder (Beat 5) ──────────────────────────────────────────────
    * Order carries meaning (dates are a sequence), so this list staggers.
    * The ladder recedes with age, which is also the information. */
-  .ladder { display: flex; flex-direction: column; }
+  .ladder {
+    display: flex; flex-direction: column;
+    /* Eight releases → 240/8 = 30ms. Same derivation as the word reveal, so
+     * two lists of the same length read at the same speed by construction. */
+    --n: 8;
+    --stagger: min(var(--stagger-step), calc(var(--stagger-max) / var(--n)));
+  }
   .ladder__row {
     display: grid;
     grid-template-columns: 5.5rem 7.5rem 1fr;
@@ -685,7 +935,8 @@
   .ladder__row:first-child { font-size: var(--fs-body); }
   .ladder__row:first-child .ladder__w { color: hsl(var(--text)); }
   .js-reveal .beat.is-revealed .ladder__row {
-    animation: word-in var(--d-base) var(--ease-entrance) calc(180ms + var(--i) * 30ms) both;
+    animation: word-in var(--d-base) var(--ease-entrance)
+               calc(var(--d-wake-lag) + var(--i) * var(--stagger)) both;
   }
   @media (max-width: 34rem) {
     .ladder__row { grid-template-columns: 1fr 1fr; }
@@ -768,12 +1019,32 @@
   }
   .cmp td { color: hsl(var(--text-muted)); }
   .cmp__us { background: hsl(var(--surface-elevated)); color: hsl(var(--text)); font-weight: 500; }
+  /* Row hover is functional here, not decorative: seven columns wide with a
+   * sticky first column is exactly the shape where the eye loses its row.
+   * The LockinRa column keeps its own tint so hover never flattens the one
+   * distinction the table is drawing. */
+  @media (hover: hover) {
+    .cmp tbody tr:hover th,
+    .cmp tbody tr:hover td { background: hsl(var(--bg-subtle)); }
+    .cmp tbody tr:hover .cmp__us { background: hsl(var(--primary-subtle)); }
+  }
   .cmp thead .cmp__us { color: hsl(var(--primary)); box-shadow: inset 0 2px 0 hsl(var(--primary)); }
 
   /* ── Block: facts (Beat 8) ───────────────────────────────────────────── */
-  .facts { display: flex; flex-direction: column; gap: var(--s-3); max-inline-size: var(--w-prose); }
+  /* Order carries meaning: the list leads with the 8GB path deliberately,
+   * because "will it run on my machine" is answered before anything else is
+   * worth reading. A sequence that means something staggers (§2.3). */
+  .facts {
+    display: flex; flex-direction: column; gap: var(--s-3); max-inline-size: var(--w-prose);
+    --n: 4;
+    --stagger: min(var(--stagger-step), calc(var(--stagger-max) / var(--n)));
+  }
   .facts li { color: hsl(var(--text-muted)); padding-inline-start: var(--s-4); border-inline-start: 1px solid hsl(var(--border)); }
   .facts strong { color: hsl(var(--text)); }
+  .js-reveal .beat.is-revealed .facts li {
+    animation: word-in var(--d-base) var(--ease-entrance)
+               calc(var(--d-wake-lag) + var(--i) * var(--stagger)) both;
+  }
 
   /* ── Block: faq (Beat 8) ─────────────────────────────────────────────────
    * Native <details>: keyboard-accessible, screen-reader-correct, findable by
@@ -838,8 +1109,9 @@
   /* Platform detected: the alternates step DOWN to a text link. A collapse,
    * never a removal — there is no state in which a visitor sees zero
    * download links (05-interaction.md §4.1). */
-  .download[data-promoted="windows"] [data-platform="linux"],
-  .download[data-promoted="linux"] [data-platform="windows"] {
+  .download[data-promoted="windows"] [data-platform]:not([data-platform="windows"]),
+  .download[data-promoted="linux"] [data-platform]:not([data-platform="linux"]),
+  .download[data-promoted="mac"] [data-platform]:not([data-platform="mac"]) {
     min-block-size: 0; padding-inline: 0;
     background: none; border: 0;
     color: hsl(var(--text-muted));
@@ -919,4 +1191,17 @@
   /* Decorative loops STOP rather than snapping to a final frame. */
   .threshold__glow { animation: none !important; }
   .threshold { transform: none !important; clip-path: none !important; }
+
+  /* The scrubbed cascade resolves to its FINAL state, never to nothing.
+   * Reduced motion takes away duration; it must not take away information,
+   * and the ORDER of the four stages is this beat's entire argument
+   * (04-motion.md §7.1). Progress is pinned to 1 with !important, which also
+   * beats the inline value cascade.js may have written before the OS setting
+   * was toggled mid-session. */
+  .stages { animation: none !important; --cascade-progress: 1 !important; }
+  .flow::before {
+    animation: none !important;
+    clip-path: inset(0 0 var(--draw-stop) 0) !important;
+  }
+  .flow--out::after { animation: none !important; opacity: 1 !important; }
 }

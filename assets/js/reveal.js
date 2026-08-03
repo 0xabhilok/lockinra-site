@@ -50,9 +50,48 @@ function onIntersect(entries) {
     // Continuous: gates the ambient breath's animation-play-state.
     target.classList.toggle('is-onscreen', isIntersecting);
 
+    // Announce the boundary rather than letting other modules observe it
+    // again. cascade.js needs exactly this fact to gate its rAF loop, and
+    // §6.2 permits ONE observer instance on the page.
+    target.dispatchEvent(new CustomEvent('beat:onscreen', {
+      detail: { onscreen: isIntersecting },
+    }));
+
     // Once, permanent. A beat does not un-reveal on scroll-up.
-    if (isIntersecting) target.classList.add('is-revealed');
+    if (isIntersecting && !target.classList.contains('is-revealed')) {
+      promote(target);
+      target.classList.add('is-revealed');
+    }
   }
+}
+
+/**
+ * Hint the compositor for the duration of the wake, and withdraw the hint the
+ * moment it is spent.
+ *
+ * 04-motion.md §6.2 asks for this "on approach". It is applied here instead,
+ * one class-change before the animation, which buys the same head start for
+ * free: the wake is delayed by --d-wake-lag (180ms), so the promotion lands
+ * well before the first animated frame. Adding a second, wider-margin
+ * observer to be literal about "approach" would cost the page its
+ * one-observer guarantee to save nothing measurable.
+ *
+ * A hint that is never withdrawn is a memory leak with good intentions, so
+ * there are two ways out and both are taken.
+ */
+function promote(beat) {
+  // Instant beats have no animation to promote for.
+  if (beat.classList.contains('is-instant')) return;
+
+  const content = beat.querySelector('.beat__content');
+  if (!content) return;
+
+  content.style.willChange = 'opacity, clip-path';
+  const clear = () => { content.style.willChange = ''; };
+  content.addEventListener('animationend', clear, { once: true });
+  // Belt and braces: if the animation is suppressed (reduced motion pins the
+  // duration to 0.01ms and animationend may be missed), drop it anyway.
+  setTimeout(clear, 2000);
 }
 
 /** True when any part of the element is already within the viewport. */

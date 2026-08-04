@@ -101,11 +101,24 @@
       <div class="card">
         <strong style="color:#e2b04a;">Limited</strong>
         <ul style="margin-bottom:0;">
-          <li><strong>Desktop-app distraction detection</strong> works on X11 but is unreliable on <strong>Wayland</strong> (the default on many distros) — the web/extension path still covers browser distractions.</li>
-          <li>The OS media-session mini-player and the installed-apps Smart Launcher list are Windows-only.</li>
+          <li><strong>Desktop-app distraction detection</strong> works on X11 but is unreliable on <strong>Wayland</strong> (the default on many distros) — the web/extension path still covers browser distractions. This one is permanent: Wayland has no protocol for reading another window's title, by design.</li>
+          <li>The OS media-session mini-player and the installed-apps Smart Launcher list are Windows-only <strong>in v1.3.0</strong>. Both are implemented for Linux in v1.7.0 — see below.</li>
           <li>No built-in auto-update yet — re-download to upgrade.</li>
         </ul>
       </div>
+    </div>
+
+    <h2>What v1.7.0 changes</h2>
+    <p class="muted" style="margin-top:6px;">The Linux gap was never really about packaging. It was that the parts of the app which talk to the operating system had one implementation, and it was the Windows one. That is what v1.7.0 fixes.</p>
+    <div class="card">
+      <ul style="margin:0;">
+        <li><strong>.deb and .rpm</strong> alongside the AppImage, with a proper freedesktop entry — so the app appears in your launcher instead of being a file you have to remember where you put.</li>
+        <li><strong>Run at login actually works.</strong> Electron's login-item API is a documented no-op on Linux, so LockinRa now writes an XDG autostart entry itself. Under an AppImage it records the image's real path rather than the temporary mount it is running from — which is why this looked like it worked and then silently stopped after a reboot.</li>
+        <li><strong>The app picker reads your <code>.desktop</code> entries</strong> — system, user, Flatpak and Snap — instead of returning nothing.</li>
+        <li><strong>Now playing</strong> reads any MPRIS player through <code>playerctl</code>. If <code>playerctl</code> is not installed the panel says nothing is playing, which is the truth rather than an error.</li>
+        <li><strong>Close-to-tray refuses to hide</strong> when your session has no status-icon host — a stock GNOME desktop has none, and hiding there used to mean losing the window with no way back.</li>
+        <li><strong>Local AI</strong> finds Ollama at any of the paths the install script, your distro package or Snap put it at.</li>
+      </ul>
     </div>
 
     <h2>System requirements</h2>
@@ -119,6 +132,7 @@
 
     <p style="margin-top:26px;">Prefer Windows? <a href="index.html#download">Download for Windows</a> or get it on the
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">Microsoft Store</a>.
+      On a Mac? <a href="mac.html">macOS arrives in the same release</a>.
       Found a bug on Linux? <a href="mailto:abhilokreddydev@gmail.com">Email us</a> — Linux feedback genuinely helps.</p>
 
     <a class="back" href="index.html">← Back to lockinra.app</a>

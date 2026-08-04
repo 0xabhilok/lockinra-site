@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>LockinRa for macOS — Arriving in v1.7.0</title>
+  <meta name="description" content="macOS support for LockinRa is written and built by CI for Intel and Apple silicon. It has not been published yet — here is exactly what exists, what was fixed to make it work, and what its limits are." />
+  <meta name="keywords" content="LockinRa Mac, focus app macOS, local-first AI Mac, distraction blocker macOS, Apple silicon productivity app" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f1713" />
+  <link rel="canonical" href="https://lockinra.xyz/mac.html" />
+  <meta property="og:site_name" content="LockinRa" />
+  <meta property="og:title" content="LockinRa for macOS — Arriving in v1.7.0" />
+  <meta property="og:description" content="Written and building for Intel and Apple silicon. Not published yet — and this page is not going to invent a download." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lockinra.xyz/mac.html" />
+  <meta property="og:image" content="https://lockinra.xyz/thumbnail.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://lockinra.xyz/thumbnail.webp" />
+  <style>
+    :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --primary:#4fae7e; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
+    a { color:#86d3a6; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }
+    header { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:56px 22px; text-align:center; }
+    .mark { width:84px; height:84px; border-radius:20px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:18px; }
+    .mark svg { width:46px; height:46px; }
+    h1 { margin:0; font-size:34px; letter-spacing:-.5px; }
+    .tag { margin:8px 0 0; color:rgba(255,255,255,.85); font-size:18px; }
+    .pill { display:inline-block; margin-top:16px; padding:5px 14px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+    h2 { margin:40px 0 10px; font-size:21px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
+    .muted { color:var(--muted); }
+    .meta { margin-top:12px; font-size:13px; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.03em; }
+    ul { padding-left:20px; }
+    li { margin:5px 0; }
+    .grid { display:grid; gap:14px; }
+    @media (min-width:620px){ .grid.two { grid-template-columns:1fr 1fr; } }
+    code { background:#0c130f; padding:2px 6px; border-radius:6px; font-size:13.5px; }
+    footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
+    .back { display:inline-block; margin-top:22px; color:var(--muted); text-decoration:none; font-size:14px; }
+    .lede { font-size:17.5px; }
+  </style>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header>
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
+    </div>
+    <h1>LockinRa for macOS</h1>
+    <p class="tag">Written, built, not yet published.</p>
+    <span class="pill">Arriving in v1.7.0</span>
+  </header>
+
+  <div class="wrap">
+    <h2>Where this actually stands</h2>
+    <div class="card">
+      <p class="lede" style="margin-top:0;">There is no Mac download on this site today, and this page is not going to invent one.</p>
+      <p>What exists is the work: macOS support is written and merged, and the release pipeline builds a signed <code>.dmg</code> and <code>.zip</code> for both Intel and Apple silicon on every tagged release. The first one is <strong>v1.7.0</strong>. When it is published, this page becomes a download.</p>
+      <p class="muted" style="margin-bottom:0;">If you would rather be told than keep checking, <a href="mailto:abhilokreddydev@gmail.com?subject=Tell%20me%20when%20the%20Mac%20build%20lands">email us</a> and we will let you know when it lands.</p>
+    </div>
+
+    <h2>What "supported" had to mean first</h2>
+    <p class="muted" style="margin-top:6px;">Porting an Electron app to macOS is mostly free, which is exactly why bad Mac ports are common: the app runs, so it looks finished. The parts that are not free are the ones that touch the operating system directly — and each of these was a real defect, not a missing nicety.</p>
+    <div class="grid two">
+      <div class="card">
+        <strong style="color:var(--primary);">Fixed for the Mac build</strong>
+        <ul style="margin-bottom:0;">
+          <li><strong>⌘C, ⌘V, ⌘X, ⌘Z, ⌘A and ⌘Q.</strong> macOS reads keyboard equivalents from the menu bar. LockinRa had removed its application menu — correct on Windows, and on a Mac it means you cannot copy or paste anywhere in the app, including its own text fields.</li>
+          <li><strong>Launching your apps.</strong> A <code>.app</code> is a folder, not an executable. Workspaces now hand it to LaunchServices, which is also what gives the app its Dock entry and its environment.</li>
+          <li><strong>Finding your apps.</strong> The workspace picker reads your Applications folders instead of returning an empty list.</li>
+          <li><strong>Run at login</strong> starts LockinRa hidden in the menu bar, rather than throwing a dashboard at you on every boot.</li>
+          <li><strong>Now playing</strong> in the focus mini-player reads Music and Spotify — and never launches a player just to ask it a question.</li>
+          <li><strong>Local AI</strong> finds Ollama wherever you installed it: the app bundle, Homebrew on either architecture, or a manual install.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong style="color:#e2b04a;">Known limits</strong>
+        <ul style="margin-bottom:0;">
+          <li><strong>Window titles need Screen Recording permission.</strong> macOS treats another app's window title as screen content. Without it LockinRa still sees <em>which</em> app you are in, so app-level focus detection works and title-aware detection does not. It is asked for once, and refusing it degrades the feature rather than breaking the app.</li>
+          <li><strong>The menu-bar icon is a colour tile, not a monochrome glyph.</strong> A template icon keeps only the silhouette, and the LockinRa mark is a filled square — it would render as a black block.</li>
+          <li><strong>No auto-update into the first release.</strong> The <code>.zip</code> that makes updates possible is built from v1.7.0 onward, so getting <em>to</em> v1.7.0 is a manual download.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Signing and notarization</h2>
+    <div class="card">
+      <p style="margin-top:0;">The build is configured for a Developer ID identity and Apple's notary service, with the hardened runtime on. That last part is not a formality: the hardened runtime blocks the just-in-time compilation that both the browser engine and the on-device speech runtime depend on, so the app declares exactly the exceptions it needs — JIT, the microphone, and permission to ask Music and Spotify what is playing. Nothing broader.</p>
+      <p class="muted" style="margin-bottom:0;">Whether the published <code>.dmg</code> is signed depends on the credentials present when it is built. An unsigned build is a development build and will not be offered here as a download — Gatekeeper would be right to stop you.</p>
+    </div>
+
+    <h2>System requirements</h2>
+    <div class="card">
+      <ul style="margin:0;">
+        <li>macOS 11 Big Sur or newer, on Apple silicon or Intel.</li>
+        <li>8&nbsp;GB RAM for small local models, 16&nbsp;GB recommended for larger ones.</li>
+        <li>Roughly 254&nbsp;MB installed — the local models are most of it.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:26px;">Windows has a current build — <a href="index.html#download">download it</a> or get it on the
+      <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">Microsoft Store</a>.
+      Linux has a portable AppImage on the <a href="linux.html">Linux page</a>.</p>
+
+    <a class="back" href="index.html">← Back to lockinra.xyz</a>
+
+    <footer>
+      © <span id="y"></span> LockinRa. <a href="./privacy.html">Privacy Policy</a> · <a href="./support.html">Support</a>
+      <script>document.getElementById('y').textContent = '2026';</script>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>Download LockinRa — Windows, macOS &amp; Linux</title>
+  <meta name="description" content="Download LockinRa v1.7.0 — the local-first AI focus workspace. Windows installer, MSI and Microsoft Store; macOS for Apple silicon and Intel; Linux AppImage, deb and rpm. Free, no account, with SHA-256 checksums for every file." />
+  <meta name="keywords" content="download LockinRa, LockinRa Windows, LockinRa macOS, LockinRa Linux, AppImage productivity, local-first focus app download, msi installer, focus app deb rpm" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f1713" />
+  <link rel="canonical" href="https://lockinra.xyz/download.html" />
+  <meta property="og:site_name" content="LockinRa" />
+  <meta property="og:title" content="Download LockinRa — Windows, macOS &amp; Linux" />
+  <meta property="og:description" content="v1.7.0 for every desktop. Windows, macOS (Apple silicon + Intel) and Linux, with a checksum for every file." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lockinra.xyz/download.html" />
+  <meta property="og:image" content="https://lockinra.xyz/thumbnail.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://lockinra.xyz/thumbnail.webp" />
+  <style>
+    :root {
+      --bg:#0f1713; --card:#13201a; --card-hi:#16271e; --tile1:#3B7257; --tile2:#2A5A42;
+      --primary:#4fae7e; --primary-ink:#06120c; --text:#e8efe9; --muted:#9fb3a6;
+      --line:#27392f; --line-hi:#375145; --warn:#e2b04a; --warn-line:#5a4a20;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font:16px/1.65 -apple-system,"Segoe UI Variable Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); -webkit-font-smoothing:antialiased; }
+    a { color:#86d3a6; }
+    .wrap { max-width:940px; margin:0 auto; padding:0 22px 72px; }
+
+    /* ---------- header ---------- */
+    header.hero { background:linear-gradient(135deg,var(--tile1),var(--tile2)); padding:54px 22px 46px; text-align:center; }
+    .mark { width:76px; height:76px; border-radius:19px; background:rgba(255,255,255,.10); display:inline-flex; align-items:center; justify-content:center; margin-bottom:16px; }
+    .mark svg { width:42px; height:42px; }
+    h1 { margin:0; font-size:clamp(30px,5vw,40px); letter-spacing:-.6px; line-height:1.1; }
+    .tag { margin:10px auto 0; max-width:46ch; color:rgba(255,255,255,.86); font-size:17px; }
+    .pill { display:inline-block; margin-top:18px; padding:5px 14px; border-radius:999px; background:rgba(255,255,255,.15); color:#fff; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; font-family:var(--mono); }
+
+    /* ---------- detected banner ---------- */
+    .detected { display:none; margin:26px 0 0; padding:18px 20px; border-radius:14px; background:var(--card-hi); border:1px solid var(--line-hi); }
+    .detected.on { display:block; }
+    .detected .lbl { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--primary); }
+    .detected .row { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:8px; }
+    .detected .name { font-size:19px; font-weight:650; letter-spacing:-.2px; }
+    .detected .sub { color:var(--muted); font-size:14px; margin-top:3px; }
+
+    /* ---------- sections ---------- */
+    h2 { margin:44px 0 6px; font-size:23px; letter-spacing:-.3px; display:flex; align-items:center; gap:11px; flex-wrap:wrap; }
+    h2 .os { width:26px; height:26px; flex:none; opacity:.9; }
+    h2 .here { font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--primary-ink); background:var(--primary); padding:3px 9px; border-radius:999px; font-weight:700; }
+    .sec-note { color:var(--muted); font-size:14.5px; margin:0 0 14px; max-width:70ch; }
+
+    /* ---------- format cards ---------- */
+    .formats { display:grid; gap:12px; }
+    @media (min-width:700px) { .formats { grid-template-columns:1fr 1fr; } .formats .wide { grid-column:1 / -1; } }
+    .fmt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; transition:border-color .16s, background .16s; }
+    .fmt:hover { border-color:var(--line-hi); background:var(--card-hi); }
+    .fmt.best { border-color:rgba(79,174,126,.45); background:linear-gradient(160deg,rgba(79,174,126,.09),transparent 60%),var(--card); }
+    .fmt .top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .fmt .ttl { font-size:16.5px; font-weight:650; letter-spacing:-.15px; }
+    .fmt .badge { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:999px; white-space:nowrap; flex:none; }
+    .badge.rec { background:var(--primary); color:var(--primary-ink); font-weight:700; }
+    .badge.alt { background:rgba(255,255,255,.07); color:var(--muted); border:1px solid var(--line); }
+    .fmt .why { color:var(--muted); font-size:14px; line-height:1.55; margin:0; flex:1; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:12px 20px; border-radius:11px; background:var(--primary); color:var(--primary-ink); text-decoration:none; font-weight:700; font-size:15px; box-shadow:0 10px 26px rgba(40,120,80,.28); transition:transform .16s cubic-bezier(.16,1,.3,1), filter .16s; }
+    .btn:hover { transform:translateY(-1px); filter:brightness(1.06); }
+    .btn svg { width:17px; height:17px; flex:none; }
+    .btn.ghost { background:transparent; color:var(--text); border:1px solid var(--line-hi); box-shadow:none; font-weight:600; }
+    .btn.ghost:hover { background:rgba(255,255,255,.04); }
+    .btn.big { padding:15px 28px; font-size:16.5px; }
+    .meta { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.02em; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .meta .dot { opacity:.4; }
+
+    /* ---------- notes ---------- */
+    .note { margin-top:14px; padding:15px 18px; border-radius:13px; background:rgba(226,176,74,.06); border:1px solid var(--warn-line); font-size:14.5px; line-height:1.6; }
+    .note strong { color:var(--warn); }
+    .note p { margin:0; }
+    .note p + p { margin-top:9px; }
+    .note code, code { background:#0b110d; padding:2px 7px; border-radius:6px; font-family:var(--mono); font-size:13px; }
+    pre { background:#0b110d; border:1px solid var(--line); border-radius:11px; padding:14px 16px; overflow-x:auto; font-size:13px; font-family:var(--mono); margin:12px 0 0; }
+    pre code { background:none; padding:0; }
+
+    /* ---------- checksums ---------- */
+    details.sums { margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:2px 20px; }
+    details.sums summary { cursor:pointer; padding:16px 0; font-weight:650; font-size:15.5px; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    details.sums summary::-webkit-details-marker { display:none; }
+    details.sums summary::after { content:"+"; font-family:var(--mono); color:var(--muted); font-size:19px; line-height:1; }
+    details.sums[open] summary::after { content:"–"; }
+    .sumtable { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px; }
+    .sumtable th { text-align:left; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600; padding:8px 10px 8px 0; border-bottom:1px solid var(--line); }
+    .sumtable td { padding:10px 10px 10px 0; border-bottom:1px solid var(--line); vertical-align:top; }
+    .sumtable tr:last-child td { border-bottom:none; }
+    .sumtable .file { font-family:var(--mono); font-size:12px; color:var(--text); white-space:nowrap; }
+    .sumtable .hash { font-family:var(--mono); font-size:11.5px; color:var(--muted); word-break:break-all; line-height:1.5; }
+    .copy { background:transparent; border:1px solid var(--line-hi); color:var(--muted); border-radius:7px; padding:4px 9px; font-size:11px; font-family:var(--mono); cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s; }
+    .copy:hover { color:var(--text); border-color:var(--primary); }
+    .copy.done { color:var(--primary); border-color:var(--primary); }
+
+    /* ---------- matrix ---------- */
+    .mtx-scroll { overflow-x:auto; margin-top:14px; border:1px solid var(--line); border-radius:14px; background:var(--card); }
+    .mtx { width:100%; border-collapse:collapse; font-size:14px; min-width:560px; }
+    .mtx th, .mtx td { padding:13px 16px; text-align:left; border-bottom:1px solid var(--line); }
+    .mtx thead th { font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+    .mtx tbody tr:last-child td { border-bottom:none; }
+    .mtx td:first-child { color:var(--text); font-weight:550; }
+    .mtx .y { color:var(--primary); font-weight:600; }
+    .mtx .p { color:var(--warn); }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
+    .card ul { margin:0; padding-left:20px; }
+    .card li { margin:6px 0; }
+    .muted { color:var(--muted); }
+
+    footer { border-top:1px solid var(--line); margin-top:52px; padding-top:20px; color:var(--muted); font-size:14px; display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between; }
+    .back { display:inline-block; margin-top:26px; color:var(--muted); text-decoration:none; font-size:14px; }
+    .back:hover { color:var(--text); }
+    @media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } html { scroll-behavior:auto; } .btn:hover { transform:none; } }
+  </style>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header class="hero">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
+    </div>
+    <h1>Download LockinRa</h1>
+    <p class="tag">One local-first focus workspace, built for all three desktops. No account, no cloud, no telemetry.</p>
+    <span class="pill">v1.7.0 · Free in open beta</span>
+  </header>
+
+  <div class="wrap">
+
+    <!-- Filled in by the detector at the bottom of this page. Hidden unless it
+         actually recognises the platform — a wrong guess is worse than none. -->
+    <div class="detected" id="detected">
+      <div class="lbl">Looks like you're on</div>
+      <div class="row">
+        <div>
+          <div class="name" id="det-name"></div>
+          <div class="sub" id="det-sub"></div>
+        </div>
+        <a class="btn big" id="det-btn" href="#" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+          <span id="det-label">Download</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ===================== WINDOWS ===================== -->
+    <section id="windows" data-os="win">
+      <h2>
+        <svg class="os" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.2 4.5v7.02H3V5.5Zm0 13L10.2 19.5v-6.93H3V18.5Zm8.3 1.15L21 21V12.57h-9.7v7.08Zm0-15.3v7.17H21V3l-9.7 1.35Z"/></svg>
+        Windows
+        <span class="here" data-here hidden>You're here</span>
+      </h2>
+      <p class="sec-note">Windows 10 and 11, 64-bit. The installer is what most people want; the other two exist for the Store and for managed deployments.</p>
+
+      <div class="formats">
+        <div class="fmt best">
+          <div class="top">
+            <div class="ttl">Installer · <code>.exe</code></div>
+            <span class="badge rec">Recommended</span>
+          </div>
+          <p class="why">The normal download. Installs per-user, so it needs no administrator rights, and lets you pick the install folder.</p>
+          <a class="btn" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download for Windows
+          </a>
+          <div class="meta"><span>x64</span><span class="dot">·</span><span>259&nbsp;MB</span><span class="dot">·</span><span>NSIS</span></div>
+        </div>
+
+        <div class="fmt">
+          <div class="top">
+            <div class="ttl">Microsoft Store</div>
+            <span class="badge alt">Auto-updates</span>
+          </div>
+          <p class="why">Installs and updates through the Store, with no SmartScreen prompt — Microsoft signs the package. Store releases go through review, so this channel can trail the direct download by a version.</p>
+          <a class="btn ghost" href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">
+            <svg viewBox="0 0 23 23" style="width:15px;height:15px;"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#7fba00" d="M12 1h10v10H12z"/><path fill="#00a4ef" d="M1 12h10v10H1z"/><path fill="#ffb900" d="M12 12h10v10H12z"/></svg>
+            Get it from the Store
+          </a>
+          <div class="meta"><span>Signed by Microsoft</span><span class="dot">·</span><span><a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.appx" style="color:inherit;">.appx</a> on the release</span></div>
+        </div>
+
+        <div class="fmt wide">
+          <div class="top">
+            <div class="ttl">Windows Installer · <code>.msi</code></div>
+            <span class="badge alt">For IT / deployment</span>
+          </div>
+          <p class="why">A standard MSI for silent installs and Group Policy rollout — <code>msiexec /i LockinRa-1.7.0-win-x64.msi /qn</code>. Same app as the <code>.exe</code>; pick this only if your deployment tooling needs an MSI.</p>
+          <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.msi" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download the MSI
+          </a>
+          <div class="meta"><span>x64</span><span class="dot">·</span><span>272&nbsp;MB</span><span class="dot">·</span><span>WiX</span></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <p><strong>Windows will warn you the first time.</strong> The direct downloads are not signed with an Authenticode certificate yet, so SmartScreen shows "Windows protected your PC". Choose <strong>More info → Run anyway</strong>. The Store build does not do this, because Microsoft signs it on their side.</p>
+        <p class="muted" style="margin-bottom:0;">A code-signing certificate is the fix, and the release pipeline is already wired for one. Until there is a certificate, verifying the SHA-256 below is the real check — it tells you the file is byte-for-byte what was published.</p>
+      </div>
+    </section>
+
+    <!-- ===================== MACOS ===================== -->
+    <section id="macos" data-os="mac">
+      <h2>
+        <svg class="os" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9-.7 0-1.9-.8-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.2.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.4-1-2.4-3.9ZM14.2 5.9c.6-.8 1-1.9.9-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.9 1 .1 2-.5 2.7-1.3Z"/></svg>
+        macOS
+        <span class="here" data-here hidden>You're here</span>
+      </h2>
+      <p class="sec-note">macOS 11 Big Sur or newer. Separate builds per chip rather than a universal binary — a universal app would carry both database engines and double everyone's download to serve one.</p>
+
+      <div class="formats">
+        <div class="fmt best">
+          <div class="top">
+            <div class="ttl">Apple silicon · <code>.dmg</code></div>
+            <span class="badge rec">M1–M4</span>
+          </div>
+          <p class="why">For every Mac with an Apple chip. Not sure? Apple menu → <em>About This Mac</em> — "Apple M1/M2/M3/M4" means this one.</p>
+          <a class="btn" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download for Apple silicon
+          </a>
+          <div class="meta"><span>arm64</span><span class="dot">·</span><span>260&nbsp;MB</span></div>
+        </div>
+
+        <div class="fmt">
+          <div class="top">
+            <div class="ttl">Intel · <code>.dmg</code></div>
+            <span class="badge alt">x86-64</span>
+          </div>
+          <p class="why">For Intel Macs — <em>About This Mac</em> reports an Intel processor rather than an Apple chip.</p>
+          <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-x64.dmg" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download for Intel
+          </a>
+          <div class="meta"><span>x64</span><span class="dot">·</span><span>264&nbsp;MB</span></div>
+        </div>
+
+        <div class="fmt wide">
+          <div class="top">
+            <div class="ttl">Zip archives · <code>.zip</code></div>
+            <span class="badge alt">For updates &amp; scripting</span>
+          </div>
+          <p class="why">The same app as a plain archive, which is the format the updater consumes. Useful if you deploy with a script; for a normal install take the <code>.dmg</code> above.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.zip" download>Apple silicon zip</a>
+            <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-x64.zip" download>Intel zip</a>
+          </div>
+          <div class="meta"><span>arm64 253&nbsp;MB</span><span class="dot">·</span><span>x64 260&nbsp;MB</span></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <p><strong>Gatekeeper asks once, and that is expected.</strong> This build is ad-hoc signed but not notarized by Apple, so the first open shows "LockinRa can't be opened because Apple cannot check it for malicious software." Drag the app to Applications, then <strong>right-click it → Open</strong> and confirm. macOS remembers the decision.</p>
+        <p>If macOS instead calls the app <em>damaged</em>, the download was quarantined — clear it with:</p>
+        <pre><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+        <p class="muted" style="margin-bottom:0;">Notarization needs a paid Apple Developer ID. The <a href="mac.html">macOS page</a> explains the whole picture, including what the ad-hoc signature does and does not cover.</p>
+      </div>
+    </section>
+
+    <!-- ===================== LINUX ===================== -->
+    <section id="linux" data-os="linux">
+      <h2>
+        <svg class="os" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-2.2 0-3.5 1.7-3.5 4 0 1.4.2 2.3-.4 3.4-.7 1.3-2 2.6-2.6 4.4-.4 1.2-.2 2 .1 2.4-.5.5-.8 1.2-.5 1.8.2.5.7.7 1.3.9.9.3 1.6.6 2.3 1.3.5.5 1.3.8 2.1.8h2.4c.8 0 1.6-.3 2.1-.8.7-.7 1.4-1 2.3-1.3.6-.2 1.1-.4 1.3-.9.3-.6 0-1.3-.5-1.8.3-.4.5-1.2.1-2.4-.6-1.8-1.9-3.1-2.6-4.4-.6-1.1-.4-2-.4-3.4 0-2.3-1.3-4-3.5-4Zm-1.6 3.3c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9Zm3.2 0c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9Zm-1.6 2.6c.9 0 1.9.5 1.9 1 0 .3-.4.5-.8.8-.4.2-.7.5-1.1.5s-.8-.3-1.2-.5c-.4-.3-.8-.5-.8-.8 0-.5 1-1 2-1Z"/></svg>
+        Linux
+        <span class="here" data-here hidden>You're here</span>
+      </h2>
+      <p class="sec-note">Built on Ubuntu 22.04, so the glibc floor is as low as it can reasonably go. x86-64.</p>
+
+      <div class="formats">
+        <div class="fmt best">
+          <div class="top">
+            <div class="ttl">AppImage</div>
+            <span class="badge rec">Any distro</span>
+          </div>
+          <p class="why">One portable file, no package manager and no root. Mark it executable and run it.</p>
+          <a class="btn" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download the AppImage
+          </a>
+          <div class="meta"><span>x86_64</span><span class="dot">·</span><span>276&nbsp;MB</span></div>
+        </div>
+
+        <div class="fmt">
+          <div class="top">
+            <div class="ttl">Debian &amp; Ubuntu · <code>.deb</code></div>
+            <span class="badge alt">apt</span>
+          </div>
+          <p class="why">Installs into the system with a launcher entry, and pulls in the libraries Electron's sandbox needs.</p>
+          <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-amd64.deb" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download the deb
+          </a>
+          <div class="meta"><span>amd64</span><span class="dot">·</span><span>197&nbsp;MB</span></div>
+        </div>
+
+        <div class="fmt wide">
+          <div class="top">
+            <div class="ttl">Fedora &amp; openSUSE · <code>.rpm</code></div>
+            <span class="badge alt">dnf / zypper</span>
+          </div>
+          <p class="why">The same system install for RPM distributions.</p>
+          <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.rpm" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+            Download the rpm
+          </a>
+          <div class="meta"><span>x86_64</span><span class="dot">·</span><span>197&nbsp;MB</span></div>
+        </div>
+      </div>
+
+      <pre><code># AppImage
+chmod +x LockinRa-1.7.0-linux-x86_64.AppImage
+./LockinRa-1.7.0-linux-x86_64.AppImage
+
+# Debian / Ubuntu
+sudo apt install ./LockinRa-1.7.0-linux-amd64.deb
+
+# Fedora / openSUSE
+sudo dnf install ./LockinRa-1.7.0-linux-x86_64.rpm</code></pre>
+
+      <div class="note">
+        <p><strong>Two things behave differently on Linux.</strong> Under <strong>Wayland</strong> there is no protocol for reading another window's title, so desktop-app distraction detection goes quiet — the browser extension still covers the web, and tasks, notes, timers, habits and the AI are all unaffected. Under X11 it works fully.</p>
+        <p class="muted" style="margin-bottom:0;">And the focus mini-player's "now playing" needs <code>playerctl</code>, which most distributions do not install by default. Without it the surface simply reads as nothing playing. The <a href="linux.html">Linux page</a> has the details.</p>
+      </div>
+    </section>
+
+    <!-- ===================== VERIFY ===================== -->
+    <h2 id="verify">Verify what you downloaded</h2>
+    <p class="sec-note">Because the Windows and macOS builds are not signed with a paid certificate yet, the checksum is the meaningful integrity check: it proves the file on your disk is byte-for-byte the file that was published. Compare the output against the row below.</p>
+
+    <pre><code># Windows (PowerShell)
+Get-FileHash .\LockinRa-1.7.0-win-x64.exe -Algorithm SHA256
+
+# macOS
+shasum -a 256 LockinRa-1.7.0-mac-arm64.dmg
+
+# Linux
+sha256sum LockinRa-1.7.0-linux-x86_64.AppImage</code></pre>
+
+    <details class="sums">
+      <summary>SHA-256 for every v1.7.0 file</summary>
+      <table class="sumtable">
+        <thead><tr><th>File</th><th>SHA-256</th><th></th></tr></thead>
+        <tbody id="sumbody">
+          <tr><td class="file">win-x64.exe</td><td class="hash">e83f80310fe69a2d64b32c22fbb7309cc901cbe9ae325261839aacad8ecaa74f</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">win-x64.msi</td><td class="hash">333ed9b49a3599f8156baf84dbd938357b36feb12bdcde61777c6945a52d19b1</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">win-x64.appx</td><td class="hash">cbce875e7a2c623ad02d0d34a0b42947ab3a8acf8d1527cfb15c344d57e9ad01</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">mac-arm64.dmg</td><td class="hash">92a4ce43ccdfcb65b86b97f2798a5da9d8bfa6e91ae6ded7dc28cf690cc9797a</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">mac-x64.dmg</td><td class="hash">c62259bc9828abe360f456675fc6de5e1ecaf5b1891d71574d8e03e1f87f65de</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">mac-arm64.zip</td><td class="hash">627f1d0d926014df3c3e5d320a8bb238b1d19fcde3d5271ec5716343c972c3d2</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">mac-x64.zip</td><td class="hash">595e196e9211ccde17b0bcd545cdf71b11890b5707273de3c298fc8df77b4a66</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">linux-x86_64.AppImage</td><td class="hash">af0516d405ffbb2b99a115ff849b3a48ff3d37302b09e22029ce5a37563fddf3</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">linux-amd64.deb</td><td class="hash">5efa2fa24ff7f7ce2adccf35a4390b5bf2034d384e0e909275e11f9a90bb02fc</td><td><button class="copy">copy</button></td></tr>
+          <tr><td class="file">linux-x86_64.rpm</td><td class="hash">caea49b0da58c32cfa796b3b84c5299573f05da4db4ecd854a626eb00e34bd9f</td><td><button class="copy">copy</button></td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="font-size:13.5px;margin:0 0 18px;">Also published as <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/SHA256SUMS.txt">SHA256SUMS.txt</a> on the release.</p>
+    </details>
+
+    <!-- ===================== WHAT DIFFERS ===================== -->
+    <h2>What differs by platform</h2>
+    <p class="sec-note">Everything that makes LockinRa what it is — tasks, notes, focus sessions, habits, screen time, the local AI — is identical everywhere. These are the parts that touch the operating system directly, and this is the honest state of each.</p>
+    <div class="mtx-scroll">
+      <table class="mtx">
+        <thead><tr><th>Capability</th><th>Windows</th><th>macOS</th><th>Linux</th></tr></thead>
+        <tbody>
+          <tr><td>App &amp; window tracking</td><td class="y">Full</td><td class="p">Titles need Screen&nbsp;Recording</td><td class="p">X11 full · Wayland app-level only</td></tr>
+          <tr><td>Website blocking (extension)</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+          <tr><td>Launch apps from Workspaces</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+          <tr><td>Run at startup</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes (XDG autostart)</td></tr>
+          <tr><td>Close to tray</td><td class="y">Yes</td><td class="y">Yes</td><td class="p">Only where a tray exists</td></tr>
+          <tr><td>Now playing in mini-player</td><td class="y">Yes</td><td class="y">Music &amp; Spotify</td><td class="p">Needs <code>playerctl</code></td></tr>
+          <tr><td>Local AI (Ollama)</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+          <tr><td>Signed build</td><td class="p">Store only</td><td class="p">Ad-hoc, not notarized</td><td class="p">Unsigned</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===================== REQUIREMENTS ===================== -->
+    <h2>System requirements</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Windows</strong> 10 or 11, 64-bit. <strong>macOS</strong> 11 Big Sur or newer, Apple silicon or Intel. <strong>Linux</strong> x86-64 with glibc 2.35 or newer (Ubuntu 22.04+, Fedora 36+, and equivalents).</li>
+        <li><strong>8&nbsp;GB RAM</strong> for the small local models; 16&nbsp;GB recommended for the larger ones.</li>
+        <li><strong>No GPU required.</strong> Every model in the catalog runs on CPU — a GPU only makes responses snappier.</li>
+        <li>Roughly <strong>260&nbsp;MB</strong> installed, before any language model you choose to add.</li>
+        <li><strong>No internet needed</strong> after setup. Nothing is uploaded, because there is nowhere to upload it to.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:26px;">Deeper platform notes: <a href="mac.html">macOS</a> · <a href="linux.html">Linux</a>. Every build, including older versions, is on the <a href="https://github.com/0xabhilok/lockinra-site/releases">releases page</a>.</p>
+
+    <a class="back" href="index.html">← Back to lockinra.xyz</a>
+
+    <footer>
+      <div>© <span id="y">2026</span> LockinRa · v1.7.0</div>
+      <div><a href="./privacy.html">Privacy Policy</a> · <a href="./support.html">Support</a></div>
+    </footer>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ---- platform detection -------------------------------------------------
+    // Only ever used to REORDER and HIGHLIGHT. Every download stays visible and
+    // reachable no matter what this guesses, because user-agent sniffing is a
+    // hint and a wrong guess must never hide the file somebody actually needs.
+    var ua = navigator.userAgent || '';
+    var plat = navigator.platform || '';
+    var os = null;
+
+    if (/Windows|Win32|Win64|WOW64/.test(ua + plat)) os = 'win';
+    else if (/Mac OS X|Macintosh/.test(ua) && !/iPhone|iPad|iPod/.test(ua)) os = 'mac';
+    else if (/Linux|X11/.test(ua) && !/Android/.test(ua)) os = 'linux';
+
+    var REC = {
+      win: {
+        name: 'Windows',
+        sub: 'The per-user installer — no administrator rights needed.',
+        label: 'Download for Windows',
+        href: 'https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe'
+      },
+      mac: {
+        name: 'macOS',
+        sub: 'Apple silicon build. On an Intel Mac, take the Intel download below.',
+        label: 'Download for Mac',
+        href: 'https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg'
+      },
+      linux: {
+        name: 'Linux',
+        sub: 'The portable AppImage — no package manager, no root.',
+        label: 'Download the AppImage',
+        href: 'https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage'
+      }
+    };
+
+    // Apple silicon vs Intel cannot be read from the user agent — every Mac
+    // reports "Intel Mac OS X". A WebGL renderer string is the one reliable
+    // tell, so ask for it, and fall back to Apple silicon (the overwhelming
+    // majority of Macs in use) rather than guessing Intel and sending most
+    // visitors to the wrong build.
+    function macIsIntel() {
+      try {
+        var c = document.createElement('canvas');
+        var gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (!gl) return false;
+        var ext = gl.getExtension('WEBGL_debug_renderer_info');
+        if (!ext) return false;
+        var r = String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '');
+        return /Intel/i.test(r) && !/Apple/i.test(r);
+      } catch (e) { return false; }
+    }
+
+    if (os) {
+      var rec = REC[os];
+      if (os === 'mac' && macIsIntel()) {
+        rec = {
+          name: 'macOS',
+          sub: 'Intel build — your Mac reports an Intel graphics processor.',
+          label: 'Download for Mac (Intel)',
+          href: 'https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-x64.dmg'
+        };
+      }
+
+      var box = document.getElementById('detected');
+      document.getElementById('det-name').textContent = rec.name;
+      document.getElementById('det-sub').textContent = rec.sub;
+      document.getElementById('det-label').textContent = rec.label;
+      document.getElementById('det-btn').setAttribute('href', rec.href);
+      box.classList.add('on');
+
+      var mine = document.querySelector('section[data-os="' + os + '"]');
+      if (mine) {
+        var flag = mine.querySelector('[data-here]');
+        if (flag) flag.hidden = false;
+        // Move the matching platform directly under the banner, so the section
+        // a visitor wants is the first one they scroll into.
+        box.parentNode.insertBefore(mine, box.nextSibling);
+      }
+    }
+
+    // ---- copy buttons -------------------------------------------------------
+    document.getElementById('sumbody').addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy');
+      if (!btn) return;
+      var row = btn.closest('tr');
+      var hash = row.querySelector('.hash').textContent.trim();
+
+      function done() {
+        btn.textContent = 'copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'copy'; btn.classList.remove('done'); }, 1600);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(hash).then(done, fallback);
+      } else {
+        fallback();
+      }
+
+      function fallback() {
+        // Clipboard API is unavailable over plain http and in some embedded
+        // browsers; select the text so a manual copy still works.
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(row.querySelector('.hash'));
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try { document.execCommand('copy'); done(); } catch (err) { /* leave it selected */ }
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

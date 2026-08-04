@@ -131,6 +131,29 @@
 }
 </script>
 <script src="./support.js"></script>
+<!-- Platform detection runs HERE, in the head, and deliberately not with the
+     rest of the page scripts at the bottom. It only sets a class on <html>,
+     but that class decides which download button is filled and which comes
+     first — so running it after first paint would show every visitor the
+     Windows button promoted, then visibly restyle and reorder the row once
+     the bottom script caught up. Setting it before the first paint means the
+     correct platform is simply what renders. Same reasoning as a theme class:
+     cheap, synchronous, and it has to beat the pixels.
+
+     Detection only ever promotes. All three buttons render and work whatever
+     this guesses, because a user agent is a hint and a wrong guess must cost
+     a glance rather than hide the build somebody actually came for. -->
+<script>
+(function () {
+  try {
+    var ua = navigator.userAgent || '';
+    var c = 'lk-win';
+    if (/Linux|X11/.test(ua) && !/Android/.test(ua)) c = 'lk-linux';
+    else if (/Mac OS X|Macintosh/.test(ua) && !/iPhone|iPad|iPod/.test(ua)) c = 'lk-mac';
+    document.documentElement.classList.add(c);
+  } catch (e) { document.documentElement.classList.add('lk-win'); }
+})();
+</script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -185,13 +208,44 @@
   /* ---- anchor targets clear the sticky nav ---- */
   section[id], header[id], div[id] { scroll-margin-top: 74px; }
 
-  /* ---- platform-aware download CTAs: html.lk-linux swaps Windows→Linux ---- */
-  .lk-dl-linux { display: none !important; }
-  html.lk-linux .lk-dl-win { display: none !important; }
-  html.lk-linux .lk-dl-linux { display: inline-flex !important; }
-  .lk-dl-mac { display: none !important; }
-  html.lk-mac .lk-dl-win { display: none !important; }
-  html.lk-mac .lk-dl-mac { display: inline-flex !important; }
+  /* ---- platform download CTAs -----------------------------------------------
+     All three platforms are always rendered and always clickable. Detection
+     PROMOTES one to the filled treatment instead of hiding the other two,
+     which is the whole point: a user agent is a hint, not a fact. A wrong
+     guess should cost a glance, never leave somebody hunting for a build the
+     page quietly decided not to draw. (It used to hide two of three, so a
+     misdetected visitor saw exactly one button — for the wrong OS.)
+
+     The state class lands on <html> so a re-render cannot reset it, and the
+     look lives in classes rather than inline styles because the dc runtime
+     re-serialises inline style attributes. */
+  .lk-pbtn { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 16px;
+             padding: 13px 22px; border-radius: 11px; text-decoration: none; white-space: nowrap;
+             background: var(--surface); color: var(--text); border: 1px solid var(--border);
+             transition: transform .2s cubic-bezier(.16,1,.3,1), background .15s, border-color .15s, box-shadow .15s; }
+  .lk-pbtn:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+  .lk-pbtn svg { flex: none; opacity: .8; }
+
+  html.lk-win   .lk-dl-win,
+  html.lk-mac   .lk-dl-mac,
+  html.lk-linux .lk-dl-linux {
+    background: var(--primary); color: var(--primary-fg); border-color: transparent; padding: 14px 26px;
+    box-shadow: 0 0 0 1px hsl(150 40% 30% / 0.4), 0 14px 34px hsl(150 55% 22% / 0.4);
+  }
+  html.lk-win   .lk-dl-win svg,
+  html.lk-mac   .lk-dl-mac svg,
+  html.lk-linux .lk-dl-linux svg { opacity: 1; }
+
+  /* The detected platform leads the row; the demo link always trails it. Done
+     with `order` rather than by moving nodes, so the DOM order stays a sane
+     Windows → Mac → Linux for keyboard and screen-reader users. Safe against
+     layout shift only because the class is set in the head, before paint. */
+  .lk-hero-cta .lk-pbtn { order: 2; }
+  html.lk-win   .lk-hero-cta .lk-dl-win,
+  html.lk-mac   .lk-hero-cta .lk-dl-mac,
+  html.lk-linux .lk-hero-cta .lk-dl-linux { order: 1; }
+  .lk-hero-cta .lk-demo-cta { order: 3; }
+  .lk-demo-cta:hover { color: var(--text) !important; border-color: var(--border) !important; }
 
   /* ================= LIVE DEMO (cinematic scripted tour) =================
      One 32s CSS timeline, four 8s scenes. The stage is always dark — it
@@ -351,7 +405,6 @@
     /* nav → burger */
     .lk-navlinks { display: none !important; }
     .lk-nav-cta { display: none !important; }
-    html.lk-linux .lk-nav-cta { display: none !important; }
     .lk-burger { display: inline-flex !important; }
     html.lk-menu-open .lk-menu { display: block !important; }
 
@@ -376,6 +429,18 @@
 
     /* primary hero CTAs go full-width for comfortable tapping */
     .lk-hero-cta > a { flex: 1 1 100% !important; justify-content: center !important; }
+
+    /* Four full-width buttons is a wall. Only the detected platform keeps a
+       whole row; the other two pair up and drop the "Download for" prefix so
+       their labels still fit a 375px screen. */
+    .lk-hero-cta > a.lk-pbtn { flex: 1 1 calc(50% - 7px) !important; padding-left: 12px !important; padding-right: 12px !important; }
+    .lk-hero-cta .lk-pbtn .lk-pbtn-pre { display: none; }
+    html.lk-win   .lk-hero-cta > a.lk-dl-win,
+    html.lk-mac   .lk-hero-cta > a.lk-dl-mac,
+    html.lk-linux .lk-hero-cta > a.lk-dl-linux { flex: 1 1 100% !important; }
+    html.lk-win   .lk-dl-win .lk-pbtn-pre,
+    html.lk-mac   .lk-dl-mac .lk-pbtn-pre,
+    html.lk-linux .lk-dl-linux .lk-pbtn-pre { display: inline; }
   }
 
   @media (max-width: 480px) {
@@ -439,17 +504,14 @@
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           </sc-if>
         </button>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-nav-cta lk-dl-win" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+        <!-- One nav CTA, and it goes to the hub rather than firing a download.
+             A toolbar button that starts a 260MB transfer on a single click is
+             a trap on the wrong OS; the hub is where every platform, format and
+             checksum lives, and the hero below still offers the one-click
+             download for each platform directly. -->
+        <a href="download.html" class="lk-nav-cta" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 18px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-          Download for Windows
-        </a>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download class="lk-nav-cta lk-dl-linux" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-          Download for Linux
-        </a>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg" download class="lk-nav-cta lk-dl-mac" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-          Download for macOS
+          Download
         </a>
         <button id="lk-burger" class="lk-burger" aria-label="Open menu" aria-expanded="false" aria-controls="lk-menu">
           <span></span><span></span><span></span>
@@ -468,9 +530,9 @@
       <a class="lk-menu-link" href="download.html">All downloads<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">V1.7.0</span></a>
       <a class="lk-menu-link" href="linux.html">Linux<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">APPIMAGE · DEB · RPM</span></a>
       <a class="lk-menu-link" href="mac.html">macOS<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">APPLE SILICON · INTEL</span></a>
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15.5px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.35);">
+      <a href="download.html" style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15.5px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.35);">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-        Download for Windows
+        Download
       </a>
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;font-size:13.5px;font-weight:500;color:var(--text-muted);text-decoration:none;">
         <svg width="14" height="14" viewBox="0 0 23 23"><path fill="#f25022" d="M1 1h10v10H1z"></path><path fill="#7fba00" d="M12 1h10v10H12z"></path><path fill="#00a4ef" d="M1 12h10v10H1z"></path><path fill="#ffb900" d="M12 12h10v10H12z"></path></svg>
@@ -488,19 +550,19 @@
     <h1 data-reveal style="font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-0.035em;font-weight:600;margin:0 auto 26px;max-width:18ch;">Lock in. The rest <span style="background:linear-gradient(90deg,var(--primary),hsl(150 60% 68%),var(--primary));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lk-shimmer 4.5s linear infinite;">goes quiet.</span></h1>
     <p data-reveal style="font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.55;color:var(--text-muted);max-width:46ch;margin:0 auto 36px;">A privacy-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running <span style="color:var(--text);font-weight:500;">on your machine.</span></p>
     <div data-reveal class="lk-hero-cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-magnet lk-dl-win" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-        Download for Windows
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-magnet lk-pbtn lk-dl-win">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.2 4.5v7.02H3V5.5Zm0 13L10.2 19.5v-6.93H3V18.5Zm8.3 1.15L21 21V12.57h-9.7v7.08Zm0-15.3v7.17H21V3l-9.7 1.35Z"></path></svg>
+        <span><span class="lk-pbtn-pre">Download for </span>Windows</span>
       </a>
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download class="lk-magnet lk-dl-linux" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-        Download for Linux
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg" download class="lk-magnet lk-pbtn lk-dl-mac">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9-.7 0-1.9-.8-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.2.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.4-1-2.4-3.9ZM14.2 5.9c.6-.8 1-1.9.9-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.9 1 .1 2-.5 2.7-1.3Z"></path></svg>
+        <span><span class="lk-pbtn-pre">Download for </span>Mac</span>
       </a>
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg" download class="lk-magnet lk-dl-mac" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-        Download for macOS
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download class="lk-magnet lk-pbtn lk-dl-linux">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2.2 0-3.5 1.7-3.5 4 0 1.4.2 2.3-.4 3.4-.7 1.3-2 2.6-2.6 4.4-.4 1.2-.2 2 .1 2.4-.5.5-.8 1.2-.5 1.8.2.5.7.7 1.3.9.9.3 1.6.6 2.3 1.3.5.5 1.3.8 2.1.8h2.4c.8 0 1.6-.3 2.1-.8.7-.7 1.4-1 2.3-1.3.6-.2 1.1-.4 1.3-.9.3-.6 0-1.3-.5-1.8.3-.4.5-1.2.1-2.4-.6-1.8-1.9-3.1-2.6-4.4-.6-1.1-.4-2-.4-3.4 0-2.3-1.3-4-3.5-4Zm-1.6 3.3c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9Zm3.2 0c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9Zm-1.6 2.6c.9 0 1.9.5 1.9 1 0 .3-.4.5-.8.8-.4.2-.7.5-1.1.5s-.8-.3-1.2-.5c-.4-.3-.8-.5-.8-.8 0-.5 1-1 2-1Z"></path></svg>
+        <span><span class="lk-pbtn-pre">Download for </span>Linux</span>
       </a>
-      <a href="#demo" style="display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);font-weight:600;font-size:16px;padding:14px 24px;border-radius:11px;text-decoration:none;border:1px solid var(--border);transition:background .15s,border-color .15s;">
+      <a href="#demo" class="lk-demo-cta" style="display:inline-flex;align-items:center;gap:9px;background:transparent;color:var(--text-muted);font-weight:600;font-size:16px;padding:13px 20px;border-radius:11px;text-decoration:none;border:1px solid transparent;transition:color .15s,border-color .15s;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
         Watch the 60-second demo
       </a>
@@ -1586,12 +1648,9 @@ class Component extends DCLogic {
       a.addEventListener('mouseleave', () => { a.style.color = 'var(--text-muted)'; });
     });
 
-    // Platform-aware download CTAs (class on <html> so a re-render can't reset it)
-    try {
-      const ua = navigator.userAgent || '';
-      if (/Linux|X11/.test(ua) && !/Android/.test(ua)) document.documentElement.classList.add('lk-linux');
-      else if (/Mac OS X|Macintosh/.test(ua) && !/iPhone|iPad/.test(ua)) document.documentElement.classList.add('lk-mac');
-    } catch (e) {}
+    // (Platform detection moved to an inline script in <head> — it has to land
+    // before the first paint or the promoted download button visibly changes
+    // under the reader. See the comment there.)
 
     // Mobile nav menu (state lives on <html> so a theme re-render can't reset it)
     const burger = document.getElementById('lk-burger');

@@ -7,15 +7,15 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <title>LockinRa for macOS — Arriving in v1.7.0</title>
-  <meta name="description" content="macOS support for LockinRa is written and built by CI for Intel and Apple silicon. It has not been published yet — here is exactly what exists, what was fixed to make it work, and what its limits are." />
+  <title>LockinRa for macOS — Download for Apple Silicon &amp; Intel</title>
+  <meta name="description" content="Download LockinRa for macOS — the local-first, privacy-first focus workspace, on Apple silicon and Intel. Not yet notarized, so it takes one extra click to open; here is exactly why, and what its limits are." />
   <meta name="keywords" content="LockinRa Mac, focus app macOS, local-first AI Mac, distraction blocker macOS, Apple silicon productivity app" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f1713" />
   <link rel="canonical" href="https://lockinra.xyz/mac.html" />
   <meta property="og:site_name" content="LockinRa" />
-  <meta property="og:title" content="LockinRa for macOS — Arriving in v1.7.0" />
-  <meta property="og:description" content="Written and building for Intel and Apple silicon. Not published yet — and this page is not going to invent a download." />
+  <meta property="og:title" content="LockinRa for macOS — Download for Apple Silicon &amp; Intel" />
+  <meta property="og:description" content="The local-first focus workspace, now on macOS. Not yet notarized — one extra click to open, and here is exactly why." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lockinra.xyz/mac.html" />
   <meta property="og:image" content="https://lockinra.xyz/thumbnail.webp" />
@@ -36,6 +36,11 @@
     h2 { margin:40px 0 10px; font-size:21px; }
     .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
     .muted { color:var(--muted); }
+    .dl { display:inline-flex; align-items:center; gap:10px; margin:6px 10px 0 0; padding:15px 28px; border-radius:12px; background:var(--primary); color:#06120c; text-decoration:none; font-weight:700; font-size:17px; box-shadow:0 14px 34px rgba(40,120,80,.35); }
+    .dl svg { width:19px; height:19px; }
+    .dl-alt { background:transparent; color:var(--text); border:1px solid var(--line); box-shadow:none; font-weight:600; }
+    pre { background:#0b110d; border:1px solid var(--line); border-radius:10px; padding:14px 16px; overflow:auto; font-size:13.5px; }
+    pre code { background:none; padding:0; }
     .meta { margin-top:12px; font-size:13px; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.03em; }
     ul { padding-left:20px; }
     li { margin:5px 0; }
@@ -54,16 +59,32 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
     </div>
     <h1>LockinRa for macOS</h1>
-    <p class="tag">Written, built, not yet published.</p>
-    <span class="pill">Arriving in v1.7.0</span>
+    <p class="tag">The local-first focus workspace — now on Apple silicon and Intel.</p>
+    <span class="pill">v1.7.0 · First release</span>
   </header>
 
   <div class="wrap">
-    <h2>Where this actually stands</h2>
+    <h2>Download</h2>
     <div class="card">
-      <p class="lede" style="margin-top:0;">There is no Mac download on this site today, and this page is not going to invent one.</p>
-      <p>What exists is the work: macOS support is written and merged, and the release pipeline builds a signed <code>.dmg</code> and <code>.zip</code> for both Intel and Apple silicon on every tagged release. The first one is <strong>v1.7.0</strong>. When it is published, this page becomes a download.</p>
-      <p class="muted" style="margin-bottom:0;">If you would rather be told than keep checking, <a href="mailto:abhilokreddydev@gmail.com?subject=Tell%20me%20when%20the%20Mac%20build%20lands">email us</a> and we will let you know when it lands.</p>
+      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-arm64.dmg" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+        Apple silicon (M1–M4)
+      </a>
+      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-mac-x64.dmg" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
+        Intel
+      </a>
+      <div class="meta">v1.7.0 · arm64 260&nbsp;MB · x64 262&nbsp;MB · not notarized — see below</div>
+      <p class="muted" style="margin-bottom:0;">Not sure which? Apple menu → <em>About This Mac</em>. "Apple M1/M2/M3/M4" means Apple silicon; "Intel" means the other one.</p>
+    </div>
+
+    <h2 style="color:#e2b04a;">Read this before you open it</h2>
+    <div class="card" style="border-color:#5a4a20;">
+      <p style="margin-top:0;"><strong>This build is not notarized by Apple</strong>, so Gatekeeper will refuse it on the first try — you will see "LockinRa can't be opened because Apple cannot check it for malicious software." That is expected, and it is about a certificate we do not have yet, not about the app.</p>
+      <p>To open it: drag LockinRa to Applications, then <strong>right-click the app → Open</strong>, and confirm once. macOS remembers the decision.</p>
+      <p style="margin-bottom:0;">If macOS instead says the app is <em>damaged</em>, the download was quarantined. Clear it:</p>
+      <pre style="margin-bottom:0;"><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+      <p class="muted" style="margin-bottom:0;">Notarization needs a paid Apple Developer ID. Until there is one, this is the honest trade: a working build with one extra click, rather than no Mac build at all.</p>
     </div>
 
     <h2>What "supported" had to mean first</h2>
@@ -85,15 +106,17 @@
         <ul style="margin-bottom:0;">
           <li><strong>Window titles need Screen Recording permission.</strong> macOS treats another app's window title as screen content. Without it LockinRa still sees <em>which</em> app you are in, so app-level focus detection works and title-aware detection does not. It is asked for once, and refusing it degrades the feature rather than breaking the app.</li>
           <li><strong>The menu-bar icon is a colour tile, not a monochrome glyph.</strong> A template icon keeps only the silhouette, and the LockinRa mark is a filled square — it would render as a black block.</li>
-          <li><strong>No auto-update into the first release.</strong> The <code>.zip</code> that makes updates possible is built from v1.7.0 onward, so getting <em>to</em> v1.7.0 is a manual download.</li>
+          <li><strong>Gatekeeper asks once</strong>, because the build is not notarized yet — right-click → Open, and macOS remembers. See above.</li>
+          <li><strong>No auto-update yet.</strong> The <code>.zip</code> that makes updates possible ships from v1.7.0 onward, so the next version is the first that can update itself.</li>
         </ul>
       </div>
     </div>
 
     <h2>Signing and notarization</h2>
     <div class="card">
-      <p style="margin-top:0;">The build is configured for a Developer ID identity and Apple's notary service, with the hardened runtime on. That last part is not a formality: the hardened runtime blocks the just-in-time compilation that both the browser engine and the on-device speech runtime depend on, so the app declares exactly the exceptions it needs — JIT, the microphone, and permission to ask Music and Spotify what is playing. Nothing broader.</p>
-      <p class="muted" style="margin-bottom:0;">Whether the published <code>.dmg</code> is signed depends on the credentials present when it is built. An unsigned build is a development build and will not be offered here as a download — Gatekeeper would be right to stop you.</p>
+      <p style="margin-top:0;">The build is <strong>ad-hoc signed</strong> and <strong>not notarized</strong>. Ad-hoc signing is what lets it run at all: macOS refuses to execute an unsigned arm64 binary outright, so without it an Apple silicon Mac would report the app as damaged rather than merely untrusted. Notarization is the separate step that would stop Gatekeeper asking, and it requires a paid Apple Developer ID.</p>
+      <p>The pipeline is already wired for a Developer ID identity and Apple's notary service, with the hardened runtime on. That last part is not a formality: the hardened runtime blocks the just-in-time compilation that both the browser engine and the on-device speech runtime depend on, so the app declares exactly the exceptions it needs — JIT, the microphone, and permission to ask Music and Spotify what is playing. Nothing broader.</p>
+      <p class="muted" style="margin-bottom:0;">When a certificate exists, the same build comes out signed and notarized and the extra click disappears. Nothing else about the app changes.</p>
     </div>
 
     <h2>System requirements</h2>
@@ -107,7 +130,7 @@
 
     <p style="margin-top:26px;">Windows has a current build — <a href="index.html#download">download it</a> or get it on the
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">Microsoft Store</a>.
-      Linux has a portable AppImage on the <a href="linux.html">Linux page</a>.</p>
+      Linux has an AppImage, a deb and an rpm on the <a href="linux.html">Linux page</a>.</p>
 
     <a class="back" href="index.html">← Back to lockinra.xyz</a>
 

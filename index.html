@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="google-site-verification" content="ynwm1QZAcKhX5B0qMXfZrve8gwUPjJP5s4UAPTmSyo4" />
 <title>LockinRa — Local-First AI Productivity App with a Local LLM &amp; Distraction Blocker</title>
-<meta name="description" content="LockinRa is a local-first AI productivity app for Windows, powered by a local LLM (via Ollama). An AI focus guardian that blocks distracting websites and apps, task capture by voice or text, screen-time analytics, habit tracking, notes &amp; whiteboard, and a private on-device AI coach — all running on your machine. Free on the Microsoft Store, with a Linux build in beta and macOS arriving in v1.7.0.">
+<meta name="description" content="LockinRa is a local-first AI productivity app for Windows, powered by a local LLM (via Ollama). An AI focus guardian that blocks distracting websites and apps, task capture by voice or text, screen-time analytics, habit tracking, notes &amp; whiteboard, and a private on-device AI coach — all running on your machine. Free on the Microsoft Store, with builds for macOS and Linux too.">
 <meta name="keywords" content="local LLM productivity app, AI productivity app, local-first AI, offline AI assistant, block distractions, distraction blocker, website blocker, focus app, deep work app, privacy-first productivity, Ollama app, on-device AI, ADHD focus app, Whisper dictation, screen time tracker, habit tracker, pomodoro timer, task manager">
 <meta name="author" content="LockinRa">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -41,7 +41,7 @@
   "name": "LockinRa",
   "applicationCategory": "ProductivityApplication",
   "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-  "softwareVersion": "1.6.0",
+  "softwareVersion": "1.7.0",
   "url": "https://lockinra.xyz/",
   "downloadUrl": "https://github.com/0xabhilok/lockinra-site/releases",
   "image": "https://lockinra.xyz/icon-512.png",
@@ -79,7 +79,7 @@
     {
       "@type": "Question",
       "name": "Is there a Mac or Linux version?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Windows is the current build, available as a direct download or from the Microsoft Store. Linux has a portable AppImage; everything works except desktop-app distraction detection, which is limited on Wayland. macOS support is written and built by CI for both Intel and Apple silicon, and ships with v1.7.0 — there is no published Mac download yet." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Windows is the current build, available as a direct download or from the Microsoft Store. Linux has a portable AppImage; everything works except desktop-app distraction detection, which is limited on Wayland. macOS shipped in v1.7.0 with a .dmg for both Apple silicon and Intel. It is not notarized yet, so Gatekeeper asks for confirmation the first time you open it." }
     },
     {
       "@type": "Question",
@@ -189,6 +189,9 @@
   .lk-dl-linux { display: none !important; }
   html.lk-linux .lk-dl-win { display: none !important; }
   html.lk-linux .lk-dl-linux { display: inline-flex !important; }
+  .lk-dl-mac { display: none !important; }
+  html.lk-mac .lk-dl-win { display: none !important; }
+  html.lk-mac .lk-dl-mac { display: inline-flex !important; }
 
   /* ================= LIVE DEMO (cinematic scripted tour) =================
      One 32s CSS timeline, four 8s scenes. The stage is always dark — it
@@ -435,13 +438,17 @@
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
           </sc-if>
         </button>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe" download class="lk-nav-cta lk-dl-win" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-nav-cta lk-dl-win" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
           Download for Windows
         </a>
         <a href="linux.html" class="lk-nav-cta lk-dl-linux" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
           Download for Linux
+        </a>
+        <a href="mac.html" class="lk-nav-cta lk-dl-mac" style="display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:14px;padding:9px 16px;border-radius:9px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 8px 20px hsl(150 50% 25% / 0.35);transition:background .15s,transform .15s;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+          Download for macOS
         </a>
         <button id="lk-burger" class="lk-burger" aria-label="Open menu" aria-expanded="false" aria-controls="lk-menu">
           <span></span><span></span><span></span>
@@ -459,7 +466,7 @@
       <a class="lk-menu-link" href="#faq">FAQ</a>
       <a class="lk-menu-link" href="linux.html">Linux (beta)<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">BETA</span></a>
       <a class="lk-menu-link" href="mac.html">macOS<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-subtle);letter-spacing:0.08em;">V1.7.0</span></a>
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15.5px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.35);">
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;margin-top:14px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15.5px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.35);">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
         Download for Windows
       </a>
@@ -479,13 +486,17 @@
     <h1 data-reveal style="font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-0.035em;font-weight:600;margin:0 auto 26px;max-width:18ch;">Lock in. The rest <span style="background:linear-gradient(90deg,var(--primary),hsl(150 60% 68%),var(--primary));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:lk-shimmer 4.5s linear infinite;">goes quiet.</span></h1>
     <p data-reveal style="font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.55;color:var(--text-muted);max-width:46ch;margin:0 auto 36px;">A privacy-first AI workspace for deep work. Focus tracking, task capture, an accountability coach, and a personal AI brain — all running <span style="color:var(--text);font-weight:500;">on your machine.</span></p>
     <div data-reveal class="lk-hero-cta" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;">
-      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe" download class="lk-magnet lk-dl-win" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+      <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-magnet lk-dl-win" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
         Download for Windows
       </a>
       <a href="linux.html" class="lk-magnet lk-dl-linux" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
-        Download for Linux (beta)
+        Download for Linux
+      </a>
+      <a href="mac.html" class="lk-magnet lk-dl-mac" style="display:inline-flex;align-items:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:16px;padding:14px 26px;border-radius:11px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 30% / 0.4),0 14px 34px hsl(150 55% 22% / 0.4);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
+        Download for macOS
       </a>
       <a href="#demo" style="display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);font-weight:600;font-size:16px;padding:14px 24px;border-radius:11px;text-decoration:none;border:1px solid var(--border);transition:background .15s,border-color .15s;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
@@ -1284,15 +1295,16 @@
       <div data-reveal class="lk-road-col now">
         <div class="lk-road-tag" style="color:var(--primary);"><span style="width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);"></span>Shipped</div>
         <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Windows</strong> — direct download &amp; Microsoft Store</span></div>
-        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Linux</strong> — portable AppImage (beta)</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Linux</strong> — AppImage, deb and rpm</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>macOS</strong> — Apple silicon &amp; Intel (<a href="mac.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">not notarized yet</a>)</span></div>
         <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>10+ local models</strong> — Llama, Qwen, Gemma, Phi, Mistral, GLM, bring-your-own</span></div>
         <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>On-device voice</strong> — Whisper dictation &amp; capture</span></div>
         <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span><strong>Semantic screen time</strong> — AI-classified, opt-in, local</span></div>
       </div>
       <div data-reveal class="lk-road-col">
         <div class="lk-road-tag" style="color:var(--warning);"><span style="width:7px;height:7px;border-radius:50%;background:var(--warning);"></span>In progress</div>
-        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>macOS build</strong> — written and building; ships in v1.7.0 (<a href="mac.html" style="color:var(--warning);text-decoration:none;border-bottom:1px solid currentColor;">details</a>)</span></div>
-        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Linux to parity</strong> — .deb and .rpm, launcher entry, autostart, MPRIS now-playing (v1.7.0)</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Notarized macOS build</strong> — needs an Apple Developer ID; until then Gatekeeper asks once</span></div>
+        <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Wayland app detection</strong> — the one Linux gap the display server itself makes hard</span></div>
         <div class="lk-road-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span><strong>Smarter drift prediction</strong> — semantic memory of your patterns</span></div>
       </div>
       <div data-reveal class="lk-road-col">
@@ -1318,7 +1330,7 @@
           <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;background:hsl(150 40% 40% / 0.2);border:1px solid hsl(150 40% 45% / 0.4);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--primary);margin-bottom:22px;">OPEN BETA</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;"><span style="font-size:48px;font-weight:600;letter-spacing:-0.03em;">$0</span><span style="font-size:15px;color:var(--text-muted);">/ forever in beta</span></div>
           <p style="font-size:14.5px;color:var(--text-muted);line-height:1.6;margin:0 0 26px;max-width:38ch;">Every feature, unlocked. Local AI, focus guardian, coach, copilot, capture, analytics — the whole workspace.</p>
-          <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.4);transition:background .15s;margin-bottom:24px;">
+          <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download style="display:flex;align-items:center;justify-content:center;gap:9px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:15px;padding:14px;border-radius:11px;text-decoration:none;box-shadow:0 10px 26px hsl(150 55% 22% / 0.4);transition:background .15s;margin-bottom:24px;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
             Download for Windows
           </a>
@@ -1380,7 +1392,7 @@
       </details>
       <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
         <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">Is there a Mac or Linux version?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
-        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Windows is the current build — get it as a direct download or from the <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">Microsoft Store</a>. Linux has a portable AppImage on the <a href="linux.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">Linux download page</a>; everything works except desktop-app distraction detection, which is limited on Wayland (the browser extension still covers the web). <strong style="color:var(--text);font-weight:600;">macOS support is written</strong> and CI builds a signed <code>.dmg</code> for Intel and Apple silicon — it ships with v1.7.0, and there is no published Mac download yet, so we are not going to put a button here that 404s. <a href="mac.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">What exists, and what doesn't</a>. An Android companion and web dashboard are further out.</p>
+        <p style="margin:0;padding:0 0 20px;font-size:14.5px;color:var(--text-muted);line-height:1.65;">Windows is the current build — get it as a direct download or from the <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">Microsoft Store</a>. Linux has a portable AppImage on the <a href="linux.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">Linux download page</a>; everything works except desktop-app distraction detection, which is limited on Wayland (the browser extension still covers the web). <strong style="color:var(--text);font-weight:600;">macOS is here too</strong> as of v1.7.0 — a <code>.dmg</code> for Apple silicon and Intel on the <a href="mac.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">macOS page</a>. It is not notarized yet, so Gatekeeper asks once on first open; the page explains exactly why and what to click. An Android companion and web dashboard are further out.</p>
       </details>
       <details style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 22px;">
         <summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:16px;font-weight:600;">What are the system requirements?<span class="lk-faq-chev" style="transition:transform .25s;color:var(--text-subtle);flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></summary>
@@ -1413,7 +1425,7 @@
         <div style="width:64px;height:64px;border-radius:18px;margin:0 auto 28px;background:linear-gradient(145deg,hsl(150 42% 46%),hsl(150 50% 30%));display:flex;align-items:center;justify-content:center;box-shadow:0 20px 50px hsl(150 60% 20% / 0.5),inset 0 1px 0 hsl(0 0% 100% / 0.18);"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M8 5 V17 H17" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
         <h2 style="font-size:clamp(2.2rem,4.2vw,3.6rem);font-weight:600;letter-spacing:-0.03em;line-height:1.05;margin:0 0 18px;color:hsl(150 8% 96%);">Stop fighting your focus.<br>Lock in instead.</h2>
         <p style="font-size:clamp(1.05rem,1.6vw,1.2rem);color:hsl(150 6% 78%);line-height:1.55;margin:0 auto 34px;max-width:46ch;">Free in beta. Runs on your machine. No account, nothing to leak. Download and start your first deep session in under five minutes.</p>
-        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.6.0/LockinRa-1.6.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:10px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:17px;padding:16px 32px;border-radius:13px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 35% / 0.5),0 18px 40px hsl(150 55% 20% / 0.45);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
+        <a href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-win-x64.exe" download class="lk-magnet" style="display:inline-flex;align-items:center;gap:10px;background:var(--primary);color:var(--primary-fg);font-weight:600;font-size:17px;padding:16px 32px;border-radius:13px;text-decoration:none;box-shadow:0 0 0 1px hsl(150 40% 35% / 0.5),0 18px 40px hsl(150 55% 20% / 0.45);transition:transform .2s cubic-bezier(.16,1,.3,1),background .15s;">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"></path></svg>
           Download for Windows
         </a>
@@ -1571,6 +1583,7 @@ class Component extends DCLogic {
     try {
       const ua = navigator.userAgent || '';
       if (/Linux|X11/.test(ua) && !/Android/.test(ua)) document.documentElement.classList.add('lk-linux');
+      else if (/Mac OS X|Macintosh/.test(ua) && !/iPhone|iPad/.test(ua)) document.documentElement.classList.add('lk-mac');
     } catch (e) {}
 
     // Mobile nav menu (state lives on <html> so a theme re-render can't reset it)

@@ -7,14 +7,14 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <title>LockinRa for Linux — Download the AppImage (Beta)</title>
-  <meta name="description" content="Download LockinRa for Linux — a portable AppImage of the local-first, privacy-first focus & productivity workspace. Beta: most features work; desktop distraction detection is limited on Wayland." />
+  <title>LockinRa for Linux — AppImage, deb and rpm</title>
+  <meta name="description" content="Download LockinRa for Linux — AppImage, deb or rpm. The local-first, privacy-first focus workspace. Everything works except desktop-app distraction detection under Wayland." />
   <meta name="keywords" content="LockinRa Linux, focus app Linux, AppImage productivity, local-first AI Linux, distraction blocker Linux" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f1713" />
   <link rel="canonical" href="https://lockinra.xyz/linux.html" />
   <meta property="og:site_name" content="LockinRa" />
-  <meta property="og:title" content="LockinRa for Linux — Download the AppImage (Beta)" />
+  <meta property="og:title" content="LockinRa for Linux — AppImage, deb and rpm" />
   <meta property="og:description" content="A portable AppImage of the local-first focus & productivity workspace. No installer, no account, no cloud." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lockinra.xyz/linux.html" />
@@ -36,8 +36,9 @@
     h2 { margin:40px 0 10px; font-size:21px; }
     .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:14px; }
     .muted { color:var(--muted); }
-    .dl { display:inline-flex; align-items:center; gap:10px; margin-top:6px; padding:15px 28px; border-radius:12px; background:var(--primary); color:#06120c; text-decoration:none; font-weight:700; font-size:17px; box-shadow:0 14px 34px rgba(40,120,80,.35); }
+    .dl { display:inline-flex; align-items:center; gap:10px; margin:6px 10px 0 0; padding:15px 28px; border-radius:12px; background:var(--primary); color:#06120c; text-decoration:none; font-weight:700; font-size:17px; box-shadow:0 14px 34px rgba(40,120,80,.35); }
     .dl svg { width:19px; height:19px; }
+    .dl-alt { background:transparent; color:var(--text); border:1px solid var(--line); box-shadow:none; font-weight:600; }
     .meta { margin-top:12px; font-size:13px; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.03em; }
     ul { padding-left:20px; }
     li { margin:5px 0; }
@@ -57,35 +58,41 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 V17 H17"/></svg>
     </div>
     <h1>LockinRa for Linux</h1>
-    <p class="tag">The local-first focus workspace — now as a portable AppImage.</p>
-    <span class="pill">Beta</span>
+    <p class="tag">The local-first focus workspace — AppImage, deb and rpm.</p>
+    <span class="pill">v1.7.0 · Current</span>
   </header>
 
   <div class="wrap">
     <h2>Download</h2>
     <div class="card">
-      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.3.0/LockinRa-1.3.0-linux-x86_64.AppImage" download>
+      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
-        Download AppImage
+        AppImage
       </a>
-      <div class="meta">v1.3.0 · Linux x86_64 · ~276 MB · single portable file, no installer</div>
-      <p class="muted" style="margin-bottom:0;">One self-contained file — nothing is installed system-wide, and you can delete it to uninstall. Your data lives in <code>~/.config/LockinRa</code>.</p>
+      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-amd64.deb" download>.deb</a>
+      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.rpm" download>.rpm</a>
+      <div class="meta">v1.7.0 · x86_64 · AppImage 276&nbsp;MB · deb 197&nbsp;MB · rpm 197&nbsp;MB</div>
+      <p class="muted" style="margin-bottom:0;">The AppImage is one self-contained file — nothing installed system-wide, delete it to uninstall. The deb and rpm register a launcher entry like any other app. Either way your data lives in <code>~/.config/LockinRa</code>.</p>
     </div>
 
     <h2>Run it</h2>
     <div class="card">
-      <p>After downloading, make it executable and launch it:</p>
-      <pre><code>chmod +x LockinRa-1.3.0-linux-x86_64.AppImage
-./LockinRa-1.3.0-linux-x86_64.AppImage</code></pre>
+      <p><strong>deb or rpm</strong> — install and launch it from your applications menu:</p>
+      <pre><code>sudo apt install ./LockinRa-1.7.0-linux-amd64.deb
+# or
+sudo dnf install ./LockinRa-1.7.0-linux-x86_64.rpm</code></pre>
+      <p style="margin-top:18px;"><strong>AppImage</strong> — make it executable and launch it:</p>
+      <pre><code>chmod +x LockinRa-1.7.0-linux-x86_64.AppImage
+./LockinRa-1.7.0-linux-x86_64.AppImage</code></pre>
       <p class="muted">Or right-click the file → <em>Properties → Permissions → Allow executing as program</em>, then double-click it.</p>
       <p style="margin-bottom:0;"><strong>Hit a FUSE error?</strong> Some distros don't ship FUSE 2 by default. Either install it —
         <code>sudo apt install libfuse2</code> (Debian/Ubuntu) or <code>sudo dnf install fuse</code> (Fedora) —
         or run it without FUSE:</p>
-      <pre style="margin-bottom:0;"><code>./LockinRa-1.3.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
+      <pre style="margin-bottom:0;"><code>./LockinRa-1.7.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
     </div>
 
     <h2>What to expect on Linux</h2>
-    <p class="muted" style="margin-top:6px;">This is an early Linux build. Almost everything works; one feature is limited depending on your display server.</p>
+    <p class="muted" style="margin-top:6px;">Almost everything works. One feature is limited by your display server, and one needs a package you may not have.</p>
     <div class="grid two">
       <div class="card">
         <strong style="color:var(--primary);">Works</strong>
@@ -102,14 +109,14 @@
         <strong style="color:#e2b04a;">Limited</strong>
         <ul style="margin-bottom:0;">
           <li><strong>Desktop-app distraction detection</strong> works on X11 but is unreliable on <strong>Wayland</strong> (the default on many distros) — the web/extension path still covers browser distractions. This one is permanent: Wayland has no protocol for reading another window's title, by design.</li>
-          <li>The OS media-session mini-player and the installed-apps Smart Launcher list are Windows-only <strong>in v1.3.0</strong>. Both are implemented for Linux in v1.7.0 — see below.</li>
+          <li>The now-playing mini-player needs <code>playerctl</code> installed (<code>sudo apt install playerctl</code>). Without it the panel simply says nothing is playing.</li>
           <li>No built-in auto-update yet — re-download to upgrade.</li>
         </ul>
       </div>
     </div>
 
-    <h2>What v1.7.0 changes</h2>
-    <p class="muted" style="margin-top:6px;">The Linux gap was never really about packaging. It was that the parts of the app which talk to the operating system had one implementation, and it was the Windows one. That is what v1.7.0 fixes.</p>
+    <h2>New in v1.7.0</h2>
+    <p class="muted" style="margin-top:6px;">Linux was three versions behind, and the gap was never really about packaging — it was that the parts of the app which talk to the operating system had one implementation, and it was the Windows one. That is what this release fixes, alongside the whole Notes rebuild.</p>
     <div class="card">
       <ul style="margin:0;">
         <li><strong>.deb and .rpm</strong> alongside the AppImage, with a proper freedesktop entry — so the app appears in your launcher instead of being a file you have to remember where you put.</li>
@@ -132,7 +139,7 @@
 
     <p style="margin-top:26px;">Prefer Windows? <a href="index.html#download">Download for Windows</a> or get it on the
       <a href="https://apps.microsoft.com/detail/9N6KKXPCV2JW" target="_blank" rel="noopener">Microsoft Store</a>.
-      On a Mac? <a href="mac.html">macOS arrives in the same release</a>.
+      On a Mac? <a href="mac.html">macOS ships in this release too</a>.
       Found a bug on Linux? <a href="mailto:abhilokreddydev@gmail.com">Email us</a> — Linux feedback genuinely helps.</p>
 
     <a class="back" href="index.html">← Back to lockinra.app</a>

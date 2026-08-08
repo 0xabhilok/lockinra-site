@@ -164,7 +164,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  /* The theme JS sets color-scheme on #lk-root, but that is a div — the viewport
+     scrollbar only reads it from the root element, so it was rendering as the
+     default light Windows scrollbar: a bright grey bar with arrow buttons down
+     the right edge of a near-black page. Set it on html, default dark to match
+     the default theme, and thin the bar so it recedes instead of framing. */
+  html { scroll-behavior: smooth; color-scheme: dark; scrollbar-width: thin; scrollbar-color: hsl(150 3% 24%) transparent; }
+  html.light { color-scheme: light; scrollbar-color: hsl(150 8% 80%) transparent; }
+  /* Safari and Chrome < 121, which ignore the standard properties above. */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(150 3% 24%); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(150 4% 34%); background-clip: content-box; }
+  html.light ::-webkit-scrollbar-thumb { background: hsl(150 8% 80%); background-clip: content-box; }
+  html.light ::-webkit-scrollbar-thumb:hover { background: hsl(150 8% 70%); background-clip: content-box; }
   body { margin: 0; }
   ::selection { background: hsl(150 38% 52% / 0.3); }
   details > summary { list-style: none; cursor: pointer; }
@@ -1309,35 +1322,18 @@
     </div>
     <p data-reveal class="lk-vs-note">Based on each product's public positioning, July 2026. They're good tools — they're just a different shape: cloud-first slices of the loop, where LockinRa is the local-first whole.</p>
   </section>
-  <!-- ===================== TESTIMONIALS ===================== -->
+  <!-- ===================== ABOUT ===================== -->
+  <!-- This slot held three testimonials — Dev Kapoor, Maya Reuben, Tomas Öberg.
+       They were written for the page rather than collected from anyone, so they
+       are gone. A plain description of the app beats a quote nobody said. -->
   <section style="position:relative;z-index:1;border-top:1px solid var(--border);background:var(--band);">
     <div style="max-width:1240px;margin:0 auto;padding:120px 24px;">
-      <div data-reveal style="max-width:42ch;margin:0 0 48px;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// FROM THE BETA</div>
-        <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;">People who stopped losing afternoons.</h2>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
-        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
-          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"The Guardian caught me three sentences into a YouTube hole and said it knew I was supposed to be writing tests. It was right. I closed the tab and finished the PR."</p>
-          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
-            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">DK</div>
-            <div><div style="font-size:13.5px;font-weight:600;">Dev Kapoor</div><div style="font-size:12px;color:var(--text-subtle);">Backend engineer</div></div>
-          </div>
-        </div>
-        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
-          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"I run Drill Sergeant during exam season. Brutal, but my deep-work streak hit 19 days. The fact that none of my screen data leaves my laptop is the only reason I trusted it on at all."</p>
-          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
-            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">MR</div>
-            <div><div style="font-size:13.5px;font-weight:600;">Maya Reuben</div><div style="font-size:12px;color:var(--text-subtle);">CS student, IIIT</div></div>
-          </div>
-        </div>
-        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;">
-          <p style="font-size:15px;line-height:1.65;margin:0 0 22px;letter-spacing:-0.005em;">"The morning briefing reads like a chief of staff who actually knows my week. It told me to front-load the investor deck before 11 because I always drift after lunch. Annoyingly accurate."</p>
-          <div style="margin-top:auto;display:flex;align-items:center;gap:11px;">
-            <div style="width:38px;height:38px;border-radius:10px;background:var(--avatar-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">TÖ</div>
-            <div><div style="font-size:13.5px;font-weight:600;">Tomas Öberg</div><div style="font-size:12px;color:var(--text-subtle);">Founder, 2-person startup</div></div>
-          </div>
-        </div>
+      <div data-reveal style="max-width:60ch;margin:0 auto;text-align:center;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.16em;color:var(--primary);text-transform:uppercase;margin-bottom:18px;">// ABOUT</div>
+        <h2 style="font-size:clamp(2rem,3.4vw,3rem);font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0 0 24px;">A focus workspace that runs on your own machine.</h2>
+        <p style="font-size:17px;color:var(--text-muted);line-height:1.7;margin:0 0 18px;">LockinRa keeps your tasks, notes, calendar, focus sessions and screen-time history in one desktop app, with a local AI model that reads them and helps you plan the day, catch yourself drifting, and see where the hours actually went.</p>
+        <p style="font-size:17px;color:var(--text-muted);line-height:1.7;margin:0 0 18px;">It works offline and needs no account. Voice transcription and AI run on your device by default — integrations like Google, Microsoft, GitHub and Slack are opt-in, and off until you turn them on.</p>
+        <p style="font-size:17px;color:var(--text-muted);line-height:1.7;margin:0;">It's free while in beta, on <a href="download.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">Windows, macOS and Linux</a> at v1.7.0. It's young software and still moving fast, so if something breaks or feels wrong, <a href="support.html" style="color:var(--primary);text-decoration:none;border-bottom:1px solid currentColor;">tell us</a> — that's how it gets better.</p>
       </div>
     </div>
   </section>

@@ -24,6 +24,11 @@
   <style>
     :root { --bg:#0f1713; --card:#13201a; --tile1:#3B7257; --tile2:#2A5A42; --primary:#4fae7e; --text:#e8efe9; --muted:#9fb3a6; --line:#27392f; }
     * { box-sizing: border-box; }
+    html { color-scheme:dark; scrollbar-width:thin; scrollbar-color:hsl(150 3% 24%) transparent; }
+    ::-webkit-scrollbar { width:10px; height:10px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:hsl(150 3% 24%); border-radius:8px; border:2px solid transparent; background-clip:content-box; }
+    ::-webkit-scrollbar-thumb:hover { background:hsl(150 4% 34%); background-clip:content-box; }
     body { margin:0; font:16px/1.65 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
     a { color:#86d3a6; }
     .wrap { max-width:760px; margin:0 auto; padding:0 22px 64px; }

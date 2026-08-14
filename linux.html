@@ -64,36 +64,36 @@
     </div>
     <h1>LockinRa for Linux</h1>
     <p class="tag">The local-first focus workspace — AppImage, deb and rpm.</p>
-    <span class="pill">v1.7.0 · Current</span>
+    <span class="pill">v1.8.0 · Current</span>
   </header>
 
   <div class="wrap">
     <h2>Download</h2>
     <div class="card">
-      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.AppImage" download>
+      <a class="dl" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.8.0/LockinRa-1.8.0-linux-x86_64.AppImage" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
         AppImage
       </a>
-      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-amd64.deb" download>.deb</a>
-      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.7.0/LockinRa-1.7.0-linux-x86_64.rpm" download>.rpm</a>
-      <div class="meta">v1.7.0 · x86_64 · AppImage 276&nbsp;MB · deb 197&nbsp;MB · rpm 197&nbsp;MB</div>
+      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.8.0/LockinRa-1.8.0-linux-amd64.deb" download>.deb</a>
+      <a class="dl dl-alt" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.8.0/LockinRa-1.8.0-linux-x86_64.rpm" download>.rpm</a>
+      <div class="meta">v1.8.0 · x86_64 · AppImage 277&nbsp;MB · deb 197&nbsp;MB · rpm 197&nbsp;MB</div>
       <p class="muted" style="margin-bottom:0;">The AppImage is one self-contained file — nothing installed system-wide, delete it to uninstall. The deb and rpm register a launcher entry like any other app. Either way your data lives in <code>~/.config/LockinRa</code>.</p>
     </div>
 
     <h2>Run it</h2>
     <div class="card">
       <p><strong>deb or rpm</strong> — install and launch it from your applications menu:</p>
-      <pre><code>sudo apt install ./LockinRa-1.7.0-linux-amd64.deb
+      <pre><code>sudo apt install ./LockinRa-1.8.0-linux-amd64.deb
 # or
-sudo dnf install ./LockinRa-1.7.0-linux-x86_64.rpm</code></pre>
+sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
       <p style="margin-top:18px;"><strong>AppImage</strong> — make it executable and launch it:</p>
-      <pre><code>chmod +x LockinRa-1.7.0-linux-x86_64.AppImage
-./LockinRa-1.7.0-linux-x86_64.AppImage</code></pre>
+      <pre><code>chmod +x LockinRa-1.8.0-linux-x86_64.AppImage
+./LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
       <p class="muted">Or right-click the file → <em>Properties → Permissions → Allow executing as program</em>, then double-click it.</p>
       <p style="margin-bottom:0;"><strong>Hit a FUSE error?</strong> Some distros don't ship FUSE 2 by default. Either install it —
         <code>sudo apt install libfuse2</code> (Debian/Ubuntu) or <code>sudo dnf install fuse</code> (Fedora) —
         or run it without FUSE:</p>
-      <pre style="margin-bottom:0;"><code>./LockinRa-1.7.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
+      <pre style="margin-bottom:0;"><code>./LockinRa-1.8.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
     </div>
 
     <h2>What to expect on Linux</h2>
@@ -120,7 +120,7 @@ sudo dnf install ./LockinRa-1.7.0-linux-x86_64.rpm</code></pre>
       </div>
     </div>
 
-    <h2>New in v1.7.0</h2>
+    <h2>What the Linux build brought (v1.7.0)</h2>
     <p class="muted" style="margin-top:6px;">Linux was three versions behind, and the gap was never really about packaging — it was that the parts of the app which talk to the operating system had one implementation, and it was the Windows one. That is what this release fixes, alongside the whole Notes rebuild.</p>
     <div class="card">
       <ul style="margin:0;">

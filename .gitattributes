@@ -1,0 +1,7 @@
+# install-macos.sh is served to macOS users and run by bash. A CRLF checkout
+# committed back from a Windows machine would break it in a way that is hard to
+# read: bash reports `$'\r': command not found` on the first line and every
+# line after it, and the script looks corrupt rather than mis-encoded.
+# core.autocrlf=true on the author's machine makes that one careless commit away,
+# so pin it rather than rely on the blob happening to be clean.
+*.sh text eol=lf

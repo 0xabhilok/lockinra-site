@@ -50,7 +50,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --force) FORCE=1; shift ;;
     --to) DEST="${2:?--to needs a directory}"; shift 2 ;;
-    -h|--help) sed -n '2,40p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,35p' "$0"; exit 0 ;;
     *) echo "unknown option: $1" >&2; exit 2 ;;
   esac
 done

@@ -56,6 +56,7 @@
     .back { display:inline-block; margin-top:22px; color:var(--muted); text-decoration:none; font-size:14px; }
     .lede { font-size:17.5px; }
   </style>
+  <link rel="stylesheet" href="./copy.css" />
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -92,16 +93,27 @@
     <div class="card">
       <strong style="color:var(--primary);">1 &nbsp;Install from the terminal — no warning at all</strong>
       <p style="margin-top:10px;">The quarantine flag that triggers Gatekeeper is attached by whatever does the downloading. Browsers set it; <code>curl</code> does not. Download from a terminal and there is nothing to override, because nothing was ever flagged.</p>
-      <pre><code>curl -fsSL https://lockinra.xyz/install-macos.sh -o install-macos.sh
-less install-macos.sh
-bash install-macos.sh</code></pre>
-      <p class="muted" style="margin-bottom:0;">It picks the build for your chip, checks it against a SHA-256 published here rather than alongside the download, installs to Applications and verifies the signature. It never asks for <code>sudo</code>. The middle line reads the script before you run it — please do; you should never run one you have not looked at, from us or anyone.</p>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Step 1 · Download the script</span></div>
+        <pre><code>curl -fsSL https://lockinra.xyz/install-macos.sh -o install-macos.sh</code></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Step 2 · Read it first</span></div>
+        <pre><code>less install-macos.sh</code></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Step 3 · Run it</span></div>
+        <pre><code>bash install-macos.sh</code></pre>
+      </div>
+      <p class="muted" style="margin-bottom:0;">It picks the build for your chip, checks it against a SHA-256 published here rather than alongside the download, installs to Applications and verifies the signature. It never asks for <code>sudo</code>. Step 2 reads the script before you run it — please do; you should never run one you have not looked at, from us or anyone. It opens a pager, so press <code>q</code> to leave it; that is why these are three commands to copy rather than one.</p>
     </div>
 
     <div class="card">
       <strong style="color:var(--primary);">2 &nbsp;Already downloaded the .dmg? One command</strong>
       <p style="margin-top:10px;">Drag LockinRa to Applications as usual, then:</p>
-      <pre><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+      <div class="cmd">
+        <pre><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+      </div>
       <p class="muted" style="margin-bottom:0;">That removes one extended attribute from one app. It does not modify LockinRa, and it does not turn Gatekeeper off for anything else on your Mac. Works on every macOS version.</p>
     </div>
 
@@ -119,7 +131,9 @@ bash install-macos.sh</code></pre>
 
     <div class="card" style="border-color:#5a4a20;">
       <p style="margin-top:0;margin-bottom:0;">If macOS says the app is <strong>damaged</strong> rather than unverified, that is a different problem and it is ours, not Apple's — it means the signature broke in the build. From v1.8.0 the release fails rather than shipping a bundle whose signature does not verify, so it should not happen again. If it does, <a href="support.html">tell us</a>. You can check any copy yourself:</p>
-      <pre style="margin-bottom:0;"><code>codesign --verify --deep --strict --verbose=2 /Applications/LockinRa.app</code></pre>
+      <div class="cmd">
+        <pre><code>codesign --verify --deep --strict --verbose=2 /Applications/LockinRa.app</code></pre>
+      </div>
     </div>
 
     <h2>What "supported" had to mean first</h2>
@@ -176,5 +190,6 @@ bash install-macos.sh</code></pre>
       <script>document.getElementById('y').textContent = '2026';</script>
     </footer>
   </div>
+  <script src="./copy.js" defer></script>
 </body>
 </html>

@@ -55,6 +55,7 @@
     footer { border-top:1px solid var(--line); margin-top:48px; padding-top:18px; color:var(--muted); font-size:14px; }
     .back { display:inline-block; margin-top:22px; color:var(--muted); text-decoration:none; font-size:14px; }
   </style>
+  <link rel="stylesheet" href="./copy.css" />
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -83,17 +84,28 @@
     <h2>Run it</h2>
     <div class="card">
       <p><strong>deb or rpm</strong> — install and launch it from your applications menu:</p>
-      <pre><code>sudo apt install ./LockinRa-1.8.0-linux-amd64.deb
-# or
-sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Debian · Ubuntu</span></div>
+        <pre><code>sudo apt install ./LockinRa-1.8.0-linux-amd64.deb</code></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Fedora · openSUSE</span></div>
+        <pre><code>sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
+      </div>
       <p style="margin-top:18px;"><strong>AppImage</strong> — make it executable and launch it:</p>
-      <pre><code>chmod +x LockinRa-1.8.0-linux-x86_64.AppImage
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">AppImage</span></div>
+        <pre><code>chmod +x LockinRa-1.8.0-linux-x86_64.AppImage
 ./LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
+      </div>
       <p class="muted">Or right-click the file → <em>Properties → Permissions → Allow executing as program</em>, then double-click it.</p>
       <p style="margin-bottom:0;"><strong>Hit a FUSE error?</strong> Some distros don't ship FUSE 2 by default. Either install it —
-        <code>sudo apt install libfuse2</code> (Debian/Ubuntu) or <code>sudo dnf install fuse</code> (Fedora) —
+        <code class="cmd-inline">sudo apt install libfuse2</code> (Debian/Ubuntu) or <code class="cmd-inline">sudo dnf install fuse</code> (Fedora) —
         or run it without FUSE:</p>
-      <pre style="margin-bottom:0;"><code>./LockinRa-1.8.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">AppImage without FUSE</span></div>
+        <pre><code>./LockinRa-1.8.0-linux-x86_64.AppImage --appimage-extract-and-run</code></pre>
+      </div>
     </div>
 
     <h2>What to expect on Linux</h2>
@@ -114,7 +126,7 @@ sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
         <strong style="color:#e2b04a;">Limited</strong>
         <ul style="margin-bottom:0;">
           <li><strong>Desktop-app distraction detection</strong> works on X11 but is unreliable on <strong>Wayland</strong> (the default on many distros) — the web/extension path still covers browser distractions. This one is permanent: Wayland has no protocol for reading another window's title, by design.</li>
-          <li>The now-playing mini-player needs <code>playerctl</code> installed (<code>sudo apt install playerctl</code>). Without it the panel simply says nothing is playing.</li>
+          <li>The now-playing mini-player needs <code>playerctl</code> installed (<code class="cmd-inline">sudo apt install playerctl</code>). Without it the panel simply says nothing is playing.</li>
           <li>No built-in auto-update yet — re-download to upgrade.</li>
         </ul>
       </div>
@@ -155,5 +167,6 @@ sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
       <script>document.getElementById('y').textContent = '2026';</script>
     </footer>
   </div>
+  <script src="./copy.js" defer></script>
 </body>
 </html>

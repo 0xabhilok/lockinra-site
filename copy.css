@@ -1,0 +1,126 @@
+/* Copyable terminal commands.
+ *
+ * Shared by download.html, mac.html and linux.html. Each of those pages carries
+ * its own inline stylesheet but the same palette tokens — except that only
+ * download.html defines --mono and --line-hi, hence the var() fallbacks here.
+ *
+ * The Copy control itself is built at runtime by copy.js. Nothing in this file
+ * assumes it exists: with JavaScript off a visitor sees the caption and the
+ * command exactly as before, rather than a dead button beside them.
+ */
+
+/* ---------- block commands ---------- */
+
+.cmd {
+  margin: 12px 0 0;
+  background: #0b110d;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  /* The toolbar and the <pre> both run edge to edge; clip them to the radius. */
+  overflow: hidden;
+  /* A long command must scroll inside its own box. Without this, a block placed
+     in a flex or grid parent reports the longest line as its minimum width and
+     pushes the whole page sideways on a phone. */
+  min-width: 0;
+}
+.cmd + .cmd { margin-top: 8px; }
+
+/* Caption on the left, Copy on the right. Written into the markup only where a
+   block needs a caption — copy.js creates the bar otherwise. */
+.cmd-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 39px;
+  padding: 6px 8px 6px 15px;
+  background: rgba(255, 255, 255, .025);
+  border-bottom: 1px solid var(--line);
+}
+.cmd-label {
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Beat each page's bare `pre` rule and let the wrapper own the frame. Font size
+   and family are left alone, so a block still matches its page. */
+.cmd > pre {
+  margin: 0;
+  padding: 13px 15px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow-x: auto;
+}
+
+.cmd-copy {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border: 1px solid var(--line-hi, var(--line));
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.cmd-copy:hover { color: var(--text); border-color: var(--primary); background: rgba(255, 255, 255, .045); }
+.cmd-copy:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.cmd-copy.done { color: var(--primary); border-color: var(--primary); }
+.cmd-copy svg { width: 13px; height: 13px; flex: none; }
+
+/* ---------- commands inside a sentence ---------- */
+
+/* Left as display:inline so a long one still wraps rather than pushing the page
+   sideways on a phone; the icon is a pseudo-element for the same reason, and
+   because it must stay out of the text that gets copied. */
+code.cmd-inline {
+  cursor: pointer;
+  border: 1px solid var(--line-hi, var(--line));
+  transition: color .15s, border-color .15s;
+}
+code.cmd-inline:hover { color: var(--text); border-color: var(--primary); }
+code.cmd-inline:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+code.cmd-inline.done { color: var(--primary); border-color: var(--primary); }
+
+code.cmd-inline::after {
+  content: "";
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-left: 7px;
+  vertical-align: -1px;
+  background: currentColor;
+  opacity: .5;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+code.cmd-inline:hover::after { opacity: 1; }
+code.cmd-inline.done::after {
+  opacity: 1;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+@media (max-width: 480px) {
+  .cmd-bar { padding-left: 12px; }
+  .cmd-label { font-size: 10px; letter-spacing: .08em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmd-copy, code.cmd-inline { transition: none; }
+}
+@media print {
+  .cmd-copy { display: none; }
+}

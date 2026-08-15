@@ -63,7 +63,10 @@
     /* ---------- format cards ---------- */
     .formats { display:grid; gap:12px; }
     @media (min-width:700px) { .formats { grid-template-columns:1fr 1fr; } .formats .wide { grid-column:1 / -1; } }
-    .fmt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; transition:border-color .16s, background .16s; }
+    /* min-width:0 so a card holding a wide command block lets it scroll rather
+       than widening its grid track — one column on a phone, so that column was
+       being sized by the longest line of the terminal install. */
+    .fmt { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; min-width:0; transition:border-color .16s, background .16s; }
     .fmt:hover { border-color:var(--line-hi); background:var(--card-hi); }
     .fmt.best { border-color:rgba(79,174,126,.45); background:linear-gradient(160deg,rgba(79,174,126,.09),transparent 60%),var(--card); }
     .fmt .top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
@@ -125,6 +128,7 @@
     .back:hover { color:var(--text); }
     @media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } html { scroll-behavior:auto; } .btn:hover { transform:none; } }
   </style>
+  <link rel="stylesheet" href="./copy.css" />
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
@@ -196,7 +200,7 @@
             <div class="ttl">Windows Installer · <code>.msi</code></div>
             <span class="badge alt">For IT / deployment</span>
           </div>
-          <p class="why">A standard MSI for silent installs and Group Policy rollout — <code>msiexec /i LockinRa-1.8.0-win-x64.msi /qn</code>. Same app as the <code>.exe</code>; pick this only if your deployment tooling needs an MSI.</p>
+          <p class="why">A standard MSI for silent installs and Group Policy rollout — <code class="cmd-inline">msiexec /i LockinRa-1.8.0-win-x64.msi /qn</code>. Same app as the <code>.exe</code>; pick this only if your deployment tooling needs an MSI.</p>
           <a class="btn ghost" href="https://github.com/0xabhilok/lockinra-site/releases/download/v1.8.0/LockinRa-1.8.0-win-x64.msi" download>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3M7 10l5 5 5-5M12 15V3"/></svg>
             Download the MSI
@@ -266,9 +270,18 @@
             <span class="badge rec">No Gatekeeper warning</span>
           </div>
           <p class="why">The quarantine flag that makes Gatekeeper block the app is attached by the program doing the downloading. Browsers set it; <code>curl</code> does not. Install from a terminal and there is nothing to override, because nothing was ever flagged.</p>
-          <pre><code>curl -fsSL https://lockinra.xyz/install-macos.sh -o install-macos.sh
-less install-macos.sh
-bash install-macos.sh</code></pre>
+          <div class="cmd" style="margin-top:0;">
+            <div class="cmd-bar"><span class="cmd-label">Step 1 · Download the script</span></div>
+            <pre><code>curl -fsSL https://lockinra.xyz/install-macos.sh -o install-macos.sh</code></pre>
+          </div>
+          <div class="cmd">
+            <div class="cmd-bar"><span class="cmd-label">Step 2 · Read it first</span></div>
+            <pre><code>less install-macos.sh</code></pre>
+          </div>
+          <div class="cmd">
+            <div class="cmd-bar"><span class="cmd-label">Step 3 · Run it</span></div>
+            <pre><code>bash install-macos.sh</code></pre>
+          </div>
           <div class="meta"><span>Picks your chip</span><span class="dot">·</span><span>verifies SHA-256</span><span class="dot">·</span><span>no sudo</span></div>
         </div>
       </div>
@@ -276,7 +289,9 @@ bash install-macos.sh</code></pre>
       <div class="note">
         <p><strong>Gatekeeper blocks the first launch, and that is expected.</strong> This build is ad-hoc signed but not notarized by Apple, so opening it shows "Apple could not verify LockinRa is free of malware" — or, on older systems, "LockinRa can't be opened because Apple cannot check it for malicious software." It is a statement about a certificate we do not have, not a finding about the app.</p>
         <p><strong>On macOS 15 Sequoia and later, right-click → Open no longer works</strong> — Apple removed that bypass, so any instructions telling you to use it (including the ones that were on this page until v1.8.0) will not help. Either use the terminal install above, or clear the flag by hand after dragging the app to Applications:</p>
-        <pre><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+        <div class="cmd">
+          <pre><code>xattr -dr com.apple.quarantine /Applications/LockinRa.app</code></pre>
+        </div>
         <p>The third route is <strong>System Settings → Privacy &amp; Security → Open Anyway</strong>, which only appears <em>after</em> you have tried to open the app and been blocked.</p>
         <p class="muted" style="margin-bottom:0;">If macOS calls the app <em>damaged</em> rather than unverified, that is a broken signature and it is our bug — from v1.8.0 the build fails rather than publishing one, so please <a href="support.html">report it</a>. Notarization needs a paid Apple Developer ID; the <a href="mac.html">macOS page</a> explains the whole picture.</p>
       </div>
@@ -332,15 +347,19 @@ bash install-macos.sh</code></pre>
         </div>
       </div>
 
-      <pre><code># AppImage
-chmod +x LockinRa-1.8.0-linux-x86_64.AppImage
-./LockinRa-1.8.0-linux-x86_64.AppImage
-
-# Debian / Ubuntu
-sudo apt install ./LockinRa-1.8.0-linux-amd64.deb
-
-# Fedora / openSUSE
-sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">AppImage</span></div>
+        <pre><code>chmod +x LockinRa-1.8.0-linux-x86_64.AppImage
+./LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Debian · Ubuntu</span></div>
+        <pre><code>sudo apt install ./LockinRa-1.8.0-linux-amd64.deb</code></pre>
+      </div>
+      <div class="cmd">
+        <div class="cmd-bar"><span class="cmd-label">Fedora · openSUSE</span></div>
+        <pre><code>sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
+      </div>
 
       <div class="note">
         <p><strong>Two things behave differently on Linux.</strong> Under <strong>Wayland</strong> there is no protocol for reading another window's title, so desktop-app distraction detection goes quiet — the browser extension still covers the web, and tasks, notes, timers, habits and the AI are all unaffected. Under X11 it works fully.</p>
@@ -352,14 +371,18 @@ sudo dnf install ./LockinRa-1.8.0-linux-x86_64.rpm</code></pre>
     <h2 id="verify">Verify what you downloaded</h2>
     <p class="sec-note">Because the Windows and macOS builds are not signed with a paid certificate yet, the checksum is the meaningful integrity check: it proves the file on your disk is byte-for-byte the file that was published. Compare the output against the row below.</p>
 
-    <pre><code># Windows (PowerShell)
-Get-FileHash .\LockinRa-1.8.0-win-x64.exe -Algorithm SHA256
-
-# macOS
-shasum -a 256 LockinRa-1.8.0-mac-arm64.dmg
-
-# Linux
-sha256sum LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
+    <div class="cmd">
+      <div class="cmd-bar"><span class="cmd-label">Windows · PowerShell</span></div>
+      <pre><code>Get-FileHash .\LockinRa-1.8.0-win-x64.exe -Algorithm SHA256</code></pre>
+    </div>
+    <div class="cmd">
+      <div class="cmd-bar"><span class="cmd-label">macOS</span></div>
+      <pre><code>shasum -a 256 LockinRa-1.8.0-mac-arm64.dmg</code></pre>
+    </div>
+    <div class="cmd">
+      <div class="cmd-bar"><span class="cmd-label">Linux</span></div>
+      <pre><code>sha256sum LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
+    </div>
 
     <details class="sums">
       <summary>SHA-256 for every v1.8.0 file</summary>
@@ -536,5 +559,6 @@ sha256sum LockinRa-1.8.0-linux-x86_64.AppImage</code></pre>
     });
   })();
   </script>
+  <script src="./copy.js" defer></script>
 </body>
 </html>

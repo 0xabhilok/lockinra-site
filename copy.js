@@ -65,6 +65,11 @@
     });
   }
 
+  // Exposed so the rest of the site reuses one clipboard implementation rather
+  // than growing a second one — index.html's footer uses it for the email
+  // fallback. Resolves on success, rejects if even the textarea path is refused.
+  window.lkCopy = copyText;
+
   // Last resort: leave the command selected so Ctrl/⌘+C still gets it.
   function selectNode(el) {
     try {

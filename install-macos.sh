@@ -35,14 +35,14 @@
 #
 set -euo pipefail
 
-VERSION="1.8.0"
+VERSION="1.9.0"
 BASE="https://github.com/0xabhilok/lockinra-site/releases/download/v${VERSION}"
 
 # SHA-256 of the .zip assets for v${VERSION}. Cross-check against SHA256SUMS.txt
 # on the release page — these are served from lockinra.xyz, the files are served
 # from github.com, and they have to agree.
-SHA256_ARM64="e98047558a63233f8e2d728772cf533d669626d3a8849adfc81e4a90db3969ba"
-SHA256_X64="83a015585270c701677948c32a232cf753cd90ea005d4474b278af28b881570e"
+SHA256_ARM64="a2b0ca1b81c1a897ac12beab9a971d7315862b6c6c3f9c7125612910cc4e284d"
+SHA256_X64="fab8c3733515ddba502e9f3bfd089b7096f4a3e659ee61eb8266248ac042358c"
 
 DEST="/Applications"
 FORCE=0

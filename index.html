@@ -1769,6 +1769,24 @@ class Component extends DCLogic {
 (function () {
   'use strict';
 
+  // Delegated handler for Mac / Linux download buttons: trigger download & redirect to download.html instructions
+  document.addEventListener('click', function (e) {
+    var macBtn = e.target.closest && e.target.closest('.lk-dl-mac');
+    if (macBtn) {
+      setTimeout(function () {
+        window.location.href = 'download.html?dl=mac#macos';
+      }, 150);
+      return;
+    }
+    var linuxBtn = e.target.closest && e.target.closest('.lk-dl-linux');
+    if (linuxBtn) {
+      setTimeout(function () {
+        window.location.href = 'download.html?dl=linux#linux';
+      }, 150);
+      return;
+    }
+  });
+
   // Delegated from the document rather than bound to the anchor: this page
   // renders its own markup and can replace the footer, which would quietly
   // throw away a listener attached to the element itself.

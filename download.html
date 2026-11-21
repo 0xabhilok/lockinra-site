@@ -127,6 +127,95 @@
     .back { display:inline-block; margin-top:26px; color:var(--muted); text-decoration:none; font-size:14px; }
     .back:hover { color:var(--text); }
     @media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } html { scroll-behavior:auto; } .btn:hover { transform:none; } }
+
+    /* ---------- Download instructions modal ---------- */
+    .dl-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(8, 14, 11, 0.82);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 9999; display: flex; align-items: center; justify-content: center;
+      padding: 18px; opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+    }
+    .dl-modal-backdrop.is-open { opacity: 1; pointer-events: auto; }
+    .dl-modal-card {
+      position: relative; background: var(--card); border: 1px solid var(--line-hi);
+      border-radius: 18px; max-width: 560px; width: 100%; max-height: 88vh;
+      overflow-y: auto; padding: 26px 22px 22px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(79, 174, 126, 0.2);
+      transform: translateY(14px) scale(0.98);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dl-modal-backdrop.is-open .dl-modal-card { transform: translateY(0) scale(1); }
+    .dl-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .dl-modal-close {
+      width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line);
+      background: transparent; color: var(--muted); font-size: 22px; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .dl-modal-close:hover { background: var(--line); color: #fff; }
+    .dl-modal-pill {
+      display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px;
+      border-radius: 999px; background: rgba(79, 174, 126, 0.15);
+      border: 1px solid rgba(79, 174, 126, 0.35); color: var(--primary);
+      font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .dl-modal-pill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--primary); box-shadow: 0 0 8px var(--primary);
+    }
+    .dl-modal-title { margin: 0 0 6px; font-size: 21px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+    .dl-modal-desc { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
+    .dl-modal-callout {
+      background: rgba(226, 176, 74, 0.08); border: 1px solid var(--warn-line);
+      border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;
+      font-size: 13.5px; color: #f0e6d2; line-height: 1.5;
+    }
+    .dl-modal-step { margin-bottom: 12px; }
+    .dl-modal-step-title {
+      font-size: 14px; font-weight: 600; color: var(--text);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+    }
+    .dl-modal-step-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--primary); color: var(--primary-ink);
+      font-size: 11px; font-weight: 700; display: inline-flex;
+      align-items: center; justify-content: center; flex: none;
+    }
+    .dl-modal-code-box {
+      background: #0b120e; border: 1px solid var(--line);
+      border-radius: 9px; padding: 8px 12px; display: flex;
+      align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0;
+    }
+    .dl-modal-code { font-family: var(--mono); font-size: 12.5px; color: #86d3a6; white-space: nowrap; overflow-x: auto; }
+    .dl-modal-copy-btn {
+      background: transparent; border: 1px solid var(--line); border-radius: 6px;
+      color: var(--muted); font-size: 11.5px; font-weight: 600; padding: 3px 8px;
+      cursor: pointer; transition: background 0.15s, color 0.15s; flex: none;
+    }
+    .dl-modal-copy-btn:hover { background: var(--line); color: #fff; }
+    .dl-modal-copy-btn.done { color: var(--primary); border-color: var(--primary); }
+    .dl-modal-actions {
+      display: flex; gap: 12px; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--line);
+    }
+    .dl-modal-btn-primary {
+      background: var(--primary); color: var(--primary-ink); border: none;
+      border-radius: 10px; padding: 10px 18px; font-weight: 600; font-size: 13.5px;
+      cursor: pointer; transition: opacity 0.15s, transform 0.15s;
+    }
+    .dl-modal-btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+    .dl-modal-btn-link { color: var(--muted); font-size: 13px; text-decoration: none; }
+    .dl-modal-btn-link:hover { color: #fff; text-decoration: underline; }
+    @keyframes sectionPulse {
+      0% { box-shadow: 0 0 0 0 rgba(79, 174, 126, 0); }
+      30% { box-shadow: 0 0 0 4px rgba(79, 174, 126, 0.4), 0 0 32px rgba(79, 174, 126, 0.25); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 174, 126, 0); }
+    }
+    .pulse-highlight {
+      animation: sectionPulse 1.8s ease-out 1;
+      border-radius: 16px;
+    }
   </style>
   <link rel="stylesheet" href="./copy.css" />
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bcd6aaa806f1443cafbd6d820843db3e"}'></script><!-- End Cloudflare Web Analytics -->
@@ -557,8 +646,264 @@
         try { document.execCommand('copy'); done(); } catch (err) { /* leave it selected */ }
       }
     });
+
+    // ---- Mac & Linux download interceptor & permission modal -----------------
+    var modal = document.getElementById('dl-modal');
+    var modalContent = document.getElementById('dl-modal-content');
+    var currentTargetOs = null;
+
+    function openModal(osType, format) {
+      currentTargetOs = osType;
+      var html = '';
+
+      if (osType === 'mac') {
+        html = [
+          '<div class="dl-modal-header">',
+            '<div class="dl-modal-pill"><span class="dl-modal-pill-dot"></span> Download Started</div>',
+            '<button type="button" class="dl-modal-close" id="dl-modal-close" aria-label="Close">&times;</button>',
+          '</div>',
+          '<h3 class="dl-modal-title">macOS Setup &amp; Gatekeeper</h3>',
+          '<p class="dl-modal-desc">Because LockinRa is an indie release waiting on an Apple Developer certificate, macOS Gatekeeper blocks opening on first launch.</p>',
+          '<div class="dl-modal-callout">',
+            '<div style="display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:4px;color:var(--warn);">',
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+              '<span>Expected Gatekeeper Warning:</span>',
+            '</div>',
+            '<em>&ldquo;Apple cannot check LockinRa for malicious software&rdquo;</em>',
+            '<div style="margin-top:4px;font-size:12.5px;color:var(--muted);">This is an unsigned certificate notice from Apple, not an issue with the app.</div>',
+          '</div>',
+          '<div class="dl-modal-step">',
+            '<div class="dl-modal-step-title"><span class="dl-modal-step-num">1</span> How to Open (Choose One):</div>',
+            '<div style="font-size:13.5px;color:var(--muted);margin-bottom:6px;">',
+              '<strong>Option A (In Finder):</strong> Open <code>/Applications</code> &rarr; <strong>Right-click</strong> (or Control-click) LockinRa &rarr; choose <strong>Open</strong> &rarr; click <strong>Open</strong> again.',
+            '</div>',
+            '<div style="font-size:13.5px;color:var(--muted);margin-bottom:6px;">',
+              '<strong>Option B (Terminal &mdash; Instant):</strong> Run this command to remove the quarantine flag:',
+            '</div>',
+            '<div class="dl-modal-code-box">',
+              '<code class="dl-modal-code">xattr -cr /Applications/LockinRa.app</code>',
+              '<button type="button" class="dl-modal-copy-btn" data-copy="xattr -cr /Applications/LockinRa.app">copy</button>',
+            '</div>',
+          '</div>',
+          '<div class="dl-modal-step" style="margin-top:14px;">',
+            '<div class="dl-modal-step-title"><span class="dl-modal-step-num">2</span> Focus Tracking Permission:</div>',
+            '<p style="margin:4px 0 0;font-size:13.5px;color:var(--muted);">For LockinRa to classify active window titles and detect distractions, enable <strong>Screen Recording</strong> in <em>System Settings &rarr; Privacy &amp; Security</em>.</p>',
+          '</div>',
+          '<div class="dl-modal-actions">',
+            '<button type="button" class="dl-modal-btn-primary" id="dl-modal-ok">Got it &rarr; View macOS section</button>',
+            '<a href="mac.html" class="dl-modal-btn-link" target="_blank">Full macOS Guide &rarr;</a>',
+          '</div>'
+        ].join('');
+      } else if (osType === 'linux') {
+        var isAppImage = format === 'appimage' || format === 'default';
+        var isDeb = format === 'deb';
+        var isRpm = format === 'rpm';
+
+        html = [
+          '<div class="dl-modal-header">',
+            '<div class="dl-modal-pill"><span class="dl-modal-pill-dot"></span> Download Started</div>',
+            '<button type="button" class="dl-modal-close" id="dl-modal-close" aria-label="Close">&times;</button>',
+          '</div>',
+          '<h3 class="dl-modal-title">Linux Setup &amp; Permissions</h3>',
+          '<p class="dl-modal-desc">Linux requires setting execution permissions or installing package dependencies before running.</p>'
+        ];
+
+        if (isAppImage) {
+          html.push(
+            '<div class="dl-modal-step">',
+              '<div class="dl-modal-step-title"><span class="dl-modal-step-num">1</span> Make AppImage executable:</div>',
+              '<div class="dl-modal-code-box">',
+                '<code class="dl-modal-code">chmod +x LockinRa-1.9.0-linux-x86_64.AppImage &amp;&amp; ./LockinRa-1.9.0-linux-x86_64.AppImage</code>',
+                '<button type="button" class="dl-modal-copy-btn" data-copy="chmod +x LockinRa-1.9.0-linux-x86_64.AppImage &amp;&amp; ./LockinRa-1.9.0-linux-x86_64.AppImage">copy</button>',
+              '</div>',
+            '</div>',
+            '<div class="dl-modal-callout" style="margin-top:12px;">',
+              '<div style="font-weight:600;margin-bottom:2px;color:var(--primary);">AppImage not launching on Ubuntu 22.04+?</div>',
+              'Ubuntu 22.04 and newer do not ship <code>libfuse2</code> by default. Run:',
+              '<div class="dl-modal-code-box" style="margin-top:8px;">',
+                '<code class="dl-modal-code">sudo apt install libfuse2</code>',
+                '<button type="button" class="dl-modal-copy-btn" data-copy="sudo apt install libfuse2">copy</button>',
+              '</div>',
+            '</div>'
+          );
+        } else if (isDeb) {
+          html.push(
+            '<div class="dl-modal-step">',
+              '<div class="dl-modal-step-title"><span class="dl-modal-step-num">1</span> Install with apt:</div>',
+              '<div class="dl-modal-code-box">',
+                '<code class="dl-modal-code">sudo apt install ./LockinRa-1.9.0-linux-amd64.deb</code>',
+                '<button type="button" class="dl-modal-copy-btn" data-copy="sudo apt install ./LockinRa-1.9.0-linux-amd64.deb">copy</button>',
+              '</div>',
+            '</div>'
+          );
+        } else if (isRpm) {
+          html.push(
+            '<div class="dl-modal-step">',
+              '<div class="dl-modal-step-title"><span class="dl-modal-step-num">1</span> Install with dnf:</div>',
+              '<div class="dl-modal-code-box">',
+                '<code class="dl-modal-code">sudo dnf install ./LockinRa-1.9.0-linux-x86_64.rpm</code>',
+                '<button type="button" class="dl-modal-copy-btn" data-copy="sudo dnf install ./LockinRa-1.9.0-linux-x86_64.rpm">copy</button>',
+              '</div>',
+            '</div>'
+          );
+        }
+
+        html.push(
+          '<div class="dl-modal-step" style="margin-top:14px;">',
+            '<div class="dl-modal-step-title"><span class="dl-modal-step-num">2</span> Focus Tracking Note:</div>',
+            '<p style="margin:4px 0 0;font-size:13.5px;color:var(--muted);">Under <strong>X11</strong>, window tracking is 100% full. Under <strong>Wayland</strong>, compositor privacy restricts reading other window titles (browser tracking still works via the extension).</p>',
+          '</div>',
+          '<div class="dl-modal-actions">',
+            '<button type="button" class="dl-modal-btn-primary" id="dl-modal-ok">Got it &rarr; View Linux section</button>',
+            '<a href="linux.html" class="dl-modal-btn-link" target="_blank">Full Linux Guide &rarr;</a>',
+          '</div>'
+        );
+
+        html = html.join('');
+      }
+
+      modalContent.innerHTML = html;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      // Setup copy buttons inside modal
+      var copyBtns = modalContent.querySelectorAll('.dl-modal-copy-btn');
+      copyBtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var cmd = b.getAttribute('data-copy');
+          function done() {
+            b.textContent = 'copied!';
+            b.classList.add('done');
+            setTimeout(function () { b.textContent = 'copy'; b.classList.remove('done'); }, 1800);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(cmd).then(done, function () {
+              if (window.lkCopy) window.lkCopy(cmd).then(done);
+            });
+          } else if (window.lkCopy) {
+            window.lkCopy(cmd).then(done);
+          }
+        });
+      });
+
+      var closeBtn = document.getElementById('dl-modal-close');
+      if (closeBtn) closeBtn.addEventListener('click', closeModalAndScroll);
+
+      var okBtn = document.getElementById('dl-modal-ok');
+      if (okBtn) okBtn.addEventListener('click', closeModalAndScroll);
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalAndScroll() {
+      closeModal();
+      if (currentTargetOs) {
+        scrollToSection(currentTargetOs);
+      }
+    }
+
+    function scrollToSection(osType) {
+      var secId = osType === 'mac' ? 'macos' : (osType === 'linux' ? 'linux' : null);
+      if (!secId) return;
+      var sec = document.getElementById(secId);
+      if (sec) {
+        try {
+          history.replaceState(null, '', '#' + secId);
+        } catch (e) {}
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        sec.classList.remove('pulse-highlight');
+        void sec.offsetWidth; // trigger reflow
+        sec.classList.add('pulse-highlight');
+      }
+    }
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModalAndScroll();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModalAndScroll();
+      }
+    });
+
+    // Wire clicks on Mac and Linux download links
+    function handleDownloadClick(e, osType, format) {
+      // Allow the native file download to proceed
+      openModal(osType, format);
+      scrollToSection(osType);
+    }
+
+    // Top detected button
+    var detBtn = document.getElementById('det-btn');
+    if (detBtn) {
+      detBtn.addEventListener('click', function (e) {
+        if (os === 'mac') {
+          handleDownloadClick(e, 'mac', 'dmg');
+        } else if (os === 'linux') {
+          handleDownloadClick(e, 'linux', 'appimage');
+        }
+      });
+    }
+
+    // All links inside macOS section
+    var macSec = document.getElementById('macos');
+    if (macSec) {
+      var macLinks = macSec.querySelectorAll('a[download]');
+      macLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          handleDownloadClick(e, 'mac', 'dmg');
+        });
+      });
+    }
+
+    // All links inside Linux section
+    var linuxSec = document.getElementById('linux');
+    if (linuxSec) {
+      var linuxLinks = linuxSec.querySelectorAll('a[download]');
+      linuxLinks.forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        var fmt = 'appimage';
+        if (href.endsWith('.deb')) fmt = 'deb';
+        else if (href.endsWith('.rpm')) fmt = 'rpm';
+        link.addEventListener('click', function (e) {
+          handleDownloadClick(e, 'linux', fmt);
+        });
+      });
+    }
+
+    // Auto-trigger on page load if arriving with hash or query param (e.g. from index.html)
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var dlParam = params.get('dl') || params.get('download');
+      var hashParam = window.location.hash;
+      if (dlParam === 'mac' || hashParam === '#macos') {
+        setTimeout(function () {
+          scrollToSection('mac');
+          if (dlParam === 'mac') openModal('mac', 'dmg');
+        }, 300);
+      } else if (dlParam === 'linux' || hashParam === '#linux') {
+        setTimeout(function () {
+          scrollToSection('linux');
+          if (dlParam === 'linux') openModal('linux', 'appimage');
+        }, 300);
+      }
+    } catch (err) {}
+
   })();
   </script>
   <script src="./copy.js" defer></script>
+
+  <!-- ===================== DOWNLOAD NEXT-STEPS MODAL ===================== -->
+  <div id="dl-modal" class="dl-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="dl-modal-card">
+      <div id="dl-modal-content"></div>
+    </div>
+  </div>
+
 </body>
 </html>
